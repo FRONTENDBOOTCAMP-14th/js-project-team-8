@@ -1,5 +1,9 @@
 /* 전역 스타일 변수 */
 
 :root {
-  
+  --yellow: #dbf059;
+  --black: #131314;
+  --dark-gray: #797979;
+  --light-gray: #ebebe9;
+  --white: #ffffff;
 }
