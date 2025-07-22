@@ -1,0 +1,32 @@
+.btn {
+  border-radius: 3.125rem;
+  border: none;
+  padding-inline: 2rem;
+  padding-block: .125rem;
+  line-height: 2;
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-dark {
+  color: var(--white);
+  background-color: var(--black);
+  
+  &:hover {
+    background-color: #252527;
+  }
+}
+
+.btn-yellow {
+  color: var(--black);
+  background-color: var(--yellow);
+  
+  &:hover {
+    background-color: #CBDD55;
+  }
+}
+
+.btn-long {
+  width: 100%;
+}
