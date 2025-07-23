@@ -7,18 +7,33 @@
 .input {
   display: flex;
   column-gap: 1rem;
+  color: var(--black);
+  font-weight: 300;
+  font-size: 1rem;
   padding-inline: 1.5rem;
   padding-block: 1rem;
   border: 1px solid var(--dark-gray);
   border-radius: 999px;
-  color: var(--black);
-  font-weight: 300;
-  font-size: 1rem;
+}
+
+.input.focus {
+  outline: 1px solid var(--focus);
 }
 
 .input-field {
-  border: none;
   flex: 1;
+  border: none;
+  background: transparent;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.input-label {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--dark-gray);
 }
 
 .input-search {
@@ -27,8 +42,7 @@
   padding-inline: 2.25rem;
 }
 
-.input-label {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: var(--dark-gray);
+.input-secondary {
+  border: none;
+  background-color: var(--light-gray);
 }

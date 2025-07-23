@@ -4,7 +4,7 @@ export function Input({
   id = '',
   type = 'text',
   label = '',
-  variant = 'default',
+  variant = 'primary',
   placeholder = '',
 }) {
   const inputWrapper = document.createElement('div');
@@ -39,6 +39,14 @@ export function Input({
 
   input.append(inputField);
   inputWrapper.append(input);
+
+  inputField.addEventListener('focus', () => {
+    input.classList.add('focus');
+  });
+
+  inputField.addEventListener('blur', () => {
+    input.classList.remove('focus');
+  });
 
   return inputWrapper;
 }
