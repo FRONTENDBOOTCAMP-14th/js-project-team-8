@@ -3,13 +3,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  row-gap: .5rem;
+  row-gap: 0.5rem;
   width: 500px;
   height: 120px;
-  background-color: #80EFFF;
+  background-color: var(--book-blue);
   border-radius: 999px;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 
   &::after {
     content: '';
@@ -20,7 +22,10 @@
     width: 70px;
     height: 70px;
     top: -20px;
-    right: 60px;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
   }
 }
 
@@ -28,21 +33,60 @@
   position: relative;
   font-weight: 700;
   font-size: 1.875rem;
+  max-width: 320px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 30px;
+  box-sizing: content-box;
 
   &::after {
     content: '';
     position: absolute;
     border-bottom: 1px solid var(--black);
     bottom: 0;
-    left: -50px;
-    right: -50px;
+    left: 0;
+    right: 0;
   }
 }
 
 .bookblock-desc {
-  max-width: 410px;
+  max-width: 420px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: 1rem;
+  color: var(--black);
+}
+
+.bookblock-right {
+  translate: 60px;
+
+  &::after {
+    right: 60px;
+  }
+}
+
+.bookblock-left {
+  translate: -60px;
+
+  &::after {
+    left: 60px;
+  }
+}
+
+.bookblock-blue {
+  background-color: var(--book-blue);
+}
+
+.bookblock-yellow {
+  background-color: var(--book-yellow);
+}
+
+.bookblock-green {
+  background-color: var(--book-green);
+}
+
+.bookblock-pink {
+  background-color: var(--book-pink);
 }
