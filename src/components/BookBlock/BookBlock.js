@@ -15,6 +15,7 @@ export function BookBlock({ title = '책 제목', desc = '한줄 서평', index 
   bookBlock.classList.add(direction[index % direction.length]);
   bookBlock.classList.add(color[index % color.length]);
 
+  bookBlock.setAttribute('tabindex', '0');
   bookTitle.textContent = title;
   bookDesc.textContent = desc;
 
@@ -22,6 +23,12 @@ export function BookBlock({ title = '책 제목', desc = '한줄 서평', index 
 
   if (onClick) {
     bookBlock.addEventListener('click', onClick);
+    bookBlock.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onClick();
+      }
+    });
   }
 
   return bookBlock;
