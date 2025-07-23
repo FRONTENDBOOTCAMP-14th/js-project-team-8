@@ -1,0 +1,48 @@
+.bookblock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: .5rem;
+  width: 500px;
+  height: 120px;
+  background-color: #80EFFF;
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    background-image: url('../../../src/assets/icon/bookmark.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    top: -20px;
+    right: 60px;
+  }
+}
+
+.bookblock-title {
+  position: relative;
+  font-weight: 700;
+  font-size: 1.875rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    border-bottom: 1px solid var(--black);
+    bottom: 0;
+    left: -50px;
+    right: -50px;
+  }
+}
+
+.bookblock-desc {
+  max-width: 410px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+}
