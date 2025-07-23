@@ -27,6 +27,11 @@
   }
 }
 
+.btn-gray {
+  color: var(--black);
+  background-color: var(--light-gray);
+}
+
 .btn-long {
   width: 100%;
 }
