@@ -1,12 +1,12 @@
 import './Header.css';
 
-export function Header(isLoggedIn = false) {
+export function Header({ isLoggedIn = false }) {
   const header = document.createElement('header');
   header.className = 'header';
 
   header.innerHTML = `
     <div class="header-left">
-      <img src="./assets/logo.png" alt="로고" class="logo" />
+      <img src="/src/assets/icon/logo.svg" alt="로고" class="logo" />
     </div>
     <div class="header-right"></div>
   `;
@@ -24,9 +24,17 @@ export function Header(isLoggedIn = false) {
     profile.src = '#';
     profile.alt = '프로필';
     profile.className = 'profile-img';
+
     profile.addEventListener('click', () => {
-      alert('로그아웃하시겠습니까?');
+      const shouldLogout = confirm('로그아웃하시겠습니까?');
+
+      if (shouldLogout) {
+        console.log('로그아웃합니다.');
+      } else {
+        console.log('로그아웃 취소됨');
+      }
     });
+
     headerRight.appendChild(profile);
   } else {
     const loginBtn = document.createElement('button');
