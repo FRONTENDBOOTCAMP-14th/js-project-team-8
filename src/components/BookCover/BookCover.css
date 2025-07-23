@@ -11,4 +11,5 @@
   height: 100%;
   object-fit: cover;
   object-position: top;
+  transition: all 0.3s;
 }
