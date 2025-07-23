@@ -1,16 +1,17 @@
+import { BookCover } from '../BookCover/BookCover';
 import './BookItem.css';
 
-export function BookItem({ onClick, imageUrl, title }) {
+export function BookItem({ onClick = null, imageUrl = null, title = '' }) {
   const container = document.createElement('div');
-  container.className = 'book-item';
-  container.innerHTML = `
-    <div class="book-cover-wrapper">
-      <img src="${imageUrl}" alt="${title}" class="book-cover-image">
-      <h3 class="book-title">${title}</h3>
-    </div>
-  `;
+  const bookTitle = document.createElement('h3');
 
-  if (typeof onClick === 'function') {
+  container.className = 'book-item';
+  bookTitle.className = 'book-title';
+  bookTitle.textContent = title;
+
+  container.append(BookCover({ imageUrl: imageUrl }), bookTitle);
+
+  if (onClick && typeof onClick === 'function') {
     container.addEventListener('click', onClick);
   }
 

@@ -8,6 +8,7 @@ export function BookCover({ imageUrl = '' }) {
   image.src = imageUrl;
   image.alt = 'Book Cover';
   image.className = 'book-cover-image';
+  image.draggable = false;
 
   container.appendChild(image);
 
