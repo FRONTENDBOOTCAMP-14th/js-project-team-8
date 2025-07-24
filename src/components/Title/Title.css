@@ -1,0 +1,20 @@
+.title-block {
+  padding-inline: 3rem;
+  padding-block: 2rem;
+  border-radius: 1.875rem;
+}
+
+.title-text {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.title-yellow {
+  background-color: var(--yellow);
+}
+
+.title-white {
+  background-color: var(--white);
+  border: 1px solid var(--dark-gray);
+}
