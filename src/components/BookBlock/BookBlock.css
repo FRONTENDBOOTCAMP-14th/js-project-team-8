@@ -99,6 +99,7 @@
   .bookblock {
     translate: 0;
     border-radius: 1.25rem;
+    width: 90vw;
   }
 
   .bookblock-title {
@@ -109,5 +110,13 @@
 
   .bookblock-desc {
     display: none;
+  }
+
+  .bookblock-right::after {
+    right: 20px;
+  }
+
+  .bookblock-left::after {
+    left: 20px;
   }
 }
