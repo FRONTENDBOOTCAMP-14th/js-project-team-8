@@ -1,6 +1,11 @@
 import './BookCard.css';
 
-export function createBookCard({ title, author, coverUrl, rating }) {
+export function BookCard({
+  title = '제목 없음',
+  author = '작가 미상',
+  coverUrl = '#',
+  rating = 0,
+}) {
   const card = document.createElement('div');
   card.className = 'book-card';
 
