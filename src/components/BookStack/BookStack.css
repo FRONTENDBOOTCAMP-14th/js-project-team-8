@@ -1,11 +1,18 @@
 .bookstack {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: center;
+  justify-content: flex-start;
   padding-top: 3rem;
-  padding-inline: 48px;
+  padding-inline: 3rem;
   background-color: var(--black);
   border-radius: 1.875rem;
   height: 100%;
   overflow: scroll;
+}
+
+@media screen and (max-width: 576px) {
+  .bookstack {
+    padding-inline: 1.5rem;
+  }
 }
