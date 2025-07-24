@@ -6,6 +6,6 @@
   padding-inline: 48px;
   background-color: var(--black);
   border-radius: 1.875rem;
-  height: 80vh;
+  height: 100%;
   overflow: scroll;
 }
