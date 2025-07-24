@@ -14,12 +14,20 @@
     <div id="app">
       <main class="dashboard-container">
         <header class="dashboard-header">
-          <button class="dashboard-write"></button>
+          <button type="button" class="dashboard-write">  
+            <img src="../../assets/icon/write.svg" alt="새 독서기록 쓰기" draggable="false" />
+          </button>
         </header>
         <div class="dashboard-bookstack"></div>
         <div class="dashboard-calendar"></div>
-        <div class="dashboard-first-review"></div>
-        <div class="dashboard-count"></div>
+        <div class="dashboard-userdata first-review">
+          <strong class="first-review-title">신더</strong>
+          <p>이번달에 가장 먼저<br>남긴 책갈피에요!</p>
+        </div>
+        <div class="dashboard-userdata review-count">
+          <strong class="first-review-title">200</strong>
+          <p>올해 이렇게 많은<br>책갈피를 남겼어요!</p>
+        </div>
       </main>
     </div>
 

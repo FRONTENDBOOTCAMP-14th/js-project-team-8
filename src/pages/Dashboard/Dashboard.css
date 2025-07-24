@@ -5,8 +5,8 @@
 
 .dashboard-container {
   display: grid;
-  grid-template-rows: 100px 50% 1fr;
-  grid-template-columns: 1fr 211px 211px;
+  grid-template-rows: auto 3fr 2fr;
+  grid-template-columns: 1fr 200px 200px;
   gap: 1.5rem;
   padding-block: 48px;
   width: 90%;
@@ -21,12 +21,32 @@
   .title-block {
     flex: 1
   }
+
+  .title-text span span {
+    font-weight: 100;
+    padding-inline: 3.125rem;
+    color: var(--dark-gray);
+  }
 }
 
 .dashboard-write {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
   aspect-ratio: 1;
   background: var(--black);
   border-radius: 1.875rem;
+
+  & img {
+    width: 64px;
+    height: 64px;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
 }
 
 .dashboard-bookstack {
@@ -36,21 +56,77 @@
 .dashboard-calendar {
   grid-row: 2 / span 1;
   grid-column: 2 / span 2;
-  background: #000;
+  background: var(--light-gray);
   border-radius: 1.875rem;
+  box-shadow: 2px 2px 4px #00000010;
 }
 
-.dashboard-first-review {
+.dashboard-userdata {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 1.125rem;
+  padding: .625rem;
+  text-align: center;
+  border-radius: 1.875rem;
+  box-shadow: 2px 2px 4px #00000010;
+
+  & > strong {
+    position: relative;
+    font-size: 2.5rem;
+    font-weight: 600;
+  }
+
+  & > strong::after {
+    content: '';
+    position: absolute;
+    border-bottom: 1px solid var(--dark-gray);
+    left: -10px;
+    right: -10px;
+    bottom: 0;
+  }
+
+  & > p {
+    color: var(--dark-gray);
+    line-height: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+.first-review {
   grid-row: 3 / span 1;
   grid-column: 2 / span 1;
   background-color: var(--yellow);;
-  border-radius: 1.875rem;
 }
 
-.dashboard-count {
+.review-count {
   grid-row: 3 / span 1;
   grid-column: 3 / span 1;
   background: var(--white);
-  border: 1px solid var(--dark-gray);
-  border-radius: 1.875rem;
+  border: 1px dashed var(--dark-gray);
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+  }
+
+  .dashboard-write {
+    aspect-ratio: auto;
+  }
+
+  .dashboard-bookstack {
+    max-height: 500px;
+  }
+
+  .dashboard-calendar,
+  .dashboard-userdata {
+    display: none;
+  }
 }
