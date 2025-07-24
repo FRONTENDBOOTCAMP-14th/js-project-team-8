@@ -5,13 +5,13 @@
   align-items: center;
   row-gap: 0.5rem;
   width: 500px;
-  height: 120px;
+  padding-block: 1.25rem;
   background-color: var(--book-blue);
   border-radius: 999px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   &::after {
     content: '';
@@ -93,4 +93,21 @@
 
 .bookblock-pink {
   background-color: var(--book-pink);
+}
+
+@media screen and (max-width: 768px) {
+  .bookblock {
+    translate: 0;
+    border-radius: 1.25rem;
+  }
+
+  .bookblock-title {
+    &::after {
+      display: none;
+    }
+  }
+
+  .bookblock-desc {
+    display: none;
+  }
 }

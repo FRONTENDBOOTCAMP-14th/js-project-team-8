@@ -33,3 +33,5 @@ export function BookBlock({ title = '책 제목', desc = '한줄 서평', index 
 
   return bookBlock;
 }
+
+document.body.append(BookBlock({}))
