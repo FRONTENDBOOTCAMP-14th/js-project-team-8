@@ -166,5 +166,3 @@ export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
 
   return sidebar;
 }
-
-document.body.append(Sidebar({}));
