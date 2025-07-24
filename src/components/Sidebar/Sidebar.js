@@ -77,7 +77,7 @@ export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
   const sidebar = document.createElement('nav');
   const sidebarContainer = document.createElement('div');
   const sidebarLogo = document.createElement('a');
-  
+
   sidebar.className = 'sidebar';
 
   sidebarLogo.className = 'sidebar-logo';
@@ -140,6 +140,29 @@ export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
     sidebarButtons.forEach((el) => el.classList.remove('active'));
     target.classList.add('active');
   });
+
+  const hamburgerButton = document.createElement('button');
+  hamburgerButton.className = 'hamburger';
+  hamburgerButton.innerHTML = `
+    <div class="hamburger-icon">
+      <svg width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.33325 18.3333H25.6666M2.33325 9.99999H25.6666M2.33325 1.66666H25.6666" stroke="#131314" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    <div>
+  `;
+  hamburgerButton.addEventListener('click', () => {
+    sidebar.classList.toggle('isOpen');
+
+    if (sidebar.classList.contains('isOpen')) {
+      hamburgerButton.style.left = '88px';
+      hamburgerButton.style.transitionDelay = '0s';
+    } else {
+      hamburgerButton.style.left = '24px';
+      hamburgerButton.style.transitionDelay = '0.3s';
+    }
+  });
+
+  sidebar.append(hamburgerButton);
 
   return sidebar;
 }
