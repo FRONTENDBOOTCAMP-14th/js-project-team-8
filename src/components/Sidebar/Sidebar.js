@@ -1,6 +1,6 @@
 import './Sidebar.css';
 
-export function Sidebar({ selectedIndex = 0 }) {
+export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
   const sidebarItems = [
     {
       href: '#home',
@@ -51,13 +51,44 @@ export function Sidebar({ selectedIndex = 0 }) {
       alt: '커뮤니티',
     },
   ];
-
-  const sidebar = document.createElement('nav');
-  const sidebarContainer = document.createElement('div');
+  const loginItems = [
+    {
+      href: '#login',
+      svg: `
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.99951 1.5C13.1416 1.5 16.4995 4.85786 16.4995 9C16.4995 13.1421 13.1416 16.5 8.99951 16.5C5.19671 16.4998 2.05685 13.6691 1.56787 10H8.08545L6.04248 12.043L7.45654 13.457L11.9136 9L7.45654 4.54297L6.04248 5.95703L8.08545 8H1.56787C2.05685 4.3309 5.19671 1.50021 8.99951 1.5Z" fill="currentColor"/>
+      </svg>
+      `,
+      alt: '로그인하기',
+    },
+    {
+      href: '#logout',
+      svg: `
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 1.5C12.803 1.5 15.9426 4.33079 16.4316 8H9.91406L11.957 5.95703L10.543 4.54297L6.08594 9L10.543 13.457L11.957 12.043L9.91406 10H16.4316C15.9426 13.6692 12.803 16.5 9 16.5C4.85786 16.5 1.5 13.1421 1.5 9C1.5 4.85786 4.85786 1.5 9 1.5Z" fill="currentColor"/>
+      </svg>
+      `,
+      alt: '로그아웃하기',
+    },
+  ];
   const sidebarButtons = [];
   let clickedIndex = selectedIndex;
 
+  const sidebar = document.createElement('nav');
+  const sidebarContainer = document.createElement('div');
+  const sidebarLogo = document.createElement('a');
+
   sidebar.className = 'sidebar';
+
+  sidebarLogo.className = 'sidebar-logo';
+  sidebarLogo.href = '/';
+  sidebarLogo.innerHTML = `
+    <h1>
+      <img src="/src/assets/icon/logo.svg" alt="책갈피 홈으로" draggable="false"/>
+    </h1>
+  `;
+
+  sidebar.append(sidebarLogo);
 
   for (let i = 0; i < sidebarItems.length; i++) {
     const sidebarButton = document.createElement('a');
@@ -83,7 +114,22 @@ export function Sidebar({ selectedIndex = 0 }) {
     }
   }
 
+  const loginButton = document.createElement('a');
+  const loginIcon = document.createElement('div');
+
+  loginButton.className = 'sidebar-btn';
+  loginIcon.className = 'sidebar-icon';
+  loginIcon.innerHTML = loginItems[+isLoggedin].svg.replace(
+    /<svg/,
+    '<svg aria-hidden="true" focusable="false"'
+  );
+  loginButton.href = loginItems[+isLoggedin].href;
+  loginButton.setAttribute('aria-label', loginItems[+isLoggedin].alt);
+
+  loginButton.append(loginIcon);
+
   sidebar.append(sidebarContainer);
+  sidebar.append(loginButton);
 
   sidebarContainer.addEventListener('click', (e) => {
     const target = e.target.closest('.sidebar-btn');
@@ -94,6 +140,29 @@ export function Sidebar({ selectedIndex = 0 }) {
     sidebarButtons.forEach((el) => el.classList.remove('active'));
     target.classList.add('active');
   });
+
+  const hamburgerButton = document.createElement('button');
+  hamburgerButton.className = 'hamburger';
+  hamburgerButton.innerHTML = `
+    <div class="hamburger-icon">
+      <svg width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.33325 18.3333H25.6666M2.33325 9.99999H25.6666M2.33325 1.66666H25.6666" stroke="#131314" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    <div>
+  `;
+  hamburgerButton.addEventListener('click', () => {
+    sidebar.classList.toggle('isOpen');
+
+    if (sidebar.classList.contains('isOpen')) {
+      hamburgerButton.style.left = '88px';
+      hamburgerButton.style.transitionDelay = '0s';
+    } else {
+      hamburgerButton.style.left = '24px';
+      hamburgerButton.style.transitionDelay = '0.3s';
+    }
+  });
+
+  sidebar.append(hamburgerButton);
 
   return sidebar;
 }
