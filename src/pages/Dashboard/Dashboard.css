@@ -1,0 +1,56 @@
+#app {
+  display: flex;
+  max-height: 100vh;
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-rows: 100px 50% 1fr;
+  grid-template-columns: 1fr 211px 211px;
+  gap: 1.5rem;
+  padding-block: 48px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 1.5rem;
+
+  .title-block {
+    flex: 1
+  }
+}
+
+.dashboard-write {
+  aspect-ratio: 1;
+  background: var(--black);
+  border-radius: 1.875rem;
+}
+
+.dashboard-bookstack {
+  grid-row: 2 / span 2;
+}
+
+.dashboard-calendar {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 2;
+  background: #000;
+  border-radius: 1.875rem;
+}
+
+.dashboard-first-review {
+  grid-row: 3 / span 1;
+  grid-column: 2 / span 1;
+  background-color: var(--yellow);;
+  border-radius: 1.875rem;
+}
+
+.dashboard-count {
+  grid-row: 3 / span 1;
+  grid-column: 3 / span 1;
+  background: var(--white);
+  border: 1px solid var(--dark-gray);
+  border-radius: 1.875rem;
+}
