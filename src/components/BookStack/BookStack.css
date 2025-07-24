@@ -1,0 +1,11 @@
+.bookstack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 3rem;
+  padding-inline: 48px;
+  background-color: var(--black);
+  border-radius: 1.875rem;
+  height: 80vh;
+  overflow: scroll;
+}
