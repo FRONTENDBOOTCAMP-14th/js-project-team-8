@@ -111,10 +111,16 @@
   .dashboard-container {
     display: flex;
     flex-direction: column;
+    padding-block: 88px;
   }
 
   .dashboard-header {
-    flex-direction: column;
+    /* flex-direction: column; */
+    
+    .title-text {
+      font-size: 1.5rem;
+      flex-shrink: 1;
+    }
   }
 
   .dashboard-write {
@@ -122,7 +128,7 @@
   }
 
   .dashboard-bookstack {
-    max-height: 500px;
+    height: calc(100vh - 266px);
   }
 
   .dashboard-calendar,

@@ -103,6 +103,8 @@
   }
 
   .bookblock-title {
+    font-size: 1.5rem;
+
     &::after {
       display: none;
     }
@@ -118,5 +120,11 @@
 
   .bookblock-left::after {
     left: 20px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .bookblock {
+    padding-block: 0.8rem;
   }
 }
