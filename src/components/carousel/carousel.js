@@ -89,13 +89,18 @@ export function Carousel(){
   indicatorBtns[0].classList.add(SELECTED_CLASS)
 
   let currentIndex = 0
+  let isSliding = false
   let intervalId
+  const CAROUSEL_TRANSITION_DURATION = 3000
 
   function slideMove(index) {
     slideWrapper.style.transform = `translateX(-${index * 100}%)`
   }
 
   function updateSelected(index) {
+    if (isSliding) return
+    isSliding = true
+
     slides.forEach(slide => slide.classList.remove(SELECTED_CLASS))
     indicatorBtns.forEach(btn => btn.classList.remove(SELECTED_CLASS))
 
@@ -104,6 +109,10 @@ export function Carousel(){
     slideMove(index)
     tabIndex()
     currentIndex = index
+
+    setTimeout(() => {
+    isSliding = false;
+    }, CAROUSEL_TRANSITION_DURATION);
   }
 
   function tabIndex() {
@@ -120,12 +129,11 @@ export function Carousel(){
     intervalId = setInterval(() => {
       const nextIndex = (currentIndex + 1) % slides.length
       updateSelected(nextIndex)
-    }, 3000)
+    }, CAROUSEL_TRANSITION_DURATION)
   }
 
   function resetAutoSlide() {
     clearInterval(intervalId)
-    startAutoSlide()
   }
 
   nextBtn.addEventListener('click', () => {
@@ -162,5 +170,3 @@ export function Carousel(){
 
   return carousel
 }
-
-document.body.append(Carousel())
