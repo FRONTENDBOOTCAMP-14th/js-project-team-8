@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="LoginAndSignUp.css" />
+  </head>
+  <body>
+    <main class="container">
+      <aside class="media-section" aria-label="책갈피 이미지">
+        <img src="/src/assets/login/bookmark-main.png" alt="책갈피 이미지" />
+      </aside>
+      <section class="content-section">
+        <header class="intro-section">
+          <figure class="logo">
+            <img src="/src/assets/icon/logo.svg" alt="로고" />
+          </figure>
+          <h1 class="intro-title">
+            <p>당신의 독서 취향을</p>
+            <p>기록하는 특별한 공간.</p>
+          </h1>
+          <p class="intro-subtitle">나만의 책갈피로 독서 이야기를 완성하세요.</p>
+        </header>
+        <section class="form-section" id="login-section" aria-labelledby="login-title">
+          <h2 class="form-title" id="login-title">로그인 / 회원가입</h2>
+          <form class="input-form" id="login-form" autocomplete="on">
+            <fieldset>
+              <label for="email">이메일</label>
+              <input type="email" id="email" placeholder="bookclub123@gmail.com" required />
+              <label for="password">비밀번호</label>
+              <div class="password-input-wrap">
+                <input type="password" id="password" placeholder="**********" required />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-target="password"
+                  aria-label="비밀번호 보기"
+                ></button>
+              </div>
+            </fieldset>
+            <div class="login-actions">
+              <div class="keep-login">
+                <input type="checkbox" id="keep-login" class="custom-keep-login" />
+                <label for="keep-login" class="custom-keep-login-label">로그인 유지</label>
+              </div>
+              <div class="password-finding">
+                <button type="button" id="find-password">비밀번호 찾기</button>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-dark login-button">로그인</button>
+          </form>
+          <footer class="signup-link">
+            <p class="signup-text">지금 가입하고 첫 책갈피를 남겨보세요.</p>
+            <button class="btn btn-yellow side-signup-button" type="button" id="show-signup">
+              회원가입
+            </button>
+          </footer>
+        </section>
+        <section class="form-section" id="signup-section" aria-labelledby="signup-title" hidden>
+          <h2 class="form-title" id="signup-title">회원가입</h2>
+          <form class="input-form" id="signup-form" autocomplete="on">
+            <fieldset>
+              <label for="signup-id"
+                >아이디
+                <span class="input-error" id="signup-id-error">유효한 이메일 형식이 아닙니다.</span>
+              </label>
+              <input
+                type="email"
+                id="signup-id"
+                placeholder="bookclub123@gmail.com"
+                required
+                autocomplete="username"
+              />
+              <label for="signup-password"
+                >비밀번호
+                <span class="input-error" id="signup-password-error"
+                  >비밀번호는 8글자 이상으로 설정해주세요.</span
+                >
+              </label>
+              <div class="password-input-wrap">
+                <input
+                  type="password"
+                  id="signup-password"
+                  placeholder="비밀번호를 입력하세요."
+                  required
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-target="signup-password"
+                  aria-label="비밀번호 보기"
+                ></button>
+              </div>
+              <label for="signup-password-confirm"
+                >비밀번호 확인
+                <span class="input-error" id="signup-password-confirm-error"
+                  >비밀번호가 일치하지 않습니다.</span
+                >
+              </label>
+              <div class="password-input-wrap">
+                <input
+                  type="password"
+                  id="signup-password-confirm"
+                  placeholder="비밀번호를 다시 입력하세요."
+                  required
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-target="signup-password-confirm"
+                  aria-label="비밀번호 확인 보기"
+                ></button>
+              </div>
+              <div id="signup-code-wrap" class="signup-code-hidden">
+                <label for="signup-code"
+                  >인증번호
+                  <span class="input-error" id="signup-code-error" style="display: none"
+                    >인증번호가 틀렸어요.</span
+                  >
+                </label>
+                <div class="signup-code-input-wrap">
+                  <input
+                    type="text"
+                    id="signup-code"
+                    placeholder="인증번호를 입력하세요."
+                    required
+                  />
+                  <span id="signup-timer" class="signup-timer">05:00</span>
+                </div>
+              </div>
+            </fieldset>
+            <button type="button" class="btn btn-yellow signup-button" id="signup-step-btn">
+              인증 요청
+            </button>
+          </form>
+        </section>
+      </section>
+    </main>
+    <div class="modal-wrapper set-nickname-modal" hidden>
+      <div class="modal">
+        <h1>회원님의 닉네임을 지어주세요!</h1>
+        <form action="">
+          <input type="text" placeholder="책읽는 문어빵맨" />
+          <button type="submit" class="btn btn-yellow signup-button">결정하기</button>
+        </form>
+      </div>
+    </div>
+    <script src="./LoginAndSignUp.js"></script>
+  </body>
+</html>
