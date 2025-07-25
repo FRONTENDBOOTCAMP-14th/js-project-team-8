@@ -1,33 +1,35 @@
 import './Dashboard.css';
+import 'vanilla-calendar-pro/styles/index.css';
+import './calendar-override.css';
+
+import { Calendar } from 'vanilla-calendar-pro';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { Title } from '../../components/Title/Title';
 import { BookStack } from '../../components/BookStack/BookStack';
+
+// 더미 데이터
+const reviews = [
+  { title: '제목', desc: '소제목' },
+  { title: '제목', desc: '소제목' },
+  { title: '제목', desc: '소제목' },
+  { title: '제목', desc: '소제목' },
+  { title: '제목', desc: '소제목' },
+  { title: '제목', desc: '소제목' },
+  { title: '제목', desc: '소제목' },
+  { title: '제목', desc: '소제목' },
+  { title: '제목', desc: '소제목' },
+  { title: '제목', desc: '소제목' },
+];
+
+const today = new Date();
+let year = today.getFullYear();
+let month = today.getMonth() + 1;
+let reviewCount = 3;
 
 export async function initDashboard() {
   const app = document.querySelector('#app');
   const header = document.querySelector('.dashboard-header');
   const bookstackWrapper = document.querySelector('.dashboard-bookstack');
-  const calendar = document.querySelector('.dashboard-calendar');
-
-  // 더미 데이터
-  const reviews = [
-    { title: '제목', desc: '소제목' },
-    { title: '제목', desc: '소제목' },
-    { title: '제목', desc: '소제목' },
-    { title: '제목', desc: '소제목' },
-    { title: '제목', desc: '소제목' },
-    { title: '제목', desc: '소제목' },
-    { title: '제목', desc: '소제목' },
-    { title: '제목', desc: '소제목' },
-    { title: '제목', desc: '소제목' },
-    { title: '제목', desc: '소제목' },
-  ];
-
-  const today = new Date();
-
-  let year = today.getFullYear();
-  let month = today.getMonth() + 1;
-  let reviewCount = 3;
 
   app.prepend(Sidebar({}));
   header.prepend(
@@ -38,4 +40,11 @@ export async function initDashboard() {
     })
   );
   bookstackWrapper.append(BookStack({ reviews }));
+
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const calendar = new Calendar('#calendar');
+  calendar.init();
 }
