@@ -7,7 +7,7 @@ export function Title({ text = '제목', color = 'yellow' }) {
   titleBlock.className = `title-block title-${color}`;
   titleText.className = 'title-text';
 
-  titleText.textContent = text;
+  titleText.innerHTML = text;
 
   titleBlock.append(titleText);
 

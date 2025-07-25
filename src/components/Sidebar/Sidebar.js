@@ -1,4 +1,5 @@
 import './Sidebar.css';
+import logo from '../../assets/icon/logo.svg';
 
 export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
   const sidebarItems = [
@@ -84,7 +85,7 @@ export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
   sidebarLogo.href = '/';
   sidebarLogo.innerHTML = `
     <h1>
-      <img src="/src/assets/icon/logo.svg" alt="책갈피 홈으로" draggable="false"/>
+      <img src="${logo}" alt="책갈피 홈으로" draggable="false"/>
     </h1>
   `;
 
