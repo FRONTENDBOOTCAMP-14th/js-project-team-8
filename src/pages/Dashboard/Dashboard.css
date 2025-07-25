@@ -111,12 +111,10 @@
   .dashboard-container {
     display: flex;
     flex-direction: column;
-    padding-block: 88px;
+    padding-top: 88px;
   }
 
   .dashboard-header {
-    /* flex-direction: column; */
-
     .title-text {
       font-size: 1.5rem;
       flex-shrink: 1;
