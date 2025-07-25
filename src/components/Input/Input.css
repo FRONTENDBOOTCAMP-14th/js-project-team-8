@@ -1,0 +1,48 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.input {
+  display: flex;
+  column-gap: 1rem;
+  color: var(--black);
+  font-weight: 300;
+  font-size: 1rem;
+  padding-inline: 1.5rem;
+  padding-block: 1rem;
+  border: 1px solid var(--dark-gray);
+  border-radius: 999px;
+}
+
+.input.focus {
+  outline: 1px solid var(--focus);
+}
+
+.input-field {
+  flex: 1;
+  border: none;
+  background: transparent;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.input-label {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--dark-gray);
+}
+
+.input-search {
+  border: none;
+  box-shadow: 0 4px 4px #00000010;
+  padding-inline: 2.25rem;
+}
+
+.input-secondary {
+  border: none;
+  background-color: var(--light-gray);
+}

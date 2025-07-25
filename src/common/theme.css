@@ -1,0 +1,15 @@
+/* 전역 스타일 변수 */
+
+:root {
+  --yellow: #dbf059;
+  --black: #131314;
+  --dark-gray: #797979;
+  --light-gray: #ebebe9;
+  --white: #ffffff;
+  --focus: #004b91;
+
+  --book-blue: #80efff;
+  --book-yellow: #ffeb7a;
+  --book-green: #92ecae;
+  --book-pink: #ffa5e8;
+}

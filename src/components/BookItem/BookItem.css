@@ -1,0 +1,17 @@
+.book-item {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.75rem;
+  cursor: pointer;
+  min-width: 120px;
+  max-width: 250px;
+
+  &:hover .book-cover-image {
+    transform: scale(1.05);
+  }
+}
+
+.book-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}

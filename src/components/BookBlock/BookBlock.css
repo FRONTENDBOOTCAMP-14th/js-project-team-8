@@ -1,0 +1,130 @@
+.bookblock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 0.5rem;
+  width: clamp(300px, 35vw, 500px);
+  padding-block: 1.25rem;
+  background-color: var(--book-blue);
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &::after {
+    content: '';
+    background-image: url('../../../src/assets/icon/bookmark.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    top: -20px;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--yellow);
+  }
+}
+
+.bookblock-title {
+  position: relative;
+  font-weight: 700;
+  font-size: 1.875rem;
+  max-width: 320px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 30px;
+  box-sizing: content-box;
+
+  &::after {
+    content: '';
+    position: absolute;
+    border-bottom: 1px solid var(--black);
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+.bookblock-desc {
+  max-width: 420px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  color: var(--black);
+}
+
+.bookblock-right {
+  translate: 60px;
+
+  &::after {
+    right: 60px;
+  }
+}
+
+.bookblock-left {
+  translate: -60px;
+
+  &::after {
+    left: 60px;
+  }
+}
+
+.bookblock-blue {
+  background-color: var(--book-blue);
+}
+
+.bookblock-yellow {
+  background-color: var(--book-yellow);
+}
+
+.bookblock-green {
+  background-color: var(--book-green);
+}
+
+.bookblock-pink {
+  background-color: var(--book-pink);
+}
+
+@media screen and (max-width: 768px) {
+  .bookblock {
+    translate: 0;
+    border-radius: 1.25rem;
+    width: 100%;
+  }
+
+  .bookblock-title {
+    font-size: 1.5rem;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  .bookblock-desc {
+    display: none;
+  }
+
+  .bookblock-right::after {
+    right: 20px;
+  }
+
+  .bookblock-left::after {
+    left: 20px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .bookblock {
+    padding-block: 0.8rem;
+  }
+}
