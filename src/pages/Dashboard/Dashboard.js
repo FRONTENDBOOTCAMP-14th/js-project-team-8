@@ -27,11 +27,11 @@ let month = today.getMonth() + 1;
 let reviewCount = 3;
 
 export async function initDashboard() {
-  const app = document.querySelector('#app');
+  const dashboard = document.querySelector('#dashboard');
   const header = document.querySelector('.dashboard-header');
   const bookstackWrapper = document.querySelector('.dashboard-bookstack');
 
-  app.prepend(Sidebar({}));
+  dashboard.prepend(Sidebar({}));
   header.prepend(
     Title({
       text: `
