@@ -72,6 +72,13 @@
   .community-book-wrapper {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .community-btn-wrapper {
+    > button {
+      padding-inline: 1.75rem;
+      font-size: 0.875rem;
+    }
+  }
 }
 
 
