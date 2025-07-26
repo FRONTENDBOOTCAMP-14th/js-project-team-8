@@ -81,9 +81,19 @@
   }
 }
 
-
 @media (width <= 576px) {
+  .community-container {
+    margin-inline: 24px;
+  }  
+
   .community-book-wrapper {
     grid-template-columns: 1fr;
+  }
+
+    .community-btn-wrapper {
+    > button {
+      padding-inline: 1.6rem;
+      font-size: 0.7rem;
+    }
   }
 }
