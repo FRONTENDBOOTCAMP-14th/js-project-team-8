@@ -5,7 +5,7 @@ import { Carousel } from '../../components/Carousel/Carousel'
 import { Button } from '../../components/Button/Button'
 import { BookHover } from '../../components/BookHover/BookHover'
 
-export async function initCommunity() {
+export function initCommunity() {
   const community = document.getElementById('community')
   const header = document.querySelector('.community-header')
   const wrapper = document.querySelector('.community-wrapper')
@@ -37,24 +37,16 @@ export async function initCommunity() {
     Button({ text: '인기순', color: 'gray' })
   )
 
-  const [latestBtn, popularBtn] = btnWrapper.querySelectorAll('.btn');
-
-  function setActiveButton(activeBtn, inactiveBtn) {
-    activeBtn.classList.add('btn-dark');
-    activeBtn.classList.remove('btn-gray');
-
-    inactiveBtn.classList.remove('btn-dark');
-    inactiveBtn.classList.add('btn-gray');
-  }
+  const btns = btnWrapper.querySelectorAll('.btn');
 
   btnWrapper.addEventListener('click', ({ target }) => {
-    if (!target.classList.contains('btn')) return;
+    const selectedBtn = target.closest('.btn')
+    if(!selectedBtn) return
 
-    if (target === latestBtn) {
-      setActiveButton(latestBtn, popularBtn);
-    } else if (target === popularBtn) {
-      setActiveButton(popularBtn, latestBtn);
-    }
+    btns.forEach(btn => {
+      btn.classList.toggle('btn-dark', btn === selectedBtn)
+      btn.classList.toggle('btn-gray', btn !== selectedBtn)
+    })
   })
 
   // 확인용 더미 데이터
@@ -112,5 +104,5 @@ export async function initCommunity() {
   community.prepend((Sidebar({})))
 }
 
-document.body.append(initCommunity())
+initCommunity()
 
