@@ -14,7 +14,7 @@
   display: flex;
   gap: 1rem;
   padding-inline: 1rem;
-
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
   .title-promotion {
     flex: 1;
     border: 1px dotted var(--dark-gray);
