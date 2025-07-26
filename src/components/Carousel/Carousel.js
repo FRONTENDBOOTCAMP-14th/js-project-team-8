@@ -83,6 +83,12 @@ export function Carousel(){
   const indicatorBtns = Array.from({ length: slideData.length }, () =>
     Button({ color: 'indicator' })
   )
+  // 인디케이터에 식별 가능한 이름 부여
+  const nativeNums = ['첫', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉', '열']
+  indicatorBtns.map((indicatorBtn, index) => {
+    const numsText = nativeNums[index] || `${index+1}`
+    indicatorBtn.ariaLabel = `${numsText} 번째 콘텐츠`
+  })
 
   const SELECTED_CLASS = 'is-selected'
   slides[0].classList.add(SELECTED_CLASS)
