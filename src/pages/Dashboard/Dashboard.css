@@ -51,6 +51,24 @@
 
 .dashboard-bookstack {
   grid-row: 2 / span 2;
+  position: relative;
+}
+
+.no-reviews {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+
+  & > p {
+    color: var(--white);
+    text-align: center;
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    font-weight: 500;
+    min-width: 300px;
+  }
 }
 
 .dashboard-calendar {
