@@ -40,15 +40,25 @@
   font-size: clamp(1.3rem, 2vw, 2.5rem);
   padding-bottom: 0.5rem;
   transform: translateY(2rem);
-  transition: transform 0.4s ease;
+  transition: transform 0.6s ease;
+}
+
+.book-hover-title,
+.book-hover-id {
+  max-width: 20rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .book-hover-review,
 .book-hover-id {
+  max-height: 6rem;
+  overflow: scroll;
   font-size: clamp(0.875rem, 1.5vw, 1rem);
   opacity: 0;
   transform: translateY(2rem);
-  transition: opacity 0.3s ease, transform 0.4s ease;
+  transition: opacity 0.6s ease, transform 0.8s ease;
 }
 
 /* 호버 시 텍스트 박스 중앙으로 */
@@ -60,6 +70,7 @@
   position: static;
   transform: translateY(-1rem);
   border-bottom: 1px solid var(--white);
+  white-space: wrap;
 }
 
 .book-hover-wrapper:hover .book-hover-review,
