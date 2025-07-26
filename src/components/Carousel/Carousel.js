@@ -83,13 +83,19 @@ export function Carousel(){
   const indicatorBtns = Array.from({ length: slideData.length }, () =>
     Button({ color: 'indicator' })
   )
+  // 인디케이터에 식별 가능한 이름 부여
+  const nativeNums = ['첫', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉', '열']
+  indicatorBtns.map((indicatorBtn, index) => {
+    const numsText = nativeNums[index] || `${index+1}`
+    indicatorBtn.ariaLabel = `${numsText} 번째 콘텐츠`
+  })
 
   const SELECTED_CLASS = 'is-selected'
   slides[0].classList.add(SELECTED_CLASS)
   indicatorBtns[0].classList.add(SELECTED_CLASS)
 
   let currentIndex = 0
-  let isSliding = false
+  // let isSliding = true
   let intervalId
   const CAROUSEL_TRANSITION_DURATION = 3000
 
@@ -98,8 +104,8 @@ export function Carousel(){
   }
 
   function updateSelected(index) {
-    if (isSliding) return
-    isSliding = true
+    // if (isSliding) return
+    // isSliding = false
 
     slides.forEach(slide => slide.classList.remove(SELECTED_CLASS))
     indicatorBtns.forEach(btn => btn.classList.remove(SELECTED_CLASS))
@@ -110,9 +116,9 @@ export function Carousel(){
     tabIndex()
     currentIndex = index
 
-    setTimeout(() => {
-    isSliding = false;
-    }, CAROUSEL_TRANSITION_DURATION);
+    // setTimeout(() => {
+    // isSliding = false;
+    // }, CAROUSEL_TRANSITION_DURATION);
   }
 
   function tabIndex() {
