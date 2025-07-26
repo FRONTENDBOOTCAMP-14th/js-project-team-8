@@ -142,3 +142,18 @@
     height: 20px;
   }
 }
+
+@media (width <= 576px) {
+  .carousel {
+    gap: 1rem;
+  }
+
+  .carousel-btn-container {
+    gap: 1rem;
+  }
+
+  .btn-indicator {
+    width: 16px;
+    height: 16px;
+  }
+}
