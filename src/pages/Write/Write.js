@@ -134,7 +134,7 @@ function initWrite() {
     Input({ id: 'search', type: 'search', variant: 'search', placeholder: '검색하기' })
   );
 
-  search.querySelector('.input-field').autocomplete = 'off';
+  search.querySelector('.input-field').autocomplete = 'off';``
 
   list.forEach((item) => {
     bookList.append(

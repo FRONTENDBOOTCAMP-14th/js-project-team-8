@@ -27,11 +27,24 @@ const dumyReviews = [
   { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
   { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
   { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
+  { title: '제목', oneLineDescription: '소제목', date: '2025-05-21' },
+  { title: '제목', oneLineDescription: '소제목', date: '2025-05-20' },
+  { title: '제목', oneLineDescription: '소제목', date: '2025-06-18' },
 ];
 
 const dashboard = document.querySelector('#dashboard');
 const header = document.querySelector('.dashboard-header');
 const bookstackWrapper = document.querySelector('.dashboard-bookstack');
+
+const currentMonthReviews = dumyReviews.filter((review) => {
+  // 서버 date 타입 확인하고 문자열 아니면 수정 필요
+  const [reviewYear, reviewMonth, reviewDay] = review.date.split('-');
+  return reviewYear == currentYear && reviewMonth == currentMonth;
+});
+const dayReviews = dumyReviews.filter((review) => {
+  const [reviewYear, reviewMonth, reviewDay] = review.date.split('-');
+  return reviewDay == currentDay;
+});
 
 /** 대시보드 페이지 초기화 */
 function initDashboard() {
@@ -46,20 +59,10 @@ function initDashboard() {
     })
   );
 
-  const currentMonthReviews = dumyReviews.filter((review) => {
-    // 서버 date 타입 확인하고 문자열 아니면 수정 필요
-    const [reviewYear, reviewMonth, reviewDay] = review.date.split('-');
-    return reviewYear == currentYear && reviewMonth == currentMonth;
-  });
-  const dayReviews = dumyReviews.filter((review) => {
-    const [reviewYear, reviewMonth, reviewDay] = review.date.split('-');
-    return reviewDay == currentDay;
-  });
-
   // 더미데이터 렌더링
   renderReviews(currentMonthReviews);
   // renderReviews(monthReviews);
-  renderCalendar(dayReviews);
+  renderCalendar(dumyReviews);
   renderStats(currentMonthReviews, yearBookmarkCount);
 }
 
@@ -88,16 +91,75 @@ async function loadDashboardData() {
 
 /** 책 리뷰 데이터 바인딩 */
 function renderReviews(reviews) {
-  const noReviewsMessage = document.querySelector('.no-reviews');
+  const noReviewsMessage = document.createElement('div');
+  noReviewsMessage.className = 'no-reviews';
+  noReviewsMessage.innerHTML = `
+    <p>남긴 책갈피가 없어요!<br />글쓰기 버튼을 눌러 기록을 남겨보세요😊</p>
+  `;
 
+  bookstackWrapper.innerHTML = '';
   bookstackWrapper.append(BookStack({ reviews }));
-  if (reviews.length === 0) noReviewsMessage.classList.add('show');
+  if (reviews.length === 0) bookstackWrapper.append(noReviewsMessage);
 }
 
 /** 달력 데이터 바인딩 */
-function renderCalendar() {
+function renderCalendar(reviews) {
   const calendar = new Calendar('#calendar');
   calendar.init();
+
+  const calendarEl = document.querySelector('#calendar');
+  const calendarHeader = document.querySelector('.vc-header');
+  const headerBtns = calendarHeader.querySelectorAll('.vc-header__content > button');
+  const calendarObserver = new MutationObserver(() => highlightDates(reviews, calendarEl));
+
+  // 라이브러리 기본 제공 년/월 선택 동작 비활성화
+  headerBtns.forEach((btn) => btn.setAttribute('disabled', 'true'));
+
+  // 페이지 로드/캘린더 DOM 바뀔때 highlight 클래스 추가
+  highlightDates(reviews, calendarEl);
+  calendarObserver.observe(calendarEl, { childList: true, subtree: true });
+
+  // 날짜 클릭 이벤트
+  calendarEl.addEventListener('click', (e) => {
+    const targetEl = e.target.closest('.vc-date__btn');
+    if (!targetEl) return;
+    renderReviewsByDate(reviews);
+  });
+}
+
+/**
+ * 리뷰 데이터가 있는 날짜에 하이라이트
+ * - 추후 삭제기능 추가된다면 클래스 remove 로직 구현 필요
+ */
+function highlightDates(reviews, calendarEl) {
+  reviews
+    .map((review) => review.date)
+    .forEach((date) => {
+      const activeDates = calendarEl.querySelectorAll(`.vc-date[data-vc-date="${date}"]`);
+      activeDates.forEach((el) => {
+        if (!el.classList.contains('highlight')) {
+          el.classList.add('highlight');
+        }
+      });
+    });
+}
+
+/**
+ * 클릭한 날짜 리뷰 렌더링
+ * - 시간 남으면 다중선택 구현까지
+ */
+function renderReviewsByDate(reviews) {
+  const selectedEl = document.querySelector('[data-vc-date-selected]');
+  if (!selectedEl) {
+    renderReviews(currentMonthReviews);
+    return;
+  }
+
+  // data-vc-date="YYYY-MM-DD"
+  const selectedDate = selectedEl.dataset.vcDate;
+  const filteredReviews = reviews.filter((review) => review.date === selectedDate);
+
+  renderReviews(filteredReviews);
 }
 
 /** 통계 데이터 바인딩 */
