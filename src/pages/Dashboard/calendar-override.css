@@ -1,0 +1,63 @@
+[data-vc-theme='light'] .vc-date__btn {
+  aspect-ratio: 1;
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+}
+
+[data-vc='dates'] {
+  gap: 0.3125rem;
+}
+
+[data-vc-date] {
+  padding: 0;
+}
+
+[data-vc='calendar'] {
+  padding: 1.25rem;
+}
+
+[data-vc='week'] {
+  column-gap: 5px;
+  margin-bottom: 0.75rem;
+}
+
+[data-vc-theme='light'].vc {
+  --tw-bg-opacity: 0;
+}
+
+[data-vc-theme='light'] .vc-header__content,
+[data-vc-theme='light'] .vc-month,
+[data-vc-theme='light'] .vc-year {
+  color: var(--dark-gray) !important;
+}
+
+[data-vc-theme='light'] .vc-date[data-vc-date-holiday][data-vc-date-selected] .vc-date__btn,
+[data-vc-theme='light'] .vc-date[data-vc-date-weekend][data-vc-date-selected] .vc-date__btn {
+  background-color: var(--dark-gray);
+}
+
+[data-vc-theme='light'] .vc-date[data-vc-date-selected] .vc-date__btn {
+  background-color: var(--dark-gray);
+}
+
+[data-vc-theme='light'] .vc-week__day {
+  color: var(--white) !important;
+  background: var(--dark-gray);
+  padding-block: 4px;
+  border-radius: 999px;
+  font-weight: 400;
+}
+
+[data-vc-theme='light'] .vc-date[data-vc-date-month='next'] .vc-date__btn,
+[data-vc-theme='light'] .vc-date[data-vc-date-month='prev'] .vc-date__btn {
+  display: none;
+}
+
+/* 리뷰 데이터가 있는 날짜에 하이라이트 */
+[data-vc-date].highlight .vc-date__btn {
+  background-color: var(--yellow);
+
+  &:hover {
+    background-color: #cbdd55;
+  }
+}

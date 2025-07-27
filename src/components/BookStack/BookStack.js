@@ -7,8 +7,8 @@ export function BookStack({ reviews = [] }) {
   bookStack.className = 'bookstack';
 
   reviews.forEach((review, index) => {
-    // * TODO: onClick에 책 상세 모달 연결
-    bookStack.append(BookBlock({ title: review.title, desc: review.subtitle, index }));
+    // * TODO: onClick에 책 상세 모달 연결(title로 검색)
+    bookStack.append(BookBlock({ title: review.title, desc: review.oneLineDescription, index }));
   });
 
   return bookStack;

@@ -1,0 +1,99 @@
+#community {
+  display: flex;
+  max-height: 100vh;
+  padding-inline-end: 88px;
+}
+
+.community-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--white);
+  padding-block: 48px 24px;
+  margin-bottom: 0;
+  display: flex;
+  gap: 1rem;
+  padding-inline: 1rem;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
+  .title-promotion {
+    flex: 1;
+    border: 1px dotted var(--dark-gray);
+  }
+}
+
+.community-container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100vh;
+  background-color: var(--white);
+  padding-block-end: 48px;
+}
+
+.community-wrapper {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.community-btn-wrapper {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-block: 1rem;
+
+  > .btn-dark-gray {
+  background-color: var(--light-gray);
+}
+}
+
+.community-book-wrapper {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr); /* PC 기본 3개 */
+}
+
+@media (width <= 768px) {
+  #community {
+    padding-inline-end: 0;
+  }
+  .community-header {
+    display: block;
+    padding: 0 0 24px 0;
+
+    > .title-promotion {
+      display: none;
+    }
+  }
+  .community-container {
+    margin: 88px 88px;
+    width: 100%;
+  }
+  .community-book-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .community-btn-wrapper {
+    > button {
+      padding-inline: 1.75rem;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+@media (width <= 576px) {
+  .community-container {
+    margin-inline: 24px;
+  }  
+
+  .community-book-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+    .community-btn-wrapper {
+    > button {
+      padding-inline: 1.6rem;
+      font-size: 0.7rem;
+    }
+  }
+}
