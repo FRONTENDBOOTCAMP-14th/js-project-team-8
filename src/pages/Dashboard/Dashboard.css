@@ -71,7 +71,7 @@
     text-align: center;
     font-size: clamp(1rem, 4vw, 1.5rem);
     font-weight: 500;
-    min-width: 300px;
+    min-width: 240px;
   }
 }
 
@@ -169,6 +169,10 @@
   .dashboard-calendar,
   .dashboard-userdata {
     display: none;
+  }
+
+  .no-reviews {
+    white-space: nowrap;
   }
 }
 
