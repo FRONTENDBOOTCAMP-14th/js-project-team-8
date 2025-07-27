@@ -4,7 +4,7 @@ import logo from '../../assets/icon/logo.svg';
 export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
   const sidebarItems = [
     {
-      href: '#home',
+      href: '/src/pages/Dashboard/Dashboard.html',
       svg: `<svg
               width="14"
               height="16"
@@ -20,7 +20,7 @@ export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
       alt: '홈',
     },
     {
-      href: '#shelf',
+      href: '/src/pages/MyShelf/MyShelf.html',
       svg: `<svg
               width="14"
               height="14"
@@ -36,7 +36,7 @@ export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
       alt: '내 서랍',
     },
     {
-      href: '#community',
+      href: '/src/pages/Community/Community.html',
       svg: `<svg
               width="14"
               height="14"
@@ -54,7 +54,7 @@ export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
   ];
   const loginItems = [
     {
-      href: '#login',
+      href: '/src/pages/LoginAndSignUp/LoginAndSignUp.html',
       svg: `
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8.99951 1.5C13.1416 1.5 16.4995 4.85786 16.4995 9C16.4995 13.1421 13.1416 16.5 8.99951 16.5C5.19671 16.4998 2.05685 13.6691 1.56787 10H8.08545L6.04248 12.043L7.45654 13.457L11.9136 9L7.45654 4.54297L6.04248 5.95703L8.08545 8H1.56787C2.05685 4.3309 5.19671 1.50021 8.99951 1.5Z" fill="currentColor"/>
@@ -82,7 +82,7 @@ export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
   sidebar.className = 'sidebar';
 
   sidebarLogo.className = 'sidebar-logo';
-  sidebarLogo.href = '/';
+  sidebarLogo.href = '/src/pages/Dashboard/Dashboard.html';
   sidebarLogo.innerHTML = `
     <h1>
       <img src="${logo}" alt="책갈피 홈으로" draggable="false"/>
