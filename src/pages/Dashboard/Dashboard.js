@@ -125,10 +125,18 @@ function renderCalendar(reviews) {
     if (!targetEl) return;
     renderReviewsByDate(reviews);
   });
+
+  // 모바일 날짜 이벤트
+  const mobileDateInput = document.querySelector('#dateInput');
+
+  mobileDateInput.addEventListener('change', (e) => {
+    const selectedDate = e.target.value;
+    const filteredReviews = reviews.filter((review) => review.date === selectedDate);
+    renderReviews(filteredReviews);
+  });
 }
 
-/**
- * 리뷰 데이터가 있는 날짜에 하이라이트
+/** 리뷰 데이터가 있는 날짜에 하이라이트
  * - 추후 삭제기능 추가된다면 클래스 remove 로직 구현 필요
  */
 function highlightDates(reviews, calendarEl) {
@@ -144,8 +152,7 @@ function highlightDates(reviews, calendarEl) {
     });
 }
 
-/**
- * 클릭한 날짜 리뷰 렌더링
+/** 클릭한 날짜 리뷰 렌더링
  * - 시간 남으면 다중선택 구현까지
  */
 function renderReviewsByDate(reviews) {

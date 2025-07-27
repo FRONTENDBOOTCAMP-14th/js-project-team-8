@@ -3,6 +3,10 @@
   max-height: 100vh;
 }
 
+#dateInput {
+  display: none;
+}
+
 .dashboard-container {
   display: grid;
   grid-template-rows: auto 3fr 2fr;
@@ -20,6 +24,7 @@
 
   .title-block {
     flex: 1;
+    overflow: hidden;
   }
 
   .title-text span span {
@@ -125,15 +130,30 @@
 }
 
 @media screen and (max-width: 768px) {
+  #dateInput {
+    display: block;
+    padding: 12px;
+    font-weight: 500;
+    border: 1px dashed var(--dark-gray);
+    border-radius: 16px;
+    background-color: var(--light-gray);
+    color: var(--black);
+  }
+
   .dashboard-container {
     display: flex;
     flex-direction: column;
     padding-top: 88px;
+    row-gap: 1rem;
   }
 
   .dashboard-header {
+    .title-block {
+      padding-inline: 10px;
+    }
+
     .title-text {
-      font-size: 1.5rem;
+      font-size: 2.2rem;
       flex-shrink: 1;
     }
   }
@@ -149,5 +169,11 @@
   .dashboard-calendar,
   .dashboard-userdata {
     display: none;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .dashboard-header .title-text {
+    font-size: 1.8rem;
   }
 }
