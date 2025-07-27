@@ -17,8 +17,8 @@ const dumyReviews = [
   { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
   { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
   { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
+  { title: '제목', oneLineDescription: '소제목', date: '2025-07-12' },
+  { title: '제목', oneLineDescription: '소제목', date: '2025-07-09' },
   { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
   { title: '제목', oneLineDescription: '소제목', date: '2025-05-21' },
   { title: '제목', oneLineDescription: '소제목', date: '2025-05-20' },
@@ -124,7 +124,6 @@ function renderCalendar(reviews) {
 
   // 모바일 날짜 이벤트
   const mobileDateInput = document.querySelector('#dateInput');
-
   mobileDateInput.addEventListener('change', (e) => {
     const selectedDate = e.target.value;
     const filteredReviews = reviews.filter((review) => review.date === selectedDate);
@@ -155,7 +154,7 @@ function highlightDates(reviews, calendarEl) {
 function renderReviewsByDate(reviews) {
   const selectedEl = document.querySelector('[data-vc-date-selected]');
   if (!selectedEl) {
-    renderReviews(currentMonthReviews);
+    renderReviews(reviews);
     return;
   }
 
