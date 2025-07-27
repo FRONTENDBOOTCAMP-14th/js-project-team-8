@@ -31,7 +31,7 @@ export function Input({
   inputField.placeholder = placeholder;
 
   if (variant === 'search') {
-    icon.src = '/src/assets/icon/search.svg';
+    icon.src = new URL('../../assets/icon/search.svg', import.meta.url).href;
     icon.alt = '검색 아이콘';
 
     input.append(icon);
