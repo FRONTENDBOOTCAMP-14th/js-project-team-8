@@ -10,13 +10,6 @@ import { BookStack } from '../../components/BookStack/BookStack';
 
 document.addEventListener('DOMContentLoaded', initDashboard);
 
-const today = new Date();
-const [currentYear, currentMonth, currentDay] = [
-  today.getFullYear(),
-  today.getMonth() + 1,
-  today.getDate(),
-];
-
 // 더미 데이터
 const dumyReviews = [
   { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
@@ -33,22 +26,20 @@ const dumyReviews = [
 ];
 
 const dashboard = document.querySelector('#dashboard');
-const header = document.querySelector('.dashboard-header');
 const bookstackWrapper = document.querySelector('.dashboard-bookstack');
-
-const currentMonthReviews = dumyReviews.filter((review) => {
-  // 서버 date 타입 확인하고 문자열 아니면 수정 필요
-  const [reviewYear, reviewMonth, reviewDay] = review.date.split('-');
-  return reviewYear == currentYear && reviewMonth == currentMonth;
-});
-const dayReviews = dumyReviews.filter((review) => {
-  const [reviewYear, reviewMonth, reviewDay] = review.date.split('-');
-  return reviewDay == currentDay;
-});
 
 /** 대시보드 페이지 초기화 */
 function initDashboard() {
   const { monthBookmarkCount, yearBookmarkCount, monthReviews } = loadDashboardData();
+  const today = new Date();
+  const [currentYear, currentMonth] = [today.getFullYear(), today.getMonth() + 1];
+  const header = document.querySelector('.dashboard-header');
+
+  const currentMonthReviews = dumyReviews.filter((review) => {
+    // 서버 date 타입 확인하고 문자열 아니면 수정 필요
+    const [reviewYear, reviewMonth] = review.date.split('-');
+    return reviewYear == currentYear && reviewMonth == currentMonth;
+  });
 
   dashboard.prepend(Sidebar({}));
   header.prepend(
