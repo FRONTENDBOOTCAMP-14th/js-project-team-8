@@ -11,6 +11,9 @@ importers:
       axios:
         specifier: ^1.10.0
         version: 1.10.0
+      vanilla-calendar-pro:
+        specifier: ^3.0.5
+        version: 3.0.5
     devDependencies:
       '@eslint/js':
         specifier: ^9.31.0
@@ -768,6 +771,9 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
+  vanilla-calendar-pro@3.0.5:
+    resolution: {integrity: sha512-4X9bmTo1/KzbZrB7B6mZXtvVXIhcKxaVSnFZuaVtps7tshKJDxgaIElkgdia6IjB5qWetWuu7kZ+ZaV1sPxy6w==}
+
   vite@7.0.5:
     resolution: {integrity: sha512-1mncVwJxy2C9ThLwz0+2GKZyEXuC3MyWtAAlNftlZZXZDP3AJt5FmwcMit/IGGaNZ8ZOB2BNO/HFUB+CpN0NQw==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -1457,6 +1463,8 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  vanilla-calendar-pro@3.0.5: {}
 
   vite@7.0.5:
     dependencies:
