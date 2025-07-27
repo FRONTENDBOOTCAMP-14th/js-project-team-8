@@ -83,14 +83,19 @@ async function loadDashboardData() {
 /** 책 리뷰 데이터 바인딩 */
 function renderReviews(reviews) {
   const noReviewsMessage = document.createElement('div');
+
   noReviewsMessage.className = 'no-reviews';
-  noReviewsMessage.innerHTML = `
-    <p>남긴 책갈피가 없어요!<br />글쓰기 버튼을 눌러 기록을 남겨보세요😊</p>
-  `;
+  noReviewsMessage.setAttribute('role', 'status');
+  noReviewsMessage.setAttribute('aria-live', 'polite');
 
   bookstackWrapper.innerHTML = '';
   bookstackWrapper.append(BookStack({ reviews }));
-  if (reviews.length === 0) bookstackWrapper.append(noReviewsMessage);
+  if (reviews.length === 0) {
+    noReviewsMessage.innerHTML = `
+      <p>남긴 책갈피가 없어요!<br />글쓰기 버튼을 눌러 기록을 남겨보세요😊</p>
+    `;
+    bookstackWrapper.append(noReviewsMessage);
+  }
 }
 
 /** 달력 데이터 바인딩 */
@@ -138,6 +143,7 @@ function highlightDates(reviews, calendarEl) {
       activeDates.forEach((el) => {
         if (!el.classList.contains('highlight')) {
           el.classList.add('highlight');
+          el.setAttribute('aria-label', `${date} - 책갈피 기록 있음`);
         }
       });
     });
