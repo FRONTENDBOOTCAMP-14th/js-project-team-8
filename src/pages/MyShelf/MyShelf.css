@@ -1,0 +1,79 @@
+.myshelf-container {
+  display: flex;
+  height: 100vh;
+}
+
+.bookmarks-main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  border-radius: 20px;
+  margin: 3rem 2rem;
+  border: 1px dashed var(--dark-gray);
+}
+
+@media (max-width: 576px) {
+  .bookmarks-main {
+    margin-top: 88px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bookmarks-main {
+    margin-top: 88px;
+  }
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .book-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .book-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.book-item {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: white;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.book-item:hover {
+  transform: translateY(-5px);
+}
+
+.book-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-bottom: 1px solid #eee;
+}
+
+.book-item-title {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: 500;
+}
