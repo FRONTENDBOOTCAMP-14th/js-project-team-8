@@ -10,7 +10,7 @@
   background-color: #f9f9f9;
   box-sizing: border-box;
   border-radius: 20px;
-  margin: 2rem;
+  margin: 3rem 2rem;
   border: 1px dashed var(--dark-gray);
 }
 
