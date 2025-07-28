@@ -9,21 +9,16 @@
     <link rel="shortcut icon" href="/favicon/icon.svg" type="image/x-icon" />
     <script type="module" src="/src/main.js"></script>
     <script type="module" src="./MyShelf.js"></script>
-    <title>책갈피 - MyShelf</title>
+    <title>책갈피 - 내 책갈피</title>
   </head>
   <body>
-    <div id="myshelf" style="display: flex; height: 100vh">
-      <div
-        style="
-          display: flex;
-          align-items: center;
-          margin: 0 auto;
-          font-size: 2.5rem;
-          font-weight: bold;
-        "
-      >
-        준비 중 입니다! 😅
-      </div>
+    <div id="myshelf">
+      <div class="myshelf-container">
+        <aside id="sidebar-container"></aside>
+        <main class="bookmarks-main">
+          <h1 class="section-title">내 책갈피</h1>
+          <section id="book-list" class="book-grid"></section>
+        </main>
     </div>
   </body>
 </html>
