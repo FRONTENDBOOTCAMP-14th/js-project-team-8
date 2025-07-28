@@ -20,6 +20,12 @@
   }
 }
 
+@media (max-width: 768px) {
+  .bookmarks-main {
+    margin-top: 88px;
+  }
+}
+
 .section-title {
   font-size: 2rem;
   font-weight: 700;
@@ -35,7 +41,8 @@
 
 @media (max-width: 768px) {
   .book-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-colums: repeat(3, 1fr);
+    gap: 0.5rem;
   }
 }
 

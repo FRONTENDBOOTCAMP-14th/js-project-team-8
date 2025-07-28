@@ -10,8 +10,8 @@
     transform: scale(1.05);
   }
 }
-book-item > .book-cover {
-  box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
+.book-item > .book-cover {
+  box-shadow: 10px 4px 8px rgba(0, 0, 0, 0.08);
 }
 
 .book-title {
