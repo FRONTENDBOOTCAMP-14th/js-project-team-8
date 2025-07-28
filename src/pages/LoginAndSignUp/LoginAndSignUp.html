@@ -3,9 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
-    <link rel="stylesheet" href="../../style.css" />
-    <link rel="stylesheet" href="LoginAndSignUp.css" />
+    <meta name="description" content="책갈피: 독서 기록 및 공유 서비스" />
+    <meta name="author" content="Team 8" />
+    <meta name="keywords" content="책, 도서, 독후감, 서평, 독서 기록, 독서습관, 커뮤니티" />
+    <title>책갈피 - Login</title>
+    <script type="module" src="/src/main.js"></script>
+    <link rel="stylesheet" href="./LoginAndSignUp.css" />
   </head>
   <body>
     <main class="container">
@@ -17,10 +20,7 @@
           <figure class="logo">
             <img src="/src/assets/icon/logo.svg" alt="로고" />
           </figure>
-          <h1 class="intro-title">
-            <p>당신의 독서 취향을</p>
-            <p>기록하는 특별한 공간.</p>
-          </h1>
+          <h1 class="intro-title">당신의 독서 취향을<br />기록하는 특별한 공간.</h1>
           <p class="intro-subtitle">나만의 책갈피로 독서 이야기를 완성하세요.</p>
         </header>
         <section class="form-section" id="login-section" aria-labelledby="login-title">
@@ -143,7 +143,7 @@
     <div class="modal-wrapper set-nickname-modal" hidden>
       <div class="modal">
         <h1>회원님의 닉네임을 지어주세요!</h1>
-        <form action="">
+        <form>
           <input type="text" placeholder="책읽는 문어빵맨" />
           <button type="submit" class="btn btn-yellow signup-button">결정하기</button>
         </form>
