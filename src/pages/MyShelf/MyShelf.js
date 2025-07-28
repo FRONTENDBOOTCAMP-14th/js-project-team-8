@@ -3,7 +3,7 @@ import { Sidebar } from '../../components/Sidebar/Sidebar.js';
 import { BookItem } from '../../components/BookItem/BookItem.js';
 import { Modal } from '../../components/Modal/Modal.js';
 
-export function initMyShelf() {
+function initMyShelf() {
   const sidebarContainer = document.getElementById('sidebar-container');
   const bookList = document.getElementById('book-list');
 
@@ -82,3 +82,4 @@ export function initMyShelf() {
     bookList.appendChild(bookItem);
   });
 }
+initMyShelf();
