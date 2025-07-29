@@ -7,12 +7,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
   row-gap: 1.5rem;
-  padding: 3rem;
+  padding: 2rem;
   border: 1px dashed var(--dark-gray);
   border-radius: 30px;
-  width: 90%;
-  margin: 48px auto;
+  margin: 3rem 2em;
   overflow: scroll;
 }
 
