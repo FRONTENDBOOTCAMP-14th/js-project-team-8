@@ -30,13 +30,12 @@ const bookstackWrapper = document.querySelector('.dashboard-bookstack');
 
 /** 대시보드 페이지 초기화 */
 function initDashboard() {
-  const { monthBookmarkCount, yearBookmarkCount, monthReviews } = loadDashboardData();
+  const { monthBookmarkCount, yearBookmarkCount, totalReviews } = loadDashboardData();
   const today = new Date();
   const [currentYear, currentMonth] = [today.getFullYear(), today.getMonth() + 1];
   const header = document.querySelector('.dashboard-header');
 
   const currentMonthReviews = dummyReviews.filter((review) => {
-    // 서버 date 타입 확인하고 문자열 아니면 수정 필요
     const [reviewYear, reviewMonth] = review.date.split('-');
     return reviewYear == currentYear && reviewMonth == currentMonth;
   });
@@ -52,7 +51,7 @@ function initDashboard() {
 
   // 더미데이터 렌더링
   renderReviews(currentMonthReviews);
-  // renderReviews(monthReviews);
+  // renderReviews(totalReveiws);
   renderCalendar(dummyReviews);
   renderStats(currentMonthReviews, yearBookmarkCount);
 }
@@ -71,9 +70,9 @@ function initDashboard() {
 async function loadDashboardData() {
   try {
     const data = await fetchDashboardData();
-    const { monthBookmarkCount, yearBookmarkCount, monthReviews } = data;
+    const { monthBookmarkCount, yearBookmarkCount, totalReveiws } = data;
 
-    return { monthBookmarkCount, yearBookmarkCount, monthReviews };
+    return { monthBookmarkCount, yearBookmarkCount, totalReveiws };
   } catch (error) {
     console.error(error.message);
     return null;
