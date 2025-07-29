@@ -1,10 +1,10 @@
 /** 대시보드 API 요청 */
 export async function fetchDashboardData() {
-  const accessToken = localStorage.getItem('accessToken');
+  const token = localStorage.getItem('token');
   const res = await fetch('https://server.bookmark.soop.run/dashboard', {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   });
