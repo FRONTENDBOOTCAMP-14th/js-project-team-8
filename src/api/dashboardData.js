@@ -3,6 +3,7 @@ import { getAuthToken, redirectIfNotLoggedIn } from '../utils/auth';
 /** 대시보드 API 요청 */
 export async function fetchDashboardData() {
   const token = getAuthToken();
+  // TODO: 로그인기능 연결 후 주석 해제
   // if (!token) redirectIfNotLoggedIn();
 
   const res = await fetch('https://server.bookmark.soop.run/dashboard', {
