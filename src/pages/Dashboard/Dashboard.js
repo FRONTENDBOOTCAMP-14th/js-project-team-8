@@ -57,13 +57,13 @@ function initDashboard() {
 }
 
 /** 대시보드 데이터 연동
- * body : {
+ * body{
  *   "monthBookmarkCount": number,
  *   "yearBookmarkCount": number,
- *   "monthReviews": {
+ *   "totalReviews": {
  *     "title": string,
- *     "oneLineDescription": string
- *     "date": date
+ *     "oneLineDescription": string,
+ *     "date": string(YYYY-MM-DD)
  *   }[]
  * }
  */
@@ -137,6 +137,10 @@ function renderCalendar(reviews) {
  * - 추후 삭제기능 추가된다면 클래스 remove 로직 구현 필요
  */
 function highlightDates(reviews, calendarEl) {
+  const calendarHeader = document.querySelector('.vc-header');
+  const headerBtns = calendarHeader.querySelectorAll('.vc-header__content > button');
+  headerBtns.forEach((btn) => btn.setAttribute('disabled', 'true'));
+
   reviews
     .map((review) => review.date)
     .forEach((date) => {
@@ -144,7 +148,7 @@ function highlightDates(reviews, calendarEl) {
       activeDates.forEach((el) => {
         if (!el.classList.contains('highlight')) {
           el.classList.add('highlight');
-          el.setAttribute('aria-label', `${date} - 책갈피 기록 있음`);
+          el.setAttribute('aria-label', '책갈피 기록 있음');
         }
       });
     });
