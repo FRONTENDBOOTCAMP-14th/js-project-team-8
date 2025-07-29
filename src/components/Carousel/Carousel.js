@@ -75,10 +75,20 @@ export function Carousel() {
   const buttonContainer = document.createElement('div');
   buttonContainer.className = 'carousel-btn-container';
 
-  const prevBtn = Button({ text: '<', color: 'carousel' });
+  const prevBtn = document.createElement('button');
+  const nextBtn = document.createElement('button');
+  prevBtn.className = 'btn-carousel';
+  nextBtn.className = 'btn-carousel';
   prevBtn.ariaLabel = '이전 탐색';
-  const nextBtn = Button({ text: '>', color: 'carousel' });
   nextBtn.ariaLabel = '다음 탐색';
+
+  const prevArrow = document.createElement('img');
+  const nextArrow = document.createElement('img');
+  prevArrow.src = '../../assets/icon/arrow-l.svg';
+  nextArrow.src = '../../assets/icon/arrow-r.svg';
+
+  prevBtn.append(prevArrow);
+  nextBtn.append(nextArrow);
 
   const indicatorBtns = Array.from({ length: slideData.length }, () =>
     Button({ color: 'indicator' })

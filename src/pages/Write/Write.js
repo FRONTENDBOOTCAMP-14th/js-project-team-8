@@ -10,7 +10,7 @@ import { Button } from '../../components/Button/Button';
 document.addEventListener('DOMContentLoaded', initWrite);
 
 // 더미 데이터
-const list = [
+const dummyList = [
   {
     title: '아름답고 죽은 그녀',
     imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
@@ -136,7 +136,7 @@ function initWrite() {
 
   search.querySelector('.input-field').autocomplete = 'off';``
 
-  list.forEach((item) => {
+  dummyList.forEach((item) => {
     bookList.append(
       BookItem({ title: item.title, imageUrl: item.imageUrl, onClick: bookDetailModal })
     );
@@ -154,11 +154,12 @@ function searchBookEvent() {
   headingText.classList.add('isSearched');
 
   if (!searchText) {
-    headingText.textContent = '책 검색 순위';
+    headingText.textContent = '이달의 베스트셀러';
     headingText.classList.remove('isSearched');
   }
 }
 
+/** 책 디테일 모달 */
 function bookDetailModal() {
   const bookDetail = document.createElement('div');
   const top = document.createElement('div');
@@ -171,6 +172,7 @@ function bookDetailModal() {
     color: 'dark',
   });
 
+  // 더미 데이터
   let title = '혼모노',
     author = '성해나',
     page = 368,
@@ -188,7 +190,7 @@ function bookDetailModal() {
   `;
   reviewText.textContent = reviewtext;
 
-  top.append(BookCover({ imageUrl: list[0].imageUrl }), header);
+  top.append(BookCover({ imageUrl: dummyList[0].imageUrl }), header);
   bottom.append(reviewText);
 
   bookDetail.append(top, bottom, writeButton);

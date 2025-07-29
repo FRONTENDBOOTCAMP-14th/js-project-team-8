@@ -7,12 +7,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
   row-gap: 1.5rem;
-  padding: 3rem;
+  padding: 2rem;
   border: 1px dashed var(--dark-gray);
   border-radius: 30px;
-  width: 90%;
-  margin: 48px auto;
+  margin: 3rem 2em;
+  overflow: scroll;
 }
 
 .write-header {
@@ -30,7 +31,6 @@
 
 .write-book-container {
   width: 100%;
-  overflow-y: scroll;
 
   & h2 {
     font-size: 1.5rem;
@@ -47,9 +47,7 @@
 }
 
 .book-list {
-  height: 58vh;
   display: grid;
-  overflow: scroll;
   gap: 1.5rem;
   grid-template-columns: repeat(5, 1fr);
 }
@@ -117,6 +115,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .write-container {
+    margin-top: 88px;
+  }
+
   .write-header h1 {
     font-size: 1.5rem;
   }
@@ -128,17 +130,8 @@
 }
 
 @media screen and (max-width: 576px) {
-  #write {
-    max-height: none;
-  }
-
-  .write-container {
-    margin-top: 88px;
-  }
-
   .book-list {
     grid-template-columns: repeat(2, 1fr);
-    height: auto;
   }
 
   .book-detail .book-cover {

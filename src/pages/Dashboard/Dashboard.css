@@ -12,9 +12,8 @@
   grid-template-rows: auto 3fr 2fr;
   grid-template-columns: 1fr 200px 200px;
   gap: 1.5rem;
-  padding-block: 48px;
-  width: 90%;
-  margin: 0 auto;
+  margin: 3rem 2rem;
+  flex: 1;
 }
 
 .dashboard-header {
@@ -148,7 +147,7 @@
   .dashboard-container {
     display: flex;
     flex-direction: column;
-    padding-top: 88px;
+    margin-top: 88px;
     row-gap: 1rem;
   }
 
