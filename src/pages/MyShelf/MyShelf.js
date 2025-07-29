@@ -7,7 +7,7 @@ function initMyShelf() {
   const sidebarContainer = document.getElementById('sidebar-container');
   const bookList = document.getElementById('book-list');
 
-  sidebarContainer.appendChild(Sidebar({}));
+  sidebarContainer.appendChild(Sidebar({ selectedIndex: 1 }));
 
   const modal = Modal({});
   document.body.appendChild(modal);

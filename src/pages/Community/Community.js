@@ -100,7 +100,7 @@ export function initCommunity() {
   });
 
   wrapper.append(Carousel(), btnWrapper, bookWrapper);
-  community.prepend(Sidebar({}));
+  community.prepend(Sidebar({ selectedIndex: 2 }));
 }
 
 initCommunity();
