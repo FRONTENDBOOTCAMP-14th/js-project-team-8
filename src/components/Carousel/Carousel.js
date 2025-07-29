@@ -84,8 +84,8 @@ export function Carousel() {
 
   const prevArrow = document.createElement('img');
   const nextArrow = document.createElement('img');
-  prevArrow.src = '../../assets/icon/arrow-l.svg';
-  nextArrow.src = '../../assets/icon/arrow-r.svg';
+  prevArrow.src = new URL('../../assets/icon/arrow-l.svg', import.meta.url).href;
+  nextArrow.src = new URL('../../assets/icon/arrow-r.svg', import.meta.url).href;
 
   prevBtn.append(prevArrow);
   nextBtn.append(nextArrow);
