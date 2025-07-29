@@ -99,7 +99,10 @@ function renderReviews(reviews) {
 
 /** 달력 데이터 바인딩 */
 function renderCalendar(reviews) {
-  const calendar = new Calendar('#calendar');
+  const options = {
+    locale: 'kr-KR',
+  };
+  const calendar = new Calendar('#calendar', options);
   calendar.init();
 
   const calendarEl = document.querySelector('#calendar');
