@@ -71,6 +71,7 @@
   & > header {
     display: flex;
     flex-direction: column;
+    flex: 1;
     flex-shrink: 1;
     row-gap: 2.625rem;
     padding: 4.125rem;
