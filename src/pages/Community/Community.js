@@ -46,59 +46,6 @@ export function initCommunity() {
     });
   });
 
-  // 확인용 더미 데이터
-  const bookDataList = [
-    {
-      title: '모순',
-      reviewTitle:
-        '새삼스런 강조일 수도 있겠지만, 인간이란 누구나 각자 해석한 만큼의 생을 살아낸다.',
-      id: '유저1',
-      imageUrl: new URL('../../assets/carousel/pc-banner01.webp', import.meta.url).href,
-    },
-    {
-      title: '혼모노',
-      reviewTitle: '신명나는 이야기를 즐겨본 독자라면 이 작가를 알아볼 수밖에 없을 것이다.',
-      id: '유저2',
-      imageUrl: new URL('../../assets/carousel/pc-banner02.webp', import.meta.url).href,
-    },
-    {
-      title: '달까지 가자',
-      reviewTitle: '삶의 끝에서도 손을 잡아줄 누군가가 있다.',
-      id: '유저3',
-      imageUrl: new URL('../../assets/carousel/pc-banner03.webp', import.meta.url).href,
-    },
-    {
-      title: '모순',
-      reviewTitle:
-        '새삼스런 강조일 수도 있겠지만, 인간이란 누구나 각자 해석한 만큼의 생을 살아낸다.',
-      id: '유저1',
-      imageUrl: new URL('../../assets/carousel/pc-banner01.webp', import.meta.url).href,
-    },
-    {
-      title: '혼모노',
-      reviewTitle: '신명나는 이야기를 즐겨본 독자라면 이 작가를 알아볼 수밖에 없을 것이다.',
-      id: '유저2',
-      imageUrl: new URL('../../assets/carousel/pc-banner02.webp', import.meta.url).href,
-    },
-    {
-      title: '달까지 가자',
-      reviewTitle: '삶의 끝에서도 손을 잡아줄 누군가가 있다.',
-      id: '유저3',
-      imageUrl: new URL('../../assets/carousel/pc-banner03.webp', import.meta.url).href,
-    },
-  ];
-
-  bookDataList.forEach((book) => {
-    bookWrapper.append(
-      BookHover({
-        title: book.title,
-        reviewTitle: book.reviewTitle,
-        id: book.id,
-        imageUrl: book.imageUrl,
-      })
-    );
-  });
-
   wrapper.append(Carousel(), btnWrapper, bookWrapper);
   community.prepend(Sidebar({ selectedIndex: 2 }));
 }
