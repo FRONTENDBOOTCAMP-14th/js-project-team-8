@@ -11,7 +11,7 @@ import { BookStack } from '../../components/BookStack/BookStack';
 document.addEventListener('DOMContentLoaded', initDashboard);
 
 // 더미 데이터
-const dumyReviews = [
+const dummyReviews = [
   { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
   { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
   { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
@@ -30,13 +30,12 @@ const bookstackWrapper = document.querySelector('.dashboard-bookstack');
 
 /** 대시보드 페이지 초기화 */
 function initDashboard() {
-  const { monthBookmarkCount, yearBookmarkCount, monthReviews } = loadDashboardData();
+  const { monthBookmarkCount, yearBookmarkCount, totalReviews } = loadDashboardData();
   const today = new Date();
   const [currentYear, currentMonth] = [today.getFullYear(), today.getMonth() + 1];
   const header = document.querySelector('.dashboard-header');
 
-  const currentMonthReviews = dumyReviews.filter((review) => {
-    // 서버 date 타입 확인하고 문자열 아니면 수정 필요
+  const currentMonthReviews = dummyReviews.filter((review) => {
     const [reviewYear, reviewMonth] = review.date.split('-');
     return reviewYear == currentYear && reviewMonth == currentMonth;
   });
@@ -52,28 +51,28 @@ function initDashboard() {
 
   // 더미데이터 렌더링
   renderReviews(currentMonthReviews);
-  // renderReviews(monthReviews);
-  renderCalendar(dumyReviews);
+  // renderReviews(totalReveiws);
+  renderCalendar(dummyReviews);
   renderStats(currentMonthReviews, yearBookmarkCount);
 }
 
 /** 대시보드 데이터 연동
- * body : {
+ * body{
  *   "monthBookmarkCount": number,
  *   "yearBookmarkCount": number,
- *   "monthReviews": {
+ *   "totalReviews": {
  *     "title": string,
- *     "oneLineDescription": string
- *     "date": date
+ *     "oneLineDescription": string,
+ *     "date": string(YYYY-MM-DD)
  *   }[]
  * }
  */
 async function loadDashboardData() {
   try {
     const data = await fetchDashboardData();
-    const { monthBookmarkCount, yearBookmarkCount, monthReviews } = data;
+    const { monthBookmarkCount, yearBookmarkCount, totalReveiws } = data;
 
-    return { monthBookmarkCount, yearBookmarkCount, monthReviews };
+    return { monthBookmarkCount, yearBookmarkCount, totalReveiws };
   } catch (error) {
     console.error(error.message);
     return null;
@@ -100,7 +99,10 @@ function renderReviews(reviews) {
 
 /** 달력 데이터 바인딩 */
 function renderCalendar(reviews) {
-  const calendar = new Calendar('#calendar');
+  const options = {
+    locale: 'kr-KR',
+  };
+  const calendar = new Calendar('#calendar', options);
   calendar.init();
 
   const calendarEl = document.querySelector('#calendar');
@@ -135,6 +137,10 @@ function renderCalendar(reviews) {
  * - 추후 삭제기능 추가된다면 클래스 remove 로직 구현 필요
  */
 function highlightDates(reviews, calendarEl) {
+  const calendarHeader = document.querySelector('.vc-header');
+  const headerBtns = calendarHeader.querySelectorAll('.vc-header__content > button');
+  headerBtns.forEach((btn) => btn.setAttribute('disabled', 'true'));
+
   reviews
     .map((review) => review.date)
     .forEach((date) => {
@@ -142,7 +148,7 @@ function highlightDates(reviews, calendarEl) {
       activeDates.forEach((el) => {
         if (!el.classList.contains('highlight')) {
           el.classList.add('highlight');
-          el.setAttribute('aria-label', `${date} - 책갈피 기록 있음`);
+          el.setAttribute('aria-label', '책갈피 기록 있음');
         }
       });
     });

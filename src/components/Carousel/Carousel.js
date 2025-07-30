@@ -1,5 +1,6 @@
 import './Carousel.css';
 import { Button } from '../Button/Button.js';
+import { slideData } from '../../data/carouselData.js';
 
 export function Carousel() {
   const carousel = document.createElement('section');
@@ -10,33 +11,6 @@ export function Carousel() {
 
   const slideWrapper = document.createElement('ul');
   slideWrapper.className = 'carousel-slide-wrapper';
-
-  const slideData = [
-    {
-      title1: '당신의 길에 작은',
-      title2: '힌트를 줄 책갈피',
-      subtitle: '흔들리는 하루 속, <br class="line-break">책은 작은 평온을 남겼다.',
-      src: new URL('../../assets/carousel/pc-banner01.png', import.meta.url).href,
-      alt: '당신의 길에 작은 힌트를 줄 책갈피',
-      href: '#',
-    },
-    {
-      title1: '흔들리는 청춘에 건네는',
-      title2: '따뜻한 위로의 책갈피',
-      subtitle: '불안한 일상속에서 <br class="line-break">책속의 한줄이 길이 되었다.',
-      src: new URL('../../assets/carousel/pc-banner02.png', import.meta.url).href,
-      alt: '흔들리는 청춘에 건네는 따뜻한 위로의 책갈피',
-      href: '#',
-    },
-    {
-      title1: '꿈을 향해 나아가는',
-      title2: '용기의 한마디',
-      subtitle: '책속의 주인공이 <br class="line-break">나를 다시 일으켜 세웠다.',
-      src: new URL('../../assets/carousel/pc-banner03.png', import.meta.url).href,
-      alt: '꿈을 향해 나아가는 용가의 책갈피',
-      href: '#',
-    },
-  ];
 
   const slides = slideData.map(({ title1, title2, subtitle, src, alt, href }) => {
     const slide = document.createElement('li');
@@ -75,10 +49,20 @@ export function Carousel() {
   const buttonContainer = document.createElement('div');
   buttonContainer.className = 'carousel-btn-container';
 
-  const prevBtn = Button({ text: '<', color: 'carousel' });
+  const prevBtn = document.createElement('button');
+  const nextBtn = document.createElement('button');
+  prevBtn.className = 'btn-carousel';
+  nextBtn.className = 'btn-carousel';
   prevBtn.ariaLabel = '이전 탐색';
-  const nextBtn = Button({ text: '>', color: 'carousel' });
   nextBtn.ariaLabel = '다음 탐색';
+
+  const prevArrow = document.createElement('img');
+  const nextArrow = document.createElement('img');
+  prevArrow.src = new URL('../../assets/icon/arrow-l.svg', import.meta.url).href;
+  nextArrow.src = new URL('../../assets/icon/arrow-r.svg', import.meta.url).href;
+
+  prevBtn.append(prevArrow);
+  nextBtn.append(nextArrow);
 
   const indicatorBtns = Array.from({ length: slideData.length }, () =>
     Button({ color: 'indicator' })
@@ -95,17 +79,17 @@ export function Carousel() {
   indicatorBtns[0].classList.add(SELECTED_CLASS);
 
   let currentIndex = 0;
-  // let isSliding = true
+  let isSliding = false
   let intervalId;
-  const CAROUSEL_TRANSITION_DURATION = 3000;
+  const CAROUSEL_TRANSITION_DURATION = 1000;
 
   function slideMove(index) {
     slideWrapper.style.transform = `translateX(-${index * 100}%)`;
   }
 
   function updateSelected(index) {
-    // if (isSliding) return
-    // isSliding = false
+    if (isSliding) return
+    isSliding = true
 
     slides.forEach((slide) => slide.classList.remove(SELECTED_CLASS));
     indicatorBtns.forEach((btn) => btn.classList.remove(SELECTED_CLASS));
@@ -116,9 +100,9 @@ export function Carousel() {
     tabIndex();
     currentIndex = index;
 
-    // setTimeout(() => {
-    // isSliding = false;
-    // }, CAROUSEL_TRANSITION_DURATION);
+    setTimeout(() => {
+    isSliding = false;
+    }, CAROUSEL_TRANSITION_DURATION);
   }
 
   function tabIndex() {
@@ -172,7 +156,7 @@ export function Carousel() {
   carousel.append(slideContainer, buttonContainer);
 
   // 초기 상태에서 자동 슬라이드 시작
-  setTimeout(startAutoSlide, 1000);
+  setTimeout(startAutoSlide, CAROUSEL_TRANSITION_DURATION);
 
   return carousel;
 }
