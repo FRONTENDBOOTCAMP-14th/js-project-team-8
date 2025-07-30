@@ -69,17 +69,17 @@ export function Carousel() {
   indicatorBtns[0].classList.add(SELECTED_CLASS);
 
   let currentIndex = 0;
-  // let isSliding = true
+  let isSliding = false
   let intervalId;
-  const CAROUSEL_TRANSITION_DURATION = 3000;
+  const CAROUSEL_TRANSITION_DURATION = 1000;
 
   function slideMove(index) {
     slideWrapper.style.transform = `translateX(-${index * 100}%)`;
   }
 
   function updateSelected(index) {
-    // if (isSliding) return
-    // isSliding = false
+    if (isSliding) return
+    isSliding = true
 
     slides.forEach((slide) => slide.classList.remove(SELECTED_CLASS));
     indicatorBtns.forEach((btn) => btn.classList.remove(SELECTED_CLASS));
@@ -90,9 +90,9 @@ export function Carousel() {
     tabIndex();
     currentIndex = index;
 
-    // setTimeout(() => {
-    // isSliding = false;
-    // }, CAROUSEL_TRANSITION_DURATION);
+    setTimeout(() => {
+    isSliding = false;
+    }, CAROUSEL_TRANSITION_DURATION);
   }
 
   function tabIndex() {
@@ -146,7 +146,7 @@ export function Carousel() {
   carousel.append(slideContainer, buttonContainer);
 
   // 초기 상태에서 자동 슬라이드 시작
-  setTimeout(startAutoSlide, 1000);
+  setTimeout(startAutoSlide, CAROUSEL_TRANSITION_DURATION);
 
   return carousel;
 }
