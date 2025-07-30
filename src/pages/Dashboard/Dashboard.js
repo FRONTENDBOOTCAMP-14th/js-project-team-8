@@ -69,10 +69,7 @@ function initDashboard() {
  */
 async function loadDashboardData() {
   try {
-    const data = await fetchDashboardData();
-    const { monthBookmarkCount, yearBookmarkCount, totalReveiws } = data;
-
-    return { monthBookmarkCount, yearBookmarkCount, totalReveiws };
+    return await fetchDashboardData();
   } catch (error) {
     console.error(error.message);
     return null;
