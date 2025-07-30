@@ -150,6 +150,33 @@ export function Carousel() {
   carousel.addEventListener('mouseenter', () => clearInterval(intervalId));
   carousel.addEventListener('mouseleave', startAutoSlide);
 
+  // 스와이프 이벤트 등록 (모바일 전용)
+  if (window.matchMedia('(pointer: coarse)').matches) {
+  let touchStartX = 0;
+  let touchEndX = 0;
+  // 스와이프 감지 최소거리
+  const SWIPE_THRESHOLD = 30;
+
+  slideWrapper.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+  });
+
+  slideWrapper.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    const distance = touchStartX - touchEndX;
+
+    if (distance > SWIPE_THRESHOLD) {
+      const nextIndex = (currentIndex + 1) % slides.length;
+      updateSelected(nextIndex);
+    } else if (distance < -SWIPE_THRESHOLD) {
+      const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateSelected(prevIndex);
+    }
+
+    resetAutoSlide();
+  });
+}
+
   slideWrapper.append(...slides);
   slideContainer.appendChild(slideWrapper);
   buttonContainer.append(prevBtn, ...indicatorBtns, nextBtn);
