@@ -59,7 +59,9 @@ export function Carousel() {
   const prevArrow = document.createElement('img');
   const nextArrow = document.createElement('img');
   prevArrow.src = new URL('../../assets/icon/arrow-l.svg', import.meta.url).href;
+  prevArrow.alt = '이전 탐색'
   nextArrow.src = new URL('../../assets/icon/arrow-r.svg', import.meta.url).href;
+  nextArrow.alt ='다음 탐색'
 
   prevBtn.append(prevArrow);
   nextBtn.append(nextArrow);
