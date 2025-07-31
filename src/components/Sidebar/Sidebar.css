@@ -4,8 +4,11 @@
   justify-content: space-between;
   align-items: center;
   width: 88px;
-  height: calc(100vh - 88px);
+  height: 100vh;
   padding-block: 1.5rem;
+  max-width: 999px;
+  overflow: hidden;
+  transition: max-width 0.3s ease-in-out;
 
   & > div {
     display: flex;
@@ -13,6 +16,14 @@
     row-gap: 1.5rem;
     margin-block: 7.75rem auto;
   }
+}
+
+.sidebar-logo {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
 }
 
 .sidebar-btn {
@@ -23,6 +34,11 @@
   aspect-ratio: 1;
   background-color: var(--light-gray);
   border-radius: 50%;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: var(--yellow);
+  }
 }
 
 .sidebar-icon {
@@ -39,8 +55,41 @@
 
 .sidebar-btn.active {
   background-color: var(--yellow);
-  
+
   & svg {
     color: var(--black);
   }
+}
+
+.hamburger {
+  display: none;
+  padding: 0;
+  border: none;
+  position: absolute;
+  top: 24px;
+  left: 88px;
+  transition: left 0.1s;
+}
+
+.hamburger-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    max-width: 0;
+  }
+
+  .hamburger {
+    left: 24px;
+    display: block;
+  }
+}
+
+.sidebar.isOpen {
+  max-width: 999px !important;
 }

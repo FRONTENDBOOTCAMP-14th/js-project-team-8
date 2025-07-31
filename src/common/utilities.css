@@ -31,3 +31,23 @@
 .no-scroll {
   overflow: hidden;
 }
+
+.desktop-only {
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+}
+
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-only {
+    display: inline-block;
+  }
+}
