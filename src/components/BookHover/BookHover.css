@@ -68,12 +68,12 @@
 }
 
 /* 호버 시 텍스트 박스 중앙으로 */
-.book-hover-wrapper:hover .book-hover-text-wrapper {
+.book-hover-wrapper:is(:hover, :focus-visible) .book-hover-text-wrapper {
   background: rgba(0, 0, 0, 0.9);
   justify-content: center;
 }
 
-.book-hover-wrapper:hover .book-hover-title {
+.book-hover-wrapper:is(:hover, :focus-visible) .book-hover-title {
   overflow: scroll;
   position: static;
   transform: translateY(-1rem);
@@ -81,8 +81,8 @@
   white-space: wrap;
 }
 
-.book-hover-wrapper:hover .book-hover-review,
-.book-hover-wrapper:hover .book-hover-id {
+.book-hover-wrapper:is(:hover, :focus-visible) .book-hover-review,
+.book-hover-wrapper:is(:hover, :focus-visible) .book-hover-id {
   opacity: 1;
   transform: translateY(0);
 }
