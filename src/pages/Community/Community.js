@@ -11,7 +11,7 @@ export function initCommunity() {
 
   // 서버에서 받아온 책 데이터 저장
   let bookDataList = []
-  const bookWrapper = document.createElement('div');
+  const bookWrapper = document.createElement('ul');
   bookWrapper.className = 'community-book-wrapper';
 
   /** 책 데이터를 받아와서 화면에 렌더링하는 비동기 함수 */
