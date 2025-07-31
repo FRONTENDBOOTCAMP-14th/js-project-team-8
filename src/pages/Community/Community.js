@@ -20,42 +20,45 @@ export function initCommunity() {
   bookHeader.id = 'community-book'
 
   /** 책 데이터를 받아와서 화면에 렌더링하는 비동기 함수 */
-  async function loadBookData(sortType = 'latest') {
-    try {
-      const data = await fetchCommunityData();
-      bookDataList = data.publicReviews || [];
-      renderBooks(sortType);
-    } catch (error) {
-      console.error(error.message);
-      return null
-    }
+  async function loadBookData(sortOption = 'latest') {
+  try {
+    const data = await fetchCommunityData();
+    bookDataList = data.publicReviews || [];
+    renderBooks(sortOption);
+  } catch (error) {
+    console.error(error.message);
+    return null
+  }
   }
 
   /** 정렬 기준(최신순, 제목순)에 따른 필터링 함수 */
-  function renderBooks(sortType = 'latest') {
-    if (!bookDataList.length) return;
+  function renderBooks(sortOption = 'latest') {
+  if (!bookDataList.length) return;
 
-    let sorted = [...bookDataList];
+  const sorted = [...bookDataList];
 
-    if (sortType === 'title') {
+  switch (sortOption) {
+    case 'title':
       sorted.sort((a, b) => a.title.localeCompare(b.title, 'ko'));
-    } else {
+      break;
+    case 'latest':
+    default:
       sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
-    }
-
-    bookWrapper.innerHTML = '';
-
-    sorted.forEach((book) => {
-      bookWrapper.append(
-        BookHover({
-          title: book.title,
-          reviewTitle: book.oneLineDescription,
-          id: book.nickname,
-          imageUrl: book.imageUrl,
-        })
-      );
-    });
   }
+
+  bookWrapper.innerHTML = '';
+
+  sorted.forEach((book) => {
+    bookWrapper.append(
+      BookHover({
+        title: book.title,
+        reviewTitle: book.oneLineDescription,
+        id: book.nickname,
+        imageUrl: book.imageUrl,
+      })
+    );
+  });
+}
 
   const community = document.getElementById('community');
   const header = document.querySelector('.community-header');
@@ -80,25 +83,36 @@ export function initCommunity() {
 
   header.append(Title({ text: '모두의 책갈피' }), promotionTitleBlock);
 
-  btnWrapper.append(
-    Button({ text: '최신순', color: 'dark' }),
-    Button({ text: '제목순', color: 'gray' })
-  );
+  const latestBtn = Button({ text: '최신순', color: 'dark' });
+  latestBtn.dataset.sortType = 'latest';
+  const titleBtn = Button({ text: '제목순', color: 'gray' });
+  titleBtn.dataset.sortType = 'title';
+
+  btnWrapper.append(latestBtn, titleBtn);
+
 
   const btns = btnWrapper.querySelectorAll('.btn');
 
   btnWrapper.addEventListener('click', ({ target }) => {
-    const selectedBtn = target.closest('.btn');
-    if (!selectedBtn) return;
+  const selectedBtn = target.closest('.btn');
+  if (!selectedBtn) return;
 
-    btns.forEach((btn) => {
-      btn.classList.toggle('btn-dark', btn === selectedBtn);
-      btn.classList.toggle('btn-gray', btn !== selectedBtn);
-    });
-
-    const sortType = selectedBtn.textContent === '제목순' ? 'title' : 'latest';
-    renderBooks(sortType);
+  btns.forEach((btn) => {
+    btn.classList.toggle('btn-dark', btn === selectedBtn);
+    btn.classList.toggle('btn-gray', btn !== selectedBtn);
   });
+
+  const sortOption = selectedBtn.dataset.sortType;
+
+  switch (sortOption) {
+    case 'title':
+    case 'latest':
+      renderBooks(sortOption);
+      break;
+    default:
+      console.warn(`지원되지 않는 정렬 타입: ${sortOption}`);
+  }
+  })
 
   bookWrapperControls.append(bookHeader, btnWrapper)
   wrapper.append(Carousel(), bookWrapperControls, bookWrapper);
