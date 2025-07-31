@@ -1,5 +1,7 @@
 /** 인증 토큰 반환 함수
  * - 토큰이 없을 시(비로그인) 빈 문자열 반환
+ * - 자동로그인 ON: localStorage 토큰
+ * - 자동로그인 OFF: sessionStorage 토큰
  */
 const TOKEN_KEY = 'token';
 export function getAuthToken() {

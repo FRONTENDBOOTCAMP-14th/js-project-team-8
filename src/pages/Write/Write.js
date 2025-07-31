@@ -11,170 +11,112 @@ import { fetchBookData, fetchBookDetail } from '../../api/writeData';
 document.addEventListener('DOMContentLoaded', initWrite);
 
 // 더미 데이터
-const dummyList = [
+const dummyBooks = [
   {
     title: '아름답고 죽은 그녀',
     imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
+    isbn13: '0000000000000',
+  },
+  {
+    title: '검색테스트123',
+    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
+    isbn13: '0000000000000',
+  },
+  {
+    title: '검색abcd&/',
+    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
+    isbn13: '0000000000000',
   },
   {
     title: '아름답고 죽은 그녀',
     imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
+    isbn13: '0000000000000',
   },
   {
     title: '아름답고 죽은 그녀',
     imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
+    isbn13: '0000000000000',
   },
   {
     title: '아름답고 죽은 그녀',
     imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
+    isbn13: '0000000000000',
   },
   {
     title: '아름답고 죽은 그녀',
     imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
+    isbn13: '0000000000000',
   },
   {
     title: '아름답고 죽은 그녀',
     imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
+    isbn13: '0000000000000',
   },
   {
     title: '아름답고 죽은 그녀',
     imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
-  },
-  {
-    title: '아름답고 죽은 그녀',
-    imageUrl: 'https://i.pinimg.com/736x/37/6a/97/376a974dee16153f43731681d33d76ee.jpg',
-    id: '1',
+    isbn13: '0000000000000',
   },
 ];
 
-const totalBooks = loadBookList();
-
 /** 글쓰기 페이지 초기화 */
-function initWrite() {
-  const write = document.querySelector('#write');
-  const search = document.querySelector('.write-search');
+async function initWrite() {
+  let totalBooks = [];
+
+  try {
+    totalBooks = await fetchBookData().books;
+  } catch (error) {
+    console.error(error.message);
+    return null;
+  } finally {
+    const write = document.querySelector('#write');
+    const search = document.querySelector('.write-search');
+
+    write.prepend(Sidebar({}));
+    search.append(
+      Input({ id: 'search', type: 'search', variant: 'search', placeholder: '검색하기' })
+    );
+    search.querySelector('.input-field').autocomplete = 'off';
+    search.addEventListener('change', searchBookEvent);
+
+    renderBooks(totalBooks || dummyBooks);
+  }
+}
+
+/** 책 목록 렌더링 */
+function renderBooks(books) {
   const bookList = document.querySelector('.book-list');
+  bookList.innerHTML = '';
 
-  write.prepend(Sidebar({}));
-  search.append(
-    Input({ id: 'search', type: 'search', variant: 'search', placeholder: '검색하기' })
-  );
-  search.querySelector('.input-field').autocomplete = 'off';
-  ``;
+  if (books.length === 0) {
+    const noBooksMessage = document.createElement('div');
 
-  // dummyList.forEach((item) => {
-  //   bookList.append(
-  //     BookItem({ title: item.title, imageUrl: item.imageUrl, onClick: bookDetailModal })
-  //   );
-  // });
+    noBooksMessage.className = 'no-books';
+    noBooksMessage.setAttribute('role', 'status');
+    noBooksMessage.setAttribute('aria-live', 'polite');
 
-  // TODO: 테스트 필요
-  const totalBooks = totalBooks.map((book) => {
+    noBooksMessage.innerHTML = `
+      <p>검색 결과가 없습니다!</p>
+    `;
+
+    bookList.append(noBooksMessage);
+  }
+
+  books.forEach((book) => {
     const isbn13 = book.isbn13;
-    
-    return BookItem({
+    const bookEl = BookItem({
       title: book.title,
       imageUrl: book.imageUrl,
       onClick: (isbn13) => bookDetailModal(isbn13),
     });
+
+    bookList.append(bookEl);
   });
-
-  search.addEventListener('input', searchBookEvent);
-}
-
-/** 글쓰기 데이터 연동 */
-async function loadBookList() {
-  try {
-    return await fetchBookData();
-  } catch(error) {
-    console.error(error.message);
-    return null;
-  }
-}
-
-async function loadBookDetail(isbn13) {
-  const res = await fetchBookDetail(isbn13);
 }
 
 /** 글쓰기 페이지 검색 핸들러 */
-const searchBookEvent = () => {
+const searchBookEvent = async () => {
+  let totalBooks = await fetchBookData().books;
   const searchText = document.querySelector('.write-search .input-field').value.trim();
   const headingText = document.querySelector('.write-book-container > h2');
 
@@ -186,14 +128,33 @@ const searchBookEvent = () => {
     headingText.classList.remove('isSearched');
   }
 
-  const searchResult = document.querySelector('.book-list');
-  searchResult.innerHTML = '';
-  totalBooks.filter((book) => book.title === searchText);
+  const filtered = (totalBooks || dummyBooks).filter((book) => book.title.includes(searchText));
+  renderBooks(filtered);
 };
 
+/** 책 디테일 로드 */
+async function loadBookDetail(isbn13) {
+  const fallback = {
+    title: '제목 미상',
+    imageUrl: new URL('../../assets/image/undefined-bookcover.jpg', import.meta.url).href,
+    author: '미상',
+    totalPage: '???',
+    description: '책 데이터 불러오기에 실패했습니다.',
+  };
+
+  try {
+    const data = await fetchBookDetail(isbn13);
+    return data || fallback;
+  } catch (error) {
+    console.log(error.message);
+    // TODO: 연동 후 null로 수정
+    return fallback;
+  }
+}
+
 /** 책 디테일 모달 */
-const bookDetailModal = () => {
-  const { title, imageUrl, author, totalPage, description } = fetchBookDetail();
+const bookDetailModal = async (isbn13) => {
+  const { title, imageUrl, author, totalPage, description } = await loadBookDetail(isbn13);
 
   const bookDetail = document.createElement('div');
   const top = document.createElement('div');
@@ -205,13 +166,6 @@ const bookDetailModal = () => {
     type: 'button',
     color: 'dark',
   });
-
-  // 더미 데이터
-  // let title = '혼모노',
-  //   author = '성해나',
-  //   page = 368,
-  //   reviewtext =
-  //     '이번 소설집에는 지난해 끊임없이 호명되며 문단을 휩쓸었다 해도 과언이 아닐 표제작 「혼모노」를 비롯해 작가에게 2년 연속 젊은작가상을 선사해준 「길티 클럽: 호랑이 만지기」, 이 계절의 소설과 올해의 문제소설에 선정된 「스무드」 등이 수록되어 더욱 눈길을 끈다. ';
 
   bookDetail.className = 'book-detail';
   top.className = 'book-detail-top';
