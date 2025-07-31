@@ -61,6 +61,9 @@ export function initCommunity() {
   const header = document.querySelector('.community-header');
   const wrapper = document.querySelector('.community-wrapper');
 
+  // bookWrapperControls : btnWrapper와 bookHeader를 묶는 container
+  const bookWrapperControls = document.createElement('div')
+  bookWrapperControls.className = 'community-book-wrapper-controls'
   const btnWrapper = document.createElement('div');
   btnWrapper.className = 'community-btn-wrapper';
 
@@ -97,7 +100,8 @@ export function initCommunity() {
     renderBooks(sortType);
   });
 
-  wrapper.append(Carousel(), btnWrapper, bookHeader, bookWrapper);
+  bookWrapperControls.append(bookHeader, btnWrapper)
+  wrapper.append(Carousel(), bookWrapperControls, bookWrapper);
   community.prepend(Sidebar({ selectedIndex: 2 }));
 
   // 데이터 로딩은 따로 분리된 함수에서 처리
