@@ -1,4 +1,4 @@
-// import { Modal } from '../../components/Modal/Modal';
+import { login, requestSignupAuth, signup, updateNickname } from '../../api/loginAndSignupAuth.js';
 
 // 비밀번호 토글 버튼 기능 (동적 생성 포함)
 function setupPasswordToggles() {
@@ -24,19 +24,11 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   try {
-    // 실제 API 주소로 변경 필요
-    const response = await fetch('https://server.bookmark.soop.run/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      // 대시보드 페이지로 보내고, 헤더에 초큰 저장
+    const data = await login(email, password);
+    if (data.token) {
       alert('로그인 성공!');
-      // 토큰 저장, 페이지 이동 등 추가 작업
-      localStorage.setItem('token', data.token); // 예시로 로컬스토리지에 저장
-      window.location.href = '/pages/Dashboard.html'; // 대시보드 페이지로 이동
+      localStorage.setItem('token', data.token);
+      window.location.href = '/pages/Dashboard.html';
     } else {
       alert(data.message || '로그인 실패');
     }
@@ -194,19 +186,13 @@ if (signupForm && signupStepBtn) {
       }
       if (hasError) return;
       try {
-        const res = await fetch('https://server.bookmark.soop.run/sign-up/auth', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: signupId.value }),
-        });
-        const data = await res.json();
+        const data = await requestSignupAuth(signupId.value);
         if (data.success) {
           code = data.code;
           signupCodeWrap.classList.remove('signup-code-hidden');
           signupCodeWrap.classList.add('signup-code-visible');
           signupStepBtn.textContent = '회원가입';
           signupStep = 2;
-
           console.log('인증번호 요청 응답:', data);
           console.log('인증번호 요청 성공:', code);
         } else {
@@ -220,9 +206,7 @@ if (signupForm && signupStepBtn) {
         alert('네트워크 오류: ' + err.message);
         return;
       }
-
       startSignupTimer();
-      // 실제로는 여기서 인증번호 요청 API 호출 필요
     } else if (signupStep === 2) {
       // 인증번호 요청 및 검증
 
@@ -247,18 +231,12 @@ if (signupForm && signupStepBtn) {
         const password = signupPassword.value;
 
         try {
-          const res = await fetch('https://server.bookmark.soop.run/sign-up', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-          });
-          const data = await res.json();
+          const data = await signup(email, password);
           console.log('회원가입 응답:', data);
           if (!data.success) {
             alert(data.message || '회원가입 실패');
             return;
           }
-          // 성공 시 닉네임 모달 띄우기
           if (nicknameModal) {
             nicknameModal.hidden = false;
             document.body.style.overflow = 'hidden';
@@ -283,13 +261,7 @@ if (signupForm && signupStepBtn) {
     }
     try {
       console.log('닉네임 설정 요청:', signupId.value, nicknameInput.value);
-      const res = await fetch('https://server.bookmark.soop.run/update_user_nickname', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: signupId.value, nickname: nicknameInput.value }),
-      });
-      console.log(res);
-      const data = await res.json();
+      const data = await updateNickname(signupId.value, nicknameInput.value);
       if (!data.success) {
         alert(data.message || '닉네임 설정 실패');
         return;
