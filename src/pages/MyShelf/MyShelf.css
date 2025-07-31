@@ -93,7 +93,7 @@
 
   & > header {
     display: flex;
-    align-items: center;
+    padding: 4.125rem;
     justify-content: center;
     flex-direction: column;
     flex: 1;
@@ -192,6 +192,6 @@
 }
 
 .color path {
-  fill: gold;
-  stroke: gold;
+  fill: var(--black);
+  stroke: var(--black);
 }
