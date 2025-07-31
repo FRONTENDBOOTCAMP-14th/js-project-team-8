@@ -52,6 +52,9 @@
   grid-template-columns: repeat(5, 1fr);
 }
 
+.no-books {
+}
+
 .book-detail {
   display: flex;
   flex-direction: column;
@@ -160,5 +163,11 @@
   .book-detail-bottom > p {
     width: auto;
     min-width: 200px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .book-list {
+    grid-template-columns: repeat(6, 1fr);
   }
 }
