@@ -1,8 +1,9 @@
 /** 인증 토큰 반환 함수
  * - 토큰이 없을 시(비로그인) 빈 문자열 반환
  */
+const TOKEN_KEY = 'token';
 export function getAuthToken() {
-  return localStorage.getItem('token') ?? '';
+  return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || null;
 }
 
 /** 비로그인 상태 시 로그인 페이지로 리디렉션하는 함수 */
