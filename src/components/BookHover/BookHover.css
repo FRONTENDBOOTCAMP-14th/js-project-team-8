@@ -37,7 +37,7 @@
 .book-hover-title {
   position: absolute;
   bottom: 20%;
-  font-size: clamp(1.3rem, 2vw, 2.5rem);
+  font-size: clamp(1.4rem, 2vw, 1.6rem);
   padding-bottom: 0.5rem;
   transform: translateY(2rem);
   transition: transform 0.6s ease;
@@ -56,10 +56,15 @@
 .book-hover-id {
   max-height: 6rem;
   overflow: scroll;
-  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
   opacity: 0;
   transform: translateY(2rem);
   transition: opacity 0.6s ease, transform 0.8s ease;
+}
+
+.book-hover-id {
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  font-weight: 300;
 }
 
 /* 호버 시 텍스트 박스 중앙으로 */
