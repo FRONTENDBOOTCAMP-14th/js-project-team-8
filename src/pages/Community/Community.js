@@ -13,6 +13,11 @@ export function initCommunity() {
   let bookDataList = []
   const bookWrapper = document.createElement('ul');
   bookWrapper.className = 'community-book-wrapper';
+  bookWrapper.setAttribute('aria-labelledby', 'community-book')
+
+  const bookHeader = document.createElement('h3')
+  bookHeader.textContent = '책덕후들의 기록, 같이 구경해요!'
+  bookHeader.id = 'community-book'
 
   /** 책 데이터를 받아와서 화면에 렌더링하는 비동기 함수 */
   async function loadBookData(sortType = 'latest') {
@@ -92,7 +97,7 @@ export function initCommunity() {
     renderBooks(sortType);
   });
 
-  wrapper.append(Carousel(), btnWrapper, bookWrapper);
+  wrapper.append(Carousel(), btnWrapper, bookHeader, bookWrapper);
   community.prepend(Sidebar({ selectedIndex: 2 }));
 
   // 데이터 로딩은 따로 분리된 함수에서 처리
