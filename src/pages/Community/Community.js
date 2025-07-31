@@ -109,7 +109,7 @@ export function initCommunity() {
 }
 
 /** 키보드 방향키로 이동 가능하게 하는 함수 */
-function enableArrowNavigation(wrapperSelector) {
+function arrowNavigation(wrapperSelector, columnNums) {
   const wrapper = document.querySelector(wrapperSelector);
 
   wrapper.addEventListener('keydown', (e) => {
@@ -130,10 +130,10 @@ function enableArrowNavigation(wrapperSelector) {
         nextIndex = index - 1;
         break;
       case 'ArrowDown':
-        nextIndex = index + 3;
+        nextIndex = index + columnNums;
         break;
       case 'ArrowUp':
-        nextIndex = index - 3;
+        nextIndex = index - columnNums;
         break;
       default:
         return;
@@ -151,6 +151,8 @@ function enableArrowNavigation(wrapperSelector) {
 
 initCommunity();
 // 키보드 방향키 접근은 pc 환경에서만
-if (window.innerWidth > 768) {
-  enableArrowNavigation('.community-book-wrapper');
+if (window.innerWidth > 1240) {
+  arrowNavigation('.community-book-wrapper', 4);
+} else {
+  arrowNavigation('.community-book-wrapper', 3);
 }
