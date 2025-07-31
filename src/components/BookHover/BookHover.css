@@ -30,7 +30,7 @@
   justify-content: flex-end;
   padding: 32px;
   color: white;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
   text-align: center;
 }
 
@@ -45,7 +45,8 @@
 
 .book-hover-title,
 .book-hover-id {
-  max-width: 20rem;
+  max-width: 85%;
+  max-height: 50%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -67,6 +68,7 @@
 }
 
 .book-hover-wrapper:hover .book-hover-title {
+  overflow: scroll;
   position: static;
   transform: translateY(-1rem);
   border-bottom: 1px solid var(--white);
