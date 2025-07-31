@@ -118,6 +118,57 @@
   align-self: flex-end;
 }
 
+.write-review {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
+
+.write-review-header {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.write-review-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.write-review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--dark-gray);
+  margin-bottom: 1.25rem;
+}
+
+.write-review-page {
+  display: flex;
+  column-gap: 1.5rem;
+  align-items: center;
+
+  & > input {
+    height: 40px;
+  }
+}
+
+.write-review-title {
+  margin-bottom: .625rem;
+}
+
+.write-review-text {
+  margin-bottom: 2.5rem;
+
+  & .input {
+    border-radius: 1.875rem;
+    height: 220px;
+    text-wrap: wrap;
+  }
+
+  & .input-field {
+  }
+}
+
 @media screen and (max-width: 768px) {
   .write-container {
     margin-top: 88px;

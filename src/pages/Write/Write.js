@@ -7,6 +7,7 @@ import { Modal } from '../../components/Modal/Modal';
 import { BookCover } from '../../components/BookCover/BookCover';
 import { Button } from '../../components/Button/Button';
 import { fetchBookData, fetchBookDetail } from '../../api/writeData';
+import { Title } from '../../components/Title/Title';
 
 document.addEventListener('DOMContentLoaded', initWrite);
 
@@ -154,7 +155,8 @@ async function loadBookDetail(isbn13) {
 
 /** 책 디테일 모달 */
 const bookDetailModal = async (isbn13) => {
-  const { title, imageUrl, author, totalPage, description } = await loadBookDetail(isbn13);
+  const bookData = await loadBookDetail(isbn13);
+  const { title, imageUrl, author, totalPage, description } = bookData;
 
   const bookDetail = document.createElement('div');
   const top = document.createElement('div');
@@ -171,7 +173,7 @@ const bookDetailModal = async (isbn13) => {
   top.className = 'book-detail-top';
   bottom.className = 'book-detail-bottom';
   writeButton.classList.add('book-detail-write');
-
+  writeButton.addEventListener('click', (bookData) => writeReviewModal(bookData));
   header.innerHTML = `
     <h2>${title}</h2>
     <p>작가: ${author} <span aria-hidden="true">/</span> 페이지수: ${totalPage}p</p>
@@ -187,4 +189,102 @@ const bookDetailModal = async (isbn13) => {
   bookDetailModal.classList.add('book-detail-modal');
 
   document.body.append(bookDetailModal);
+};
+
+/** 글쓰기 모달 렌더링 */
+const writeReviewModal = (bookData) => {
+  const { title, imageUrl, totalPage } = bookData;
+
+  const modal = document.querySelector('.modal.isOpen');
+  modal.innerHTML = '';
+  const writeReview = document.createElement('div');
+  writeReview.className = 'write-review';
+
+  const header = document.createElement('header');
+  header.className = 'write-review-header';
+
+  const form = document.createElement('form');
+  form.className = 'write-review-form';
+
+  const top = document.createElement('section');
+  top.className = 'write-review-top';
+
+  const rating = document.createElement('div');
+  rating.innerHTML = `
+    <p>평가하기</p><div class="rate"></div>
+  `;
+  const page = document.createElement('div');
+  const currentPage = Input({
+    id: 'currentPage',
+    type: 'text',
+    variant: 'secondary',
+  });
+  page.append('읽은 페이지 수', currentPage, '페이지');
+  page.className = 'write-review-page';
+
+  const reviewTitle = Input({
+    id: 'onelineDescription',
+    type: 'text',
+    variant: 'secondary',
+    placeholder: '이 작품에 대한 한줄평을 남겨주세요.',
+  });
+  reviewTitle.className = 'write-review-title';
+
+  const reviewText = Input({
+    id: 'detailDescription',
+    type: 'text',
+    variant: 'secondary',
+    placeholder: '이 작품에 대한 책갈피를 남겨주세요.',
+  });
+  reviewText.className = 'write-review-text';
+
+  const bottom = document.createElement('div');
+  bottom.className = 'write-review-bottom';
+
+  const publicToggle = document.createElement('div');
+  publicToggle.className = 'write-review-toggle';
+  const letterCounter = document.createElement('div');
+  letterCounter.className = 'write-review-counter';
+
+  const submitButton = Button({
+    text: '남기기',
+    type: 'submit',
+    color: 'dark',
+  });
+  submitButton.className = 'write-review-submit';
+
+  header.append(Title({ text: title, color: 'yellow' }));
+  top.append(rating, page);
+  bottom.append(publicToggle, letterCounter, submitButton);
+  form.append(top, reviewTitle, reviewText, bottom);
+  writeReview.append(header, form);
+  modal.append(writeReview);
+
+  const today = new Date();
+  const date = [
+    today.getFullYear(),
+    (today.getMonth() + 1).toString().padStart(2, '0'),
+    today.getDate().toString().padStart(2, '0'),
+  ].join('-');
+
+  const review = {
+    title: title,
+    imageUrl: imageUrl,
+    oneLineDescription: reviewTitle.value,
+    detailDescription: reviewText.value,
+    rate: 5,
+    currentPage: currentPage.value,
+    totalPage: totalPage,
+    date: date,
+    public: true,
+    isbn13: isbn13,
+  };
+  // TODO: isbn fetch
+
+  submitButton.addEventListener('submit', submitReview);
+};
+
+/** 리뷰 등록 */
+const submitReview = async (e) => {
+  e.preventDefault();
 };
