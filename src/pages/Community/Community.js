@@ -108,4 +108,49 @@ export function initCommunity() {
   loadBookData(); // 최신순으로 초기 렌더링
 }
 
+/** 키보드 방향키로 이동 가능하게 하는 함수 */
+function enableArrowNavigation(wrapperSelector) {
+  const wrapper = document.querySelector(wrapperSelector);
+
+  wrapper.addEventListener('keydown', (e) => {
+    const key = e.key;
+    const cards = wrapper.querySelectorAll('.book-hover-wrapper');
+    const current = document.activeElement;
+    const index = Array.from(cards).indexOf(current);
+
+    if (index === -1) return;
+
+    let nextIndex;
+
+    switch (key) {
+      case 'ArrowRight':
+        nextIndex = index + 1;
+        break;
+      case 'ArrowLeft':
+        nextIndex = index - 1;
+        break;
+      case 'ArrowDown':
+        nextIndex = index + 3;
+        break;
+      case 'ArrowUp':
+        nextIndex = index - 3;
+        break;
+      default:
+        return;
+    }
+
+    // 페이지 내 스크롤과 카드 스크롤 꼬임 방지
+    e.preventDefault();
+
+    if (cards[nextIndex]) {
+      cards[nextIndex].focus();
+    }
+  });
+
+}
+
 initCommunity();
+// 키보드 방향키 접근은 pc 환경에서만
+if (window.innerWidth > 768) {
+  enableArrowNavigation('.community-book-wrapper');
+}
