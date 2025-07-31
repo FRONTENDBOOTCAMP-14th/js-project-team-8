@@ -3,6 +3,7 @@ import './BookHover.css'
 export function BookHover({ title = '', reviewTitle = '', id = '', imageUrl = '' }) {
   const bookWrapper = document.createElement('li')
   bookWrapper.className = 'book-hover-wrapper'
+  bookWrapper.tabIndex = 0
 
   const bookImg = document.createElement('img')
   bookImg.className = 'book-hover-img'
