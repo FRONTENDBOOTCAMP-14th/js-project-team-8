@@ -205,7 +205,7 @@ const writeReviewModal = (bookData) => {
     totalPage: totalPage,
     date: getYearMonthDateFormat(),
     public: true,
-    isbn13: isbn13,
+    isbn13: '00000000',
     // TODO: isbn fetch
   };
 
