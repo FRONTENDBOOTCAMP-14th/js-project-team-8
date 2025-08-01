@@ -3,8 +3,7 @@ import { getAuthToken, redirectIfNotLoggedIn } from '../utils/auth';
 /** 글쓰기 페이지 - 책 목록 API 요청 */
 export async function fetchBookData() {
   const token = getAuthToken();
-  // TODO: 로그인기능 연결 후 주석 해제
-  // if (!token) redirectIfNotLoggedIn();
+  if (!token) redirectIfNotLoggedIn();
 
   const res = await fetch('https://server.bookmark.soop.run/write/booklist', {
     method: 'GET',
@@ -23,8 +22,7 @@ export async function fetchBookData() {
 /** 글쓰기 페이지 - 책 디테일 API 요청 */
 export async function fetchBookDetail(isbn13 = '') {
   const token = getAuthToken();
-  // TODO: 로그인기능 연결 후 주석 해제
-  // if (!token) redirectIfNotLoggedIn();
+  if (!token) redirectIfNotLoggedIn();
 
   const res = await fetch(`https://server.bookmark.soop.run/write/booklist/${isbn13}`, {
     method: 'GET',
@@ -43,8 +41,7 @@ export async function fetchBookDetail(isbn13 = '') {
 /** 글쓰기 페이지 - 리뷰 업로드 API 요청 */
 export async function postReview(review) {
   const token = getAuthToken();
-  // TODO: 로그인기능 연결 후 주석 해제
-  // if (!token) redirectIfNotLoggedIn();
+  if (!token) redirectIfNotLoggedIn();
 
   const req = await fetch(`https://server.bookmark.soop.run/write/reviews/write`, {
     method: 'POST',

@@ -35,7 +35,7 @@ function initDashboard() {
   const [currentYear, currentMonth] = [today.getFullYear(), today.getMonth() + 1];
   const header = document.querySelector('.dashboard-header');
 
-  const currentMonthReviews = dummyReviews.filter((review) => {
+  const currentMonthReviews = totalReviews.filter((review) => {
     const [reviewYear, reviewMonth] = review.date.split('-');
     return reviewYear == currentYear && reviewMonth == currentMonth;
   });
@@ -44,15 +44,14 @@ function initDashboard() {
   header.prepend(
     Title({
       text: `
-    ${currentYear}년 ${currentMonth}월<span class="desktop-only">엔 <span aria-hidden="true">|</span> 책갈피 ${monthBookmarkCount || '?'}개를 남겼어요!</span>
+    ${currentYear}년 ${currentMonth}월<span class="desktop-only">엔 <span aria-hidden="true">|</span> 책갈피 ${monthBookmarkCount || '0'}개를 남겼어요!</span>
   `,
     })
   );
 
   // 더미데이터 렌더링
   renderReviews(currentMonthReviews);
-  // renderReviews(totalReveiws);
-  renderCalendar(dummyReviews);
+  // renderCalendar(dummyReviews);
   renderStats(currentMonthReviews, yearBookmarkCount);
 }
 

@@ -1,10 +1,10 @@
 // src/api/myShelfData.js
-import { getAuthToken } from '../utils/auth';
+import { getAuthToken, redirectIfNotLoggedIn } from '../utils/auth';
 
 /** 개인서랍 - 리뷰 목록 조회 */
 export async function fetchReviewList() {
   const token = getAuthToken();
-  console.log('[fetchReviewList] 사용 토큰:', token);
+  if (!token) redirectIfNotLoggedIn();
 
   const res = await fetch('https://server.bookmark.soop.run/reviews', {
     method: 'GET',
@@ -25,6 +25,7 @@ export async function fetchReviewList() {
 /** 개인서랍 - 리뷰 상세 조회 */
 export async function fetchReviewDetail(isbn13) {
   const token = getAuthToken();
+  if (!token) redirectIfNotLoggedIn();
 
   const res = await fetch(`https://server.bookmark.soop.run/reviews/${isbn13}`, {
     method: 'GET',
