@@ -6,8 +6,9 @@ import { BookItem } from '../../components/BookItem/BookItem';
 import { Modal } from '../../components/Modal/Modal';
 import { BookCover } from '../../components/BookCover/BookCover';
 import { Button } from '../../components/Button/Button';
-import { fetchBookData, fetchBookDetail } from '../../api/writeData';
 import { Title } from '../../components/Title/Title';
+import { getYearMonthDateFormat } from '../../utils/date';
+import { fetchBookData, fetchBookDetail } from '../../api/writeData';
 
 document.addEventListener('DOMContentLoaded', initWrite);
 
@@ -194,6 +195,19 @@ const bookDetailModal = async (isbn13) => {
 /** 글쓰기 모달 렌더링 */
 const writeReviewModal = (bookData) => {
   const { title, imageUrl, totalPage } = bookData;
+  const reviewData = {
+    title: title,
+    imageUrl: imageUrl,
+    oneLineDescription: '',
+    detailDescription: '',
+    rate: 0,
+    currentPage: 0,
+    totalPage: totalPage,
+    date: getYearMonthDateFormat(),
+    public: true,
+    isbn13: isbn13,
+    // TODO: isbn fetch
+  };
 
   const modal = document.querySelector('.modal.isOpen');
   modal.innerHTML = '';
@@ -210,17 +224,50 @@ const writeReviewModal = (bookData) => {
   top.className = 'write-review-top';
 
   const rating = document.createElement('div');
-  rating.innerHTML = `
-    <p>평가하기</p><div class="rate"></div>
-  `;
+  rating.className = 'write-review-rating';
+  const ratingText = document.createElement('p');
+  ratingText.textContent = '평가하기';
+  const rate = document.createElement('div');
+  rate.className = 'rate';
+
+  for (let i = 0; i < 5; i++) {
+    const star = document.createElement('button');
+    star.className = 'star';
+    star.type = 'button';
+
+    fetch('/assets/icons/star.svg')
+      .then((res) => res.text())
+      .then((svg) => {
+        star.innerHTML = svg;
+        star.dataset.order = i + 1;
+        rate.append(star);
+      });
+  }
+
+  rating.append(ratingText, rate);
+
   const page = document.createElement('div');
   const currentPage = Input({
     id: 'currentPage',
-    type: 'text',
+    type: 'number',
     variant: 'secondary',
   });
   page.append('읽은 페이지 수', currentPage, '페이지');
   page.className = 'write-review-page';
+
+  const pageInput = currentPage.querySelector('.input .input-field');
+  pageInput.addEventListener('input', (e) => {
+    let value = e.target.value;
+
+    if (parseInt(value) < 0) {
+      e.target.value = 0;
+      return;
+    }
+
+    if (value.length > 5) {
+      e.target.value = value.slice(0, 5);
+    }
+  });
 
   const reviewTitle = Input({
     id: 'onelineDescription',
@@ -229,16 +276,12 @@ const writeReviewModal = (bookData) => {
     placeholder: '이 작품에 대한 한줄평을 남겨주세요.',
   });
   reviewTitle.className = 'write-review-title';
+  reviewTitle.querySelector('.input-field').setAttribute('maxlength', '50');
 
-  // const reviewText = Input({
-  //   id: 'detailDescription',
-  //   type: 'text',
-  //   variant: 'secondary',
-  //   placeholder: '이 작품에 대한 책갈피를 남겨주세요.',
-  // });
   const reviewText = document.createElement('textarea');
   reviewText.className = 'write-review-text';
   reviewText.placeholder = '이 작품에 대한 책갈피를 남겨주세요.';
+  reviewText.setAttribute('maxlength', 500);
 
   const bottom = document.createElement('div');
   bottom.className = 'write-review-bottom';
@@ -262,29 +305,10 @@ const writeReviewModal = (bookData) => {
   writeReview.append(header, form);
   modal.append(writeReview);
 
-  const today = new Date();
-  const date = [
-    today.getFullYear(),
-    (today.getMonth() + 1).toString().padStart(2, '0'),
-    today.getDate().toString().padStart(2, '0'),
-  ].join('-');
-
-  const review = {
-    title: title,
-    imageUrl: imageUrl,
-    oneLineDescription: reviewTitle.value,
-    detailDescription: reviewText.value,
-    rate: 5,
-    currentPage: currentPage.value,
-    totalPage: totalPage,
-    date: date,
-    public: true,
-    isbn13: isbn13,
-  };
-  // TODO: isbn fetch
-
-  submitButton.addEventListener('submit', submitReview);
+  submitButton.addEventListener('submit', (reviewData) => submitReview(reviewData));
 };
+
+const countInputText = () => {};
 
 /** 리뷰 등록 */
 const submitReview = async (e) => {
