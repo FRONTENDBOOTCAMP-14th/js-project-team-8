@@ -1,0 +1,177 @@
+.myshelf-container {
+  display: flex;
+  height: 100vh;
+}
+
+.bookmarks-main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+  border-radius: 20px;
+  margin: 2rem;
+  border: 1px dashed var(--dark-gray);
+}
+
+@media (max-width: 576px) {
+  .bookmarks-main {
+    margin-top: 88px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bookmarks-main {
+    margin-top: 88px;
+  }
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .book-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .book-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.book-item {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: white;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.book-item:hover {
+  transform: translateY(-5px);
+}
+
+.book-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-bottom: 1px solid #eee;
+}
+
+.book-item-title {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* 모달 */
+.review-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
+}
+
+.review-detail-top {
+  display: flex;
+  gap: 1.875rem;
+
+  & > div {
+    max-width: 200px;
+  }
+
+  & > header {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    flex-shrink: 1;
+    row-gap: 2.625rem;
+    padding: 4.125rem;
+    background-color: var(--yellow);
+    border-radius: 30px;
+  }
+
+  & > header h2 {
+    font-size: 2.8125rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  & > header p {
+    font-size: 1.625rem;
+    font-weight: 400;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 0;
+      right: 0;
+      border-bottom: 1px dashed var(--dark-gray);
+    }
+  }
+}
+
+.review-detail-bottom {
+  padding: 2.1875rem;
+  background-color: var(--light-gray);
+  border-radius: 30px;
+
+  .review-detail-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .review-detail-text {
+    font-size: 1.25rem;
+    font-weight: 400;
+    width: 610px;
+  }
+}
+
+.review-detail-close {
+  align-self: flex-end;
+}
+
+@media screen and (max-width: 576px) {
+  .review-detail .book-cover {
+    display: none;
+  }
+
+  .review-detail-top > header {
+    padding: 2rem;
+    gap: 1rem;
+    width: 100%;
+
+    & > h2 {
+      font-size: 2rem;
+    }
+
+    & > p {
+      font-size: 1rem;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .review-detail-bottom > p {
+    width: auto;
+    min-width: 200px;
+  }
+}

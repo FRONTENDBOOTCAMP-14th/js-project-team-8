@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="책갈피: 독서 기록 및 공유 서비스" />
+    <meta name="author" content="Team 8" />
+    <meta name="keywords" content="책, 도서, 독후감, 서평, 독서 기록, 독서습관, 커뮤니티" />
+    <link rel="shortcut icon" href="/favicon/icon.svg" type="image/x-icon" />
+    <script type="module" src="/src/main.js"></script>
+    <title>책갈피 - Home</title>
+  </head>
+  <body>
+    <div id="dashboard">
+      <main class="dashboard-container">
+        <header class="dashboard-header">
+          <h1 class="sr-only">책갈피 대시보드</h1>
+          <a href="../Write/Write.html" class="dashboard-write" aria-label="새 독서기록 쓰기">
+            <img src="../../assets/icon/write.svg" alt="" draggable="false" />
+          </a>
+        </header>
+        <label for="dateInput" class="sr-only">날짜 선택</label>
+        <input type="date" id="dateInput" aria-label="책갈피 기록을 볼 날짜 선택하기" />
+        <div class="dashboard-bookstack"></div>
+        <div class="dashboard-calendar">
+          <div id="calendar"></div>
+        </div>
+        <section class="dashboard-userdata first-review">
+          <strong class="first-review-title"></strong>
+          <p>이번달에 가장 먼저<br />남긴 책갈피에요!</p>
+        </section>
+        <section class="dashboard-userdata review-count">
+          <strong class="year-reviews-count"></strong>
+          <p>올해 이렇게 많은<br />책갈피를 남겼어요!</p>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./Dashboard.js"></script>
+  </body>
+</html>

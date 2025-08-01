@@ -18,6 +18,8 @@
     "vite": "^7.0.4"
   },
   "dependencies": {
-    "axios": "^1.10.0"
+    "axios": "^1.10.0",
+    "pnpm": "^10.13.1",
+    "vanilla-calendar-pro": "^3.0.5"
   }
 }
