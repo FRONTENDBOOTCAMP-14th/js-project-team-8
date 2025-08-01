@@ -59,7 +59,9 @@ export function Carousel() {
   const prevArrow = document.createElement('img');
   const nextArrow = document.createElement('img');
   prevArrow.src = new URL('../../assets/icon/arrow-l.svg', import.meta.url).href;
+  prevArrow.alt = '이전 탐색'
   nextArrow.src = new URL('../../assets/icon/arrow-r.svg', import.meta.url).href;
+  nextArrow.alt ='다음 탐색'
 
   prevBtn.append(prevArrow);
   nextBtn.append(nextArrow);
@@ -149,6 +151,33 @@ export function Carousel() {
   // 마우스 올렸을 때 일시정지 / 벗어나면 다시 실행
   carousel.addEventListener('mouseenter', () => clearInterval(intervalId));
   carousel.addEventListener('mouseleave', startAutoSlide);
+
+  // 스와이프 이벤트 등록 (모바일 전용)
+  if (window.matchMedia('(pointer: coarse)').matches) {
+  let touchStartX = 0;
+  let touchEndX = 0;
+  // 스와이프 감지 최소거리
+  const SWIPE_THRESHOLD = 30;
+
+  slideWrapper.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+  });
+
+  slideWrapper.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    const distance = touchStartX - touchEndX;
+
+    if (distance > SWIPE_THRESHOLD) {
+      const nextIndex = (currentIndex + 1) % slides.length;
+      updateSelected(nextIndex);
+    } else if (distance < -SWIPE_THRESHOLD) {
+      const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateSelected(prevIndex);
+    }
+
+    resetAutoSlide();
+  });
+}
 
   slideWrapper.append(...slides);
   slideContainer.appendChild(slideWrapper);
