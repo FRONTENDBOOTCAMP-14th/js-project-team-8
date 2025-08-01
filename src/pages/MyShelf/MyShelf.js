@@ -4,6 +4,7 @@ import { Button } from '../../components/Button/Button.js';
 import { BookCover } from '../../components/BookCover/BookCover.js';
 import { BookItem } from '../../components/BookItem/BookItem.js';
 import { Modal } from '../../components/Modal/Modal.js';
+import { authState } from '../../utils/auth.js';
 
 // 더미 데이터
 const reviews = [
@@ -71,7 +72,7 @@ function initMyShelf() {
   const sidebarContainer = document.getElementById('sidebar-container');
   const reviewList = document.getElementById('book-list');
 
-  sidebarContainer.appendChild(Sidebar({ selectedIndex: 1 }));
+  sidebarContainer.appendChild(Sidebar({ selectedIndex: 1, isLoggedin: authState.isLoggedIn }));
 
   reviews.forEach((review) => {
     reviewList.append(

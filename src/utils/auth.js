@@ -20,8 +20,8 @@ export function setAuthState(isLoggedIn, user = {}) {
  * - 자동로그인 ON: localStorage 토큰
  * - 자동로그인 OFF: sessionStorage 토큰
  */
-const TOKEN_KEY = 'token';
 export function getAuthToken() {
+  const TOKEN_KEY = 'token';
   return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || null;
 }
 

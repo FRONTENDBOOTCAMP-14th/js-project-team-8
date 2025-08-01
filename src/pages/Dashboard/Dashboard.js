@@ -7,6 +7,7 @@ import { Calendar } from 'vanilla-calendar-pro';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { Title } from '../../components/Title/Title';
 import { BookStack } from '../../components/BookStack/BookStack';
+import { authState } from '../../utils/auth';
 
 document.addEventListener('DOMContentLoaded', initDashboard);
 
@@ -40,7 +41,7 @@ function initDashboard() {
     return reviewYear == currentYear && reviewMonth == currentMonth;
   });
 
-  dashboard.prepend(Sidebar({}));
+  dashboard.prepend(Sidebar({ isLoggedin: authState.isLoggedIn }));
   header.prepend(
     Title({
       text: `

@@ -6,6 +6,7 @@ import { Title } from '../../components/Title/Title';
 import { Carousel } from '../../components/Carousel/Carousel';
 import { Button } from '../../components/Button/Button';
 import { BookHover } from '../../components/BookHover/BookHover';
+import { authState } from '../../utils/auth';
 
 export function initCommunity() {
   let publicReviews = [];
@@ -65,7 +66,7 @@ export function initCommunity() {
 
   bookWrapperControls.append(bookHeader, btnWrapper);
   wrapper.append(Carousel(), bookWrapperControls, bookWrapper);
-  community.prepend(Sidebar({ selectedIndex: 2 }));
+  community.prepend(Sidebar({ selectedIndex: 2, isLoggedin: authState.isLoggedIn }));
 
   // 데이터 로드 후 렌더링
   loadPublicReviews().then((data) => {
@@ -141,7 +142,6 @@ function arrowNavigation(wrapperSelector, columnNums) {
       cards[nextIndex].focus();
     }
   });
-
 }
 
 /** 리뷰 데이터를 비동기적으로 가져오는 함수 */
