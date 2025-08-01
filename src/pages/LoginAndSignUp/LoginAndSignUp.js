@@ -3,7 +3,7 @@ import { login, requestSignupAuth, signup, updateNickname } from '../../api/logi
 // 비밀번호 토글 버튼 기능 (동적 생성 포함)
 function setupPasswordToggles() {
   document.querySelectorAll('.password-toggle').forEach((btn) => {
-    btn.onclick = () => {
+    btn.addEventListener('click', () => {
       const targetId = btn.getAttribute('data-target');
       const input = document.getElementById(targetId);
       if (!input) return;
@@ -14,27 +14,29 @@ function setupPasswordToggles() {
         input.type = 'password';
         btn.classList.remove('on');
       }
-    };
+    });
   });
 }
+
 setupPasswordToggles();
 
-document.getElementById('login-form').addEventListener('submit', async (e) => {
+document.getElementById('login-form').addEventListener('submit', (e) => {
   e.preventDefault();
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
-  try {
-    const data = await login(email, password);
-    if (data.token) {
-      alert('로그인 성공!');
-      localStorage.setItem('token', data.token);
-      window.location.href = '/pages/Dashboard.html';
-    } else {
-      alert(data.message || '로그인 실패');
-    }
-  } catch (error) {
-    alert('네트워크 오류 : ' + error.message);
-  }
+  login(email, password)
+    .then((data) => {
+      if (data.token) {
+        alert('로그인 성공!');
+        localStorage.setItem('token', data.token);
+        window.location.href = '/src/pages/Dashboard/Dashboard.html';
+      } else {
+        throw new Error(data.message || '로그인 실패');
+      }
+    })
+    .catch((error) => {
+      alert('네트워크 오류 : ' + error.message);
+    });
 });
 
 // 회원가입 폼/로그인 폼 전환
@@ -168,7 +170,7 @@ function resetSignupStep() {
 let code = null;
 
 if (signupForm && signupStepBtn) {
-  signupStepBtn.addEventListener('click', async () => {
+  signupStepBtn.addEventListener('click', () => {
     if (signupStep === 1) {
       // 1단계: 인증 요청
       let hasError = false;
@@ -185,73 +187,63 @@ if (signupForm && signupStepBtn) {
         hasError = true;
       }
       if (hasError) return;
-      try {
-        const data = await requestSignupAuth(signupId.value);
-        if (data.success) {
-          code = data.code;
-          signupCodeWrap.classList.remove('signup-code-hidden');
-          signupCodeWrap.classList.add('signup-code-visible');
-          signupStepBtn.textContent = '회원가입';
-          signupStep = 2;
-          console.log('인증번호 요청 응답:', data);
-          console.log('인증번호 요청 성공:', code);
-        } else {
-          console.log(data);
-          signupIdError.textContent = data.message;
-          signupIdError.style.display = 'inline';
-          signupId.focus();
-          return;
-        }
-      } catch (err) {
-        alert('네트워크 오류: ' + err.message);
-        return;
-      }
+      requestSignupAuth(signupId.value)
+        .then((data) => {
+          if (data.success) {
+            code = data.code;
+            signupCodeWrap.classList.remove('signup-code-hidden');
+            signupCodeWrap.classList.add('signup-code-visible');
+            signupStepBtn.textContent = '회원가입';
+            signupStep = 2;
+            console.log('인증번호 요청 응답:', data);
+            console.log('인증번호 요청 성공:', code);
+          } else {
+            signupIdError.textContent = data.message;
+            signupIdError.style.display = 'inline';
+            signupId.focus();
+            throw new Error(data.message || '인증번호 요청 실패');
+          }
+        })
+        .catch((err) => {
+          alert('네트워크 오류: ' + err.message);
+        });
       startSignupTimer();
     } else if (signupStep === 2) {
       // 인증번호 요청 및 검증
-
       const signupCode = document.getElementById('signup-code');
       if (!signupCode.value) {
         signupCode.focus();
         return;
       }
-      console.log('입력한 인증번호:', signupCode.value);
-      console.log('서버에서 받은 인증번호:', code);
       if (signupCode.value !== code) {
         if (signupCodeError) signupCodeError.style.display = 'inline';
         signupCode.focus();
         return;
       } else {
         if (signupCodeError) signupCodeError.style.display = 'none';
-        // 실제 회원가입 API 호출 및 처리 필요
         if (timerInterval) clearInterval(timerInterval);
-        // 테스트용: 바로 닉네임 모달 띄우기
-        // 실제 API 호출 코드
         const email = signupId.value;
         const password = signupPassword.value;
-
-        try {
-          const data = await signup(email, password);
-          console.log('회원가입 응답:', data);
-          if (!data.success) {
-            alert(data.message || '회원가입 실패');
-            return;
-          }
-          if (nicknameModal) {
-            nicknameModal.hidden = false;
-            document.body.style.overflow = 'hidden';
-          }
-        } catch (err) {
-          alert('네트워크 오류: ' + err.message);
-          return;
-        }
+        signup(email, password)
+          .then((data) => {
+            if (!data.success) {
+              throw new Error(data.message || '회원가입 실패');
+            }
+            if (nicknameModal) {
+              nicknameModal.hidden = false;
+              document.body.style.overflow = 'hidden';
+            }
+          })
+          .catch((err) => {
+            alert('네트워크 오류: ' + err.message);
+          });
       }
     }
   });
 
   // 닉네임 모달 제출 이벤트
   const setNicknameModal = document.querySelector('.set-nickname-modal form');
-  setNicknameModal.addEventListener('submit', async (e) => {
+  setNicknameModal.addEventListener('submit', (e) => {
     e.preventDefault();
     const nicknameInput = document.querySelector('.set-nickname-modal input');
     if (!nicknameInput.value) {
@@ -259,31 +251,29 @@ if (signupForm && signupStepBtn) {
       nicknameInput.focus();
       return;
     }
-    try {
-      console.log('닉네임 설정 요청:', signupId.value, nicknameInput.value);
-      const data = await updateNickname(signupId.value, nicknameInput.value);
-      if (!data.success) {
-        alert(data.message || '닉네임 설정 실패');
-        return;
-      }
-      signupSection.hidden = true;
-      loginSection.hidden = false;
-      if (introSubtitle) introSubtitle.hidden = false;
-      // 상태 초기화
-      if (timerInterval) clearInterval(timerInterval);
-      signupCodeWrap.classList.remove('signup-code-visible');
-      signupCodeWrap.classList.add('signup-code-hidden');
-      signupStepBtn.textContent = '인증 요청';
-      signupStep = 1;
-      if (signupForm) signupForm.reset();
-      if (introTitle && introTitleOriginHTML) {
-        introTitle.innerHTML = introTitleOriginHTML;
-      }
-      if (signupTimer) signupTimer.textContent = '05:00';
-      nicknameModal.hidden = true;
-      alert('회원가입에 성공했어요. 가입한 이메일로 로그인해주세요!');
-    } catch (err) {
-      alert('네트워크 오류: ' + err.message);
-    }
+    updateNickname(signupId.value, nicknameInput.value)
+      .then((data) => {
+        if (!data.success) {
+          throw new Error(data.message || '닉네임 설정 실패');
+        }
+        signupSection.hidden = true;
+        loginSection.hidden = false;
+        if (introSubtitle) introSubtitle.hidden = false;
+        if (timerInterval) clearInterval(timerInterval);
+        signupCodeWrap.classList.remove('signup-code-visible');
+        signupCodeWrap.classList.add('signup-code-hidden');
+        signupStepBtn.textContent = '인증 요청';
+        signupStep = 1;
+        if (signupForm) signupForm.reset();
+        if (introTitle && introTitleOriginHTML) {
+          introTitle.innerHTML = introTitleOriginHTML;
+        }
+        if (signupTimer) signupTimer.textContent = '05:00';
+        nicknameModal.hidden = true;
+        alert('회원가입에 성공했어요. 가입한 이메일로 로그인해주세요!');
+      })
+      .catch((err) => {
+        alert('네트워크 오류: ' + err.message);
+      });
   });
 }
