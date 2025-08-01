@@ -53,6 +53,15 @@
   grid-template-columns: repeat(4, 1fr); /* PC 기본 4개 */
 }
 
+.community-book-list-empty {
+  grid-column: 1 / -1;
+  padding: 20px;
+  background-color: var(--yellow);
+  border-radius: 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
 #community-book {
   font-size: 1.5rem;
   font-weight: 600;
