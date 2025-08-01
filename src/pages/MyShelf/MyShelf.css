@@ -51,6 +51,12 @@
   }
 }
 
+@media screen and (min-width: 1440px) {
+  .book-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
 .book-item {
   border-radius: 12px;
   overflow: hidden;
