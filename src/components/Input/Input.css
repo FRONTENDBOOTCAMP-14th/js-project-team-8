@@ -37,7 +37,7 @@
 }
 
 .input-search {
-  border: none;
+  border: 1px solid var(--light-gray);
   box-shadow: 0 4px 4px #00000010;
   padding-inline: 2.25rem;
 }
