@@ -8,35 +8,78 @@ import { Button } from '../../components/Button/Button';
 import { BookHover } from '../../components/BookHover/BookHover';
 
 export function initCommunity() {
+  let publicReviews = [];
 
-  // 서버에서 받아온 책 데이터 저장
-  let bookDataList = []
+  const community = document.getElementById('community');
+  const header = document.querySelector('.community-header');
+  const wrapper = document.querySelector('.community-wrapper');
+
   const bookWrapper = document.createElement('ul');
   bookWrapper.className = 'community-book-wrapper';
-  bookWrapper.setAttribute('aria-labelledby', 'community-book')
+  bookWrapper.setAttribute('aria-labelledby', 'community-book');
 
-  const bookHeader = document.createElement('h3')
-  bookHeader.textContent = '책덕후들의 기록, 같이 구경해요!'
-  bookHeader.id = 'community-book'
+  const bookHeader = document.createElement('h3');
+  bookHeader.textContent = '책덕후들의 기록, 같이 구경해요!';
+  bookHeader.id = 'community-book';
 
-  /** 책 데이터를 받아와서 화면에 렌더링하는 비동기 함수 */
-  async function loadBookData(sortOption = 'latest') {
-  try {
-    const data = await fetchCommunityData();
-    bookDataList = data.publicReviews || [];
-    renderBooks(sortOption);
-  } catch (error) {
-    console.error(error.message);
-    return null
-  }
-  }
+  const bookWrapperControls = document.createElement('div');
+  bookWrapperControls.className = 'community-book-wrapper-controls';
 
-  /** 정렬 기준(최신순, 제목순)에 따른 필터링 함수 */
-  function renderBooks(sortOption = 'latest') {
-  if (!bookDataList.length) return;
+  const btnWrapper = document.createElement('div');
+  btnWrapper.className = 'community-btn-wrapper';
 
-  const sorted = [...bookDataList];
+  const promotionTitle = ['너무 늦은 시간', '혼모노', '자몽살구클럽', '모순', '새로운 질서'];
+  const promotionTitleBlock = Title({ text: `# ${promotionTitle[0]}`, color: 'promotion' });
+  const titleText = promotionTitleBlock.querySelector('.title-text');
 
+  let currentIndex = 0;
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % promotionTitle.length;
+    titleText.textContent = `# ${promotionTitle[currentIndex]}`;
+  }, 2000);
+
+  header.append(Title({ text: '모두의 책갈피' }), promotionTitleBlock);
+
+  const latestBtn = Button({ text: '최신순', color: 'dark' });
+  latestBtn.dataset.sortType = 'latest';
+
+  const titleBtn = Button({ text: '제목순', color: 'gray' });
+  titleBtn.dataset.sortType = 'title';
+
+  btnWrapper.append(latestBtn, titleBtn);
+
+  const btns = btnWrapper.querySelectorAll('.btn');
+
+  btnWrapper.addEventListener('click', ({ target }) => {
+    const selectedBtn = target.closest('.btn');
+    if (!selectedBtn) return;
+
+    btns.forEach((btn) => {
+      btn.classList.toggle('btn-dark', btn === selectedBtn);
+      btn.classList.toggle('btn-gray', btn !== selectedBtn);
+    });
+
+    const sortOption = selectedBtn.dataset.sortType;
+    renderPublicReviews(publicReviews, bookWrapper, sortOption);
+  });
+
+  bookWrapperControls.append(bookHeader, btnWrapper);
+  wrapper.append(Carousel(), bookWrapperControls, bookWrapper);
+  community.prepend(Sidebar({ selectedIndex: 2 }));
+
+  // 데이터 로드 후 렌더링
+  loadPublicReviews().then((data) => {
+    publicReviews = data;
+    renderPublicReviews(publicReviews, bookWrapper, 'latest');
+  });
+}
+initCommunity();
+
+/** 리뷰 렌더링 함수 */
+function renderPublicReviews(reviews, bookWrapper, sortOption = 'latest') {
+  if (!reviews.length || !bookWrapper) return;
+
+  const sorted = [...reviews];
   switch (sortOption) {
     case 'title':
       sorted.sort((a, b) => a.title.localeCompare(b.title, 'ko'));
@@ -58,68 +101,6 @@ export function initCommunity() {
       })
     );
   });
-}
-
-  const community = document.getElementById('community');
-  const header = document.querySelector('.community-header');
-  const wrapper = document.querySelector('.community-wrapper');
-
-  // bookWrapperControls : btnWrapper와 bookHeader를 묶는 container
-  const bookWrapperControls = document.createElement('div')
-  bookWrapperControls.className = 'community-book-wrapper-controls'
-  const btnWrapper = document.createElement('div');
-  btnWrapper.className = 'community-btn-wrapper';
-
-  const promotionTitle = ['너무 늦은 시간', '혼모노', '자몽살구클럽', '모순', '새로운 질서'];
-  const promotionTitleBlock = Title({ text: `# ${promotionTitle[0]}`, color: 'promotion' });
-  const titleText = promotionTitleBlock.querySelector('.title-text');
-
-  let currentIndex = 0;
-  // 2초마다 텍스트 변경
-  setInterval(() => {
-    currentIndex = (currentIndex + 1) % promotionTitle.length;
-    titleText.textContent = `# ${promotionTitle[currentIndex]}`;
-  }, 2000);
-
-  header.append(Title({ text: '모두의 책갈피' }), promotionTitleBlock);
-
-  const latestBtn = Button({ text: '최신순', color: 'dark' });
-  latestBtn.dataset.sortType = 'latest';
-  const titleBtn = Button({ text: '제목순', color: 'gray' });
-  titleBtn.dataset.sortType = 'title';
-
-  btnWrapper.append(latestBtn, titleBtn);
-
-
-  const btns = btnWrapper.querySelectorAll('.btn');
-
-  btnWrapper.addEventListener('click', ({ target }) => {
-  const selectedBtn = target.closest('.btn');
-  if (!selectedBtn) return;
-
-  btns.forEach((btn) => {
-    btn.classList.toggle('btn-dark', btn === selectedBtn);
-    btn.classList.toggle('btn-gray', btn !== selectedBtn);
-  });
-
-  const sortOption = selectedBtn.dataset.sortType;
-
-  switch (sortOption) {
-    case 'title':
-    case 'latest':
-      renderBooks(sortOption);
-      break;
-    default:
-      console.warn(`지원되지 않는 정렬 타입: ${sortOption}`);
-  }
-  })
-
-  bookWrapperControls.append(bookHeader, btnWrapper)
-  wrapper.append(Carousel(), bookWrapperControls, bookWrapper);
-  community.prepend(Sidebar({ selectedIndex: 2 }));
-
-  // 데이터 로딩은 따로 분리된 함수에서 처리
-  loadBookData(); // 최신순으로 초기 렌더링
 }
 
 /** 키보드 방향키로 이동 가능하게 하는 함수 */
@@ -163,7 +144,17 @@ function arrowNavigation(wrapperSelector, columnNums) {
 
 }
 
-initCommunity();
+/** 리뷰 데이터를 비동기적으로 가져오는 함수 */
+async function loadPublicReviews() {
+  try {
+    const data = await fetchCommunityData();
+    return data.publicReviews || [];
+  } catch (error) {
+    console.error(error.message);
+    return [];
+  }
+}
+
 // 키보드 방향키 접근은 pc 환경에서만
 if (window.innerWidth > 1240) {
   arrowNavigation('.community-book-wrapper', 4);
