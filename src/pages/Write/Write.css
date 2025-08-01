@@ -153,19 +153,22 @@
 }
 
 .write-review-title {
-  margin-bottom: .625rem;
+  margin-bottom: 0.625rem;
 }
 
 .write-review-text {
+  padding: 1.5rem;
   margin-bottom: 2.5rem;
+  min-width: 680px;
+  height: 220px;
+  border: none;
+  border-radius: 1.875rem;
+  color: var(--black);
+  background-color: var(--light-gray);
+  font-weight: 300;
 
-  & .input {
-    border-radius: 1.875rem;
-    height: 220px;
-    text-wrap: wrap;
-  }
-
-  & .input-field {
+  &:focus {
+    outline: 1px solid var(--focus);
   }
 }
 

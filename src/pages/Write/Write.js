@@ -230,13 +230,15 @@ const writeReviewModal = (bookData) => {
   });
   reviewTitle.className = 'write-review-title';
 
-  const reviewText = Input({
-    id: 'detailDescription',
-    type: 'text',
-    variant: 'secondary',
-    placeholder: '이 작품에 대한 책갈피를 남겨주세요.',
-  });
+  // const reviewText = Input({
+  //   id: 'detailDescription',
+  //   type: 'text',
+  //   variant: 'secondary',
+  //   placeholder: '이 작품에 대한 책갈피를 남겨주세요.',
+  // });
+  const reviewText = document.createElement('textarea');
   reviewText.className = 'write-review-text';
+  reviewText.placeholder = '이 작품에 대한 책갈피를 남겨주세요.';
 
   const bottom = document.createElement('div');
   bottom.className = 'write-review-bottom';
