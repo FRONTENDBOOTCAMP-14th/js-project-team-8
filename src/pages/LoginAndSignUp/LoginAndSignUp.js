@@ -24,11 +24,16 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
   e.preventDefault();
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
+  const keepLogin = document.getElementById('keep-login');
   login(email, password)
     .then((data) => {
       if (data.token) {
         alert('로그인 성공!');
-        localStorage.setItem('token', data.token);
+        if (keepLogin && keepLogin.checked) {
+          localStorage.setItem('token', data.token);
+        } else {
+          sessionStorage.setItem('token', data.token);
+        }
         window.location.href = '/src/pages/Dashboard/Dashboard.html';
       } else {
         throw new Error(data.message || '로그인 실패');
