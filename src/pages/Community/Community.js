@@ -77,9 +77,17 @@ initCommunity();
 
 /** 리뷰 렌더링 함수 */
 function renderPublicReviews(reviews, bookWrapper, sortOption = 'latest') {
-  if (!reviews.length || !bookWrapper) return;
-
+  if (!bookWrapper) return;
   const sorted = [...reviews];
+
+  if (sorted.length === 0) {
+    const emptyMessage = document.createElement('li');
+    emptyMessage.className = 'community-book-list-empty';
+    emptyMessage.textContent = '아직 등록된 책갈피가 없어요. 첫 번째 책갈피 남겨보세요!';
+    bookWrapper.append(emptyMessage);
+    return;
+  }
+  
   switch (sortOption) {
     case 'title':
       sorted.sort((a, b) => a.title.localeCompare(b.title, 'ko'));
