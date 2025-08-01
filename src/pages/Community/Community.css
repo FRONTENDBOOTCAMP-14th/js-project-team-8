@@ -31,11 +31,16 @@
   flex: 1;
 }
 
+.community-book-wrapper-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-block: 1.5rem;
+}
+
 .community-btn-wrapper {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
-  margin-block: 1.5rem;
 
   > .btn-dark-gray {
     background-color: var(--light-gray);
@@ -45,10 +50,22 @@
 .community-book-wrapper {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(3, 1fr); /* PC 기본 3개 */
+  grid-template-columns: repeat(4, 1fr); /* PC 기본 4개 */
+}
+
+#community-book {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+@media (width <= 1240px) {
+  .community-book-wrapper {
+    grid-template-columns: repeat(3, 1fr)
+  }
 }
 
 @media (width <= 768px) {
+
   #community {
     height: auto;
   }
@@ -68,16 +85,17 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .community-btn-wrapper {
+  .community-book-wrapper-controls {
+    flex-flow: column wrap;
+    align-items: center;
     margin-block: 3rem 1.4rem;
-    justify-content: center;
+    gap: 0.8rem;
+  }
 
-    > button {
-      padding-inline: 1.75rem;
-    }
+  .community-btn-wrapper > button {
+    padding-inline: 1.75rem;
   }
 }
-
 @media (width <= 576px) {
   .community-book-wrapper {
     grid-template-columns: 1fr;
