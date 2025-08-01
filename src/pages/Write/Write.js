@@ -7,7 +7,6 @@ import { Modal } from '../../components/Modal/Modal';
 import { BookCover } from '../../components/BookCover/BookCover';
 import { Button } from '../../components/Button/Button';
 import { Title } from '../../components/Title/Title';
-import { authState } from '../../utils/auth';
 import { getYearMonthDateFormat } from '../../utils/date';
 import { fetchBookData, fetchBookDetail } from '../../api/writeData';
 
@@ -75,7 +74,7 @@ async function initWrite() {
     const write = document.querySelector('#write');
     const search = document.querySelector('.write-search');
 
-    write.prepend(Sidebar({ isLoggedin: authState.isLoggedIn }));
+    write.prepend(Sidebar({}));
     search.append(
       Input({ id: 'search', type: 'search', variant: 'search', placeholder: '검색하기' })
     );

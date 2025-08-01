@@ -66,7 +66,7 @@ export function initCommunity() {
 
   bookWrapperControls.append(bookHeader, btnWrapper);
   wrapper.append(Carousel(), bookWrapperControls, bookWrapper);
-  community.prepend(Sidebar({ selectedIndex: 2, isLoggedin: authState.isLoggedIn }));
+  community.prepend(Sidebar({ selectedIndex: 2 }));
 
   // 데이터 로드 후 렌더링
   loadPublicReviews().then((data) => {
