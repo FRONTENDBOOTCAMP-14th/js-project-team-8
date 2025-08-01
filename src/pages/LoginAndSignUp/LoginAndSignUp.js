@@ -1,9 +1,9 @@
-// import { Modal } from '../../components/Modal/Modal';
+import { login, requestSignupAuth, signup, updateNickname } from '../../api/loginAndSignupAuth.js';
 
 // 비밀번호 토글 버튼 기능 (동적 생성 포함)
 function setupPasswordToggles() {
-  document.querySelectorAll('.password-toggle').forEach(function (btn) {
-    btn.onclick = function () {
+  document.querySelectorAll('.password-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
       const targetId = btn.getAttribute('data-target');
       const input = document.getElementById(targetId);
       if (!input) return;
@@ -14,31 +14,29 @@ function setupPasswordToggles() {
         input.type = 'password';
         btn.classList.remove('on');
       }
-    };
+    });
   });
 }
+
 setupPasswordToggles();
-document.getElementById('login-form').addEventListener('submit', async function (e) {
+
+document.getElementById('login-form').addEventListener('submit', (e) => {
   e.preventDefault();
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
-  try {
-    // 실제 API 주소로 변경 필요
-    const response = await fetch('https://your-api-url.com/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+  login(email, password)
+    .then((data) => {
+      if (data.token) {
+        alert('로그인 성공!');
+        localStorage.setItem('token', data.token);
+        window.location.href = '/src/pages/Dashboard/Dashboard.html';
+      } else {
+        throw new Error(data.message || '로그인 실패');
+      }
+    })
+    .catch((error) => {
+      alert('네트워크 오류 : ' + error.message);
     });
-    const data = await response.json();
-    if (response.ok) {
-      alert('로그인 성공!');
-      // 토큰 저장, 페이지 이동 등 추가 작업
-    } else {
-      alert(data.message || '로그인 실패');
-    }
-  } catch (error) {
-    alert('네트워크 오류 : ' + error.message);
-  }
 });
 
 // 회원가입 폼/로그인 폼 전환
@@ -46,9 +44,9 @@ const loginSection = document.getElementById('login-section');
 const signupSection = document.getElementById('signup-section');
 const showSignupBtn = document.getElementById('show-signup');
 const introSubtitle = document.querySelector('.intro-subtitle');
-
 const introTitle = document.querySelector('.intro-title');
 let introTitleOriginHTML = '';
+
 if (introTitle) {
   introTitleOriginHTML = introTitle.innerHTML;
 }
@@ -83,7 +81,7 @@ function showError(el, show) {
 }
 
 if (signupId) {
-  signupId.addEventListener('input', function () {
+  signupId.addEventListener('input', () => {
     if (!signupId.value) {
       showError(signupIdError, false);
     } else {
@@ -93,7 +91,7 @@ if (signupId) {
 }
 
 if (signupPassword) {
-  signupPassword.addEventListener('input', function () {
+  signupPassword.addEventListener('input', () => {
     if (!signupPassword.value) {
       showError(signupPasswordError, false);
     } else {
@@ -107,7 +105,7 @@ if (signupPassword) {
 }
 
 if (signupPasswordConfirm) {
-  signupPasswordConfirm.addEventListener('input', function () {
+  signupPasswordConfirm.addEventListener('input', () => {
     if (!signupPasswordConfirm.value) {
       showError(signupPasswordConfirmError, false);
     } else {
@@ -169,8 +167,10 @@ function resetSignupStep() {
   if (signupTimer) signupTimer.textContent = '05:00';
 }
 
+let code = null;
+
 if (signupForm && signupStepBtn) {
-  signupStepBtn.addEventListener('click', function () {
+  signupStepBtn.addEventListener('click', () => {
     if (signupStep === 1) {
       // 1단계: 인증 요청
       let hasError = false;
@@ -187,83 +187,93 @@ if (signupForm && signupStepBtn) {
         hasError = true;
       }
       if (hasError) return;
-      // 인증번호 입력창 보여주고 버튼 텍스트 변경
-      signupCodeWrap.classList.remove('signup-code-hidden');
-      signupCodeWrap.classList.add('signup-code-visible');
-      signupStepBtn.textContent = '회원가입';
-      signupStep = 2;
-      startSignupTimer();
-      // 실제로는 여기서 인증번호 요청 API 호출 필요
-    } else if (signupStep === 2) {
-      // 2단계: 회원가입
-      const signupCode = document.getElementById('signup-code');
-      if (!signupCode.value) {
-        signupCode.focus();
-        return;
-      }
-      // 인증번호 검증 (예시: 실제로는 서버에서 검증)
-      // 예시: 올바른 인증번호는 '123456'로 가정
-      const correctCode = '123456';
-      if (signupCode.value !== correctCode) {
-        if (signupCodeError) signupCodeError.style.display = 'inline';
-        signupCode.focus();
-        return;
-      } else {
-        if (signupCodeError) signupCodeError.style.display = 'none';
-      }
-      // 실제 회원가입 API 호출 및 처리 필요
-      if (timerInterval) clearInterval(timerInterval);
-      // 테스트용: 바로 닉네임 모달 띄우기
-      if (nicknameModal) {
-        nicknameModal.hidden = false;
-        document.body.style.overflow = 'hidden';
-        console.log('회원가입 성공! 닉네임 설정 모달을 띄웁니다.');
-      }
-      /*
-      // 실제 API 호출 코드
-      const email = signupId.value;
-      const password = signupPassword.value;
-      fetch('/sign-up', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      })
-        .then(async (res) => {
-          if (!res.ok) {
-            const data = await res.json();
-            alert(data.message || '회원가입 실패');
-            return;
-          }
-          // 성공 시 닉네임 모달 띄우기
-          if (nicknameModal) {
-            nicknameModal.hidden = false;
-            document.body.style.overflow = 'hidden';
+      requestSignupAuth(signupId.value)
+        .then((data) => {
+          if (data.success) {
+            code = data.code;
+            signupCodeWrap.classList.remove('signup-code-hidden');
+            signupCodeWrap.classList.add('signup-code-visible');
+            signupStepBtn.textContent = '회원가입';
+            signupStep = 2;
+            console.log('인증번호 요청 응답:', data);
+            console.log('인증번호 요청 성공:', code);
+          } else {
+            signupIdError.textContent = data.message;
+            signupIdError.style.display = 'inline';
+            signupId.focus();
+            throw new Error(data.message || '인증번호 요청 실패');
           }
         })
         .catch((err) => {
           alert('네트워크 오류: ' + err.message);
         });
-      */
+      startSignupTimer();
+    } else if (signupStep === 2) {
+      // 인증번호 요청 및 검증
+      const signupCode = document.getElementById('signup-code');
+      if (!signupCode.value) {
+        signupCode.focus();
+        return;
+      }
+      if (signupCode.value !== code) {
+        if (signupCodeError) signupCodeError.style.display = 'inline';
+        signupCode.focus();
+        return;
+      } else {
+        if (signupCodeError) signupCodeError.style.display = 'none';
+        if (timerInterval) clearInterval(timerInterval);
+        const email = signupId.value;
+        const password = signupPassword.value;
+        signup(email, password)
+          .then((data) => {
+            if (!data.success) {
+              throw new Error(data.message || '회원가입 실패');
+            }
+            if (nicknameModal) {
+              nicknameModal.hidden = false;
+              document.body.style.overflow = 'hidden';
+            }
+          })
+          .catch((err) => {
+            alert('네트워크 오류: ' + err.message);
+          });
+      }
     }
   });
 
-  // 로그인으로 돌아가기 버튼 이벤트 (폼 내부에 있을 수 있음)
-  signupForm.addEventListener('click', function (e) {
-    if (e.target && e.target.id === 'show-login') {
-      signupSection.hidden = true;
-      loginSection.hidden = false;
-      if (introSubtitle) introSubtitle.hidden = false;
-      // 상태 초기화
-      if (timerInterval) clearInterval(timerInterval);
-      signupCodeWrap.classList.remove('signup-code-visible');
-      signupCodeWrap.classList.add('signup-code-hidden');
-      signupStepBtn.textContent = '인증 요청';
-      signupStep = 1;
-      if (signupForm) signupForm.reset();
-      if (introTitle && introTitleOriginHTML) {
-        introTitle.innerHTML = introTitleOriginHTML;
-      }
-      if (signupTimer) signupTimer.textContent = '05:00';
+  // 닉네임 모달 제출 이벤트
+  const setNicknameModal = document.querySelector('.set-nickname-modal form');
+  setNicknameModal.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nicknameInput = document.querySelector('.set-nickname-modal input');
+    if (!nicknameInput.value) {
+      alert('닉네임을 입력해주세요.');
+      nicknameInput.focus();
+      return;
     }
+    updateNickname(signupId.value, nicknameInput.value)
+      .then((data) => {
+        if (!data.success) {
+          throw new Error(data.message || '닉네임 설정 실패');
+        }
+        signupSection.hidden = true;
+        loginSection.hidden = false;
+        if (introSubtitle) introSubtitle.hidden = false;
+        if (timerInterval) clearInterval(timerInterval);
+        signupCodeWrap.classList.remove('signup-code-visible');
+        signupCodeWrap.classList.add('signup-code-hidden');
+        signupStepBtn.textContent = '인증 요청';
+        signupStep = 1;
+        if (signupForm) signupForm.reset();
+        if (introTitle && introTitleOriginHTML) {
+          introTitle.innerHTML = introTitleOriginHTML;
+        }
+        if (signupTimer) signupTimer.textContent = '05:00';
+        nicknameModal.hidden = true;
+        alert('회원가입에 성공했어요. 가입한 이메일로 로그인해주세요!');
+      })
+      .catch((err) => {
+        alert('네트워크 오류: ' + err.message);
+      });
   });
 }
