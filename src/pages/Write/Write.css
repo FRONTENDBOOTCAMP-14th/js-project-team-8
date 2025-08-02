@@ -184,11 +184,12 @@
 
 .write-review-page {
   display: flex;
-  column-gap: 1.5rem;
+  column-gap: 1rem;
   align-items: center;
 
-  & > input {
-    height: 40px;
+  & .input-field {
+    width: 60px;
+    text-align: center;
   }
 }
 
@@ -334,9 +335,47 @@
     }
   }
 
+  .book-detail {
+    height: 80vh;
+  }
+
+  .book-detail-bottom {
+    flex: 1;
+    overflow-y: auto;
+    max-height: none;
+  }
+
   .book-detail-bottom > p {
     width: auto;
-    min-width: 200px;
+  }
+
+  .write-review {
+    row-gap: 2.5rem;
+  }
+
+  .write-review-header {
+    justify-content: center;
+
+    & .title-text {
+      font-size: 2rem;
+    }
+  }
+
+  .write-review-top {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .write-review-text {
+    min-width: auto;
+  }
+
+  .write-review-bottom {
+    flex-direction: column;
+    align-items: flex-end;
+    row-gap: 1rem;
   }
 }
 
