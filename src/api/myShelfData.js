@@ -5,7 +5,6 @@ import { getAuthToken, redirectIfNotLoggedIn } from '../utils/auth';
 export async function fetchReviewList() {
   const token = getAuthToken();
   if (!token) {
-    redirectIfNotLoggedIn();
     throw new Error('토큰 없음');
   }
 
@@ -36,7 +35,6 @@ export async function fetchReviewList() {
 export async function fetchReviewDetail(isbn13) {
   const token = getAuthToken();
   if (!token) {
-    redirectIfNotLoggedIn();
     throw new Error('토큰 없음');
   }
 

@@ -4,7 +4,6 @@ import { getAuthToken, redirectIfNotLoggedIn } from '../utils/auth';
 export async function fetchDashboardData() {
   const token = getAuthToken();
   if (!token) {
-    redirectIfNotLoggedIn();
     throw new Error('토큰 없음');
   }
 

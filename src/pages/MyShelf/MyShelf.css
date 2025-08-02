@@ -173,18 +173,29 @@
       font-size: 2rem;
     }
 
-    & > p {
-      font-size: 1rem;
-
-      &::after {
-        display: none;
-      }
+    div::after {
+      display: none;
     }
   }
 
-  .review-detail-bottom > p {
-    width: auto;
-    min-width: 200px;
+  .review-info {
+    & * {
+      font-size: 1rem;
+    }
+  }
+
+  .review-detail {
+    height: 80vh;
+  }
+
+  .review-detail-bottom {
+    flex: 1;
+    overflow-y: auto;
+    max-height: none;
+
+    .review-detail-text {
+      width: auto;
+    }
   }
 }
 

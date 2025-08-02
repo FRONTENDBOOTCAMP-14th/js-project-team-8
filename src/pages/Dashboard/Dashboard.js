@@ -8,8 +8,17 @@ import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { Title } from '../../components/Title/Title';
 import { BookStack } from '../../components/BookStack/BookStack';
 import { reviewDetailModal } from '../MyShelf/MyShelf';
+import { getAuthToken, redirectIfNotLoggedIn } from '../../utils/auth';
 
-document.addEventListener('DOMContentLoaded', initDashboard);
+document.addEventListener('DOMContentLoaded', () => {
+  if (!getAuthToken()) {
+    redirectIfNotLoggedIn();
+    return;
+  }
+
+  document.body.style.display = 'block';
+  initDashboard();
+});
 
 // 더미 데이터
 const dummyReviews = [

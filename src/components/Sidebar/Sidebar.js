@@ -1,6 +1,8 @@
 import './Sidebar.css';
 import logo from '../../assets/icon/logo.svg';
 import { authState, setAuthState } from '../../utils/auth';
+import { Modal } from '../Modal/Modal';
+import { Button } from '../Button/Button';
 
 export function Sidebar({ selectedIndex = 0 }) {
   const sidebarItems = [
@@ -83,12 +85,35 @@ export function Sidebar({ selectedIndex = 0 }) {
   sidebar.className = 'sidebar';
 
   sidebarLogo.className = 'sidebar-logo';
-  sidebarLogo.href = '/src/pages/Dashboard/Dashboard.html';
   sidebarLogo.innerHTML = `
     <h1>
       <img src="${logo}" alt="책갈피 홈으로" draggable="false"/>
     </h1>
   `;
+
+  sidebarLogo.addEventListener('click', () => {
+    const info = document.createElement('div');
+    info.className = 'info-modal';
+    info.innerHTML = `
+      <h1>책갈피 프로젝트🔖에 오신 것을 환영합니다!</h1>
+      <p>
+        '책갈피'는 나만의 공간에서 독서 활동을 기록하고,<br>커뮤니티 기능으로 감상을 공유할 수 있는 웹 서비스입니다.<br><br>
+        단순히 개인적인 독서 기록을 넘어,<br> 다른 사람들과 내용을 공유하며<br>‘함께 읽는 즐거움’을 느낄 수 있도록 설계했어요.<br>
+        책갈피처럼 쌓이는 기록을 보며 독서 습관을 길러 보세요!
+      </p>
+    `;
+    info.append(
+      Button({
+        text: '이해했어요',
+        type: 'button',
+        onClick: () => {
+          modal.remove();
+        },
+      })
+    );
+    const modal = Modal({ isOpen: true, children: info });
+    document.body.append(modal);
+  });
 
   sidebar.append(sidebarLogo);
 
