@@ -88,7 +88,7 @@ async function initMyShelf() {
 }
 
 /** 리뷰 디테일 모달 생성 */
-async function reviewDetailModal(review) {
+export async function reviewDetailModal(review) {
   const dummyDetail = {
     title: '혼모노',
     imageUrl: 'https://i.pinimg.com/736x/05/45/b0/0545b0f03de19da2d2639ec92efae930.jpg',
@@ -99,12 +99,10 @@ async function reviewDetailModal(review) {
     detailDescription:
       '이번 소설집에는 지난해 끊임없이 호명되며 문단을 휩쓸었다 해도 과언이 아닐 표제작 「혼모노」를 비롯해 작가에게 2년 연속 젊은작가상을 선사해준 「길티 클럽: 호랑이 만지기」, 이 계절의 소설과 올해의 문제소설에 선정된 「스무드」 등이 수록되어 더욱 눈길을 끈다.',
   };
-  let detail = null;
+  let detail = dummyDetail;
   try {
-    const data = await fetchReviewDetail(review.isbn13);
+    // const data = await fetchReviewDetail(review.isbn13);
     // detail = data ? data : dummyDetail;
-    if (!data) detail = dummyDetail
-    detail = dummyDetail
   } catch (error) {
     console.error('리뷰 상세 조회 실패:', error);
   }

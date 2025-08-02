@@ -7,6 +7,7 @@ import { Calendar } from 'vanilla-calendar-pro';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { Title } from '../../components/Title/Title';
 import { BookStack } from '../../components/BookStack/BookStack';
+import { reviewDetailModal } from '../MyShelf/MyShelf';
 
 document.addEventListener('DOMContentLoaded', initDashboard);
 
@@ -129,6 +130,14 @@ function renderReviews(reviews) {
     `;
     bookstackWrapper.append(noReviewsMessage);
   }
+
+  const bookStack = document.querySelector('.bookstack');
+  bookStack.addEventListener('click', (e) => {
+    const review = e.target.closest('.bookblock');
+    if (!review) return;
+
+    reviewDetailModal();
+  });
 }
 
 /** 달력 데이터 바인딩 */
