@@ -60,10 +60,10 @@ const dummyBooks = [
     isbn13: '0000000000000',
   },
 ];
+let totalBooks = [];
 
 /** 글쓰기 페이지 초기화 */
 async function initWrite() {
-  let totalBooks = [];
   const write = document.querySelector('#write');
   const search = document.querySelector('.write-search');
 
@@ -77,8 +77,8 @@ async function initWrite() {
   try {
     const data = await fetchBookData();
     totalBooks = data.books;
-    // totalBooks = false;
-    renderBooks(totalBooks || dummyBooks);
+    if (totalBooks == []) renderBooks(dummyBooks);
+    renderBooks(totalBooks);
   } catch (error) {
     console.error(error.message);
     return null;
@@ -118,8 +118,7 @@ function renderBooks(books) {
 }
 
 /** 글쓰기 페이지 검색 핸들러 */
-const searchBookEvent = async () => {
-  let totalBooks = await fetchBookData().books;
+const searchBookEvent = () => {
   const searchText = document.querySelector('.write-search .input-field').value.trim();
   const headingText = document.querySelector('.write-book-container > h2');
 
@@ -129,9 +128,11 @@ const searchBookEvent = async () => {
   if (!searchText) {
     headingText.textContent = '이달의 베스트셀러';
     headingText.classList.remove('isSearched');
+    renderBooks(totalBooks);
+    return;
   }
 
-  const filtered = (totalBooks || dummyBooks).filter((book) => book.title.includes(searchText));
+  const filtered = totalBooks.filter((book) => book.title.includes(searchText));
   renderBooks(filtered);
 };
 
@@ -352,6 +353,7 @@ const writeReviewModal = (bookData) => {
       public: publicInput.checked,
       isbn13: isbn13 || '0000000000000',
     };
+
     submitReview(reviewData);
   });
 };

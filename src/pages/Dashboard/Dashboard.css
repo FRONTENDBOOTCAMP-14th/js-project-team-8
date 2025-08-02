@@ -136,6 +136,42 @@
   border: 1px dashed var(--dark-gray);
 }
 
+.loader {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow:
+    32px 0 #fff,
+    -32px 0 #fff;
+  position: absolute;
+  animation: flash 0.5s ease-out infinite alternate;
+  top: 50%;
+  left: 50%;
+  translate: transform(-50%, -50%);
+}
+
+@keyframes flash {
+  0% {
+    background-color: #fff2;
+    box-shadow:
+      32px 0 #fff2,
+      -32px 0 #fff;
+  }
+  50% {
+    background-color: #fff;
+    box-shadow:
+      32px 0 #fff2,
+      -32px 0 #fff2;
+  }
+  100% {
+    background-color: #fff2;
+    box-shadow:
+      32px 0 #fff,
+      -32px 0 #fff2;
+  }
+}
+
 @media screen and (max-width: 768px) {
   #dateInput {
     display: block;

@@ -49,7 +49,9 @@ async function initDashboard() {
     const data = await fetchDashboardData();
     console.log('[DEBUG] fetched data:', data);
     if (data.message) {
-      console.log('데이터 없음');
+      monthBookmarkCount = 0;
+      yearBookmarkCount = 0;
+      totalReviews = [];
     } else {
       ({ monthBookmarkCount, yearBookmarkCount, totalReviews } = data);
     }
@@ -62,30 +64,9 @@ async function initDashboard() {
       return reviewYear == currentYear && reviewMonth == currentMonth;
     });
 
-    // 더미데이터 렌더링
     renderReviews(currentMonthReviews);
     renderCalendar(currentMonthReviews);
     renderStats(currentMonthReviews, yearBookmarkCount);
-  }
-}
-
-/** 대시보드 데이터 연동
- * body{
- *   "monthBookmarkCount": number,
- *   "yearBookmarkCount": number,
- *   "totalReviews": {
- *     "title": string,
- *     "oneLineDescription": string,
- *     "date": string(YYYY-MM-DD)
- *   }[]
- * }
- */
-async function loadDashboardData() {
-  try {
-    return await fetchDashboardData();
-  } catch (error) {
-    console.error(error.message);
-    return null;
   }
 }
 
