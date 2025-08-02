@@ -7,10 +7,9 @@
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
-  background-color: #f9f9f9;
   box-sizing: border-box;
   border-radius: 20px;
-  margin: 3rem 2rem;
+  margin: 2rem;
   border: 1px dashed var(--dark-gray);
 }
 
@@ -42,13 +41,19 @@
 @media (max-width: 768px) {
   .book-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
+    gap: 0.75rem;
   }
 }
 
 @media (max-width: 576px) {
   .book-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .book-grid {
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
@@ -76,4 +81,172 @@
   font-size: 0.9rem;
   text-align: center;
   font-weight: 500;
+}
+
+/* 모달 */
+.review-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
+}
+
+.review-detail-top {
+  display: flex;
+  gap: 1.875rem;
+  & > div {
+    max-width: 200px;
+  }
+
+  & > header {
+    display: flex;
+    padding: 4.125rem;
+    justify-content: center;
+    flex-direction: column;
+    flex: 1;
+    flex-shrink: 1;
+    row-gap: 2.625rem;
+    background-color: var(--yellow);
+    border-radius: 30px;
+  }
+
+  & > header h2 {
+    font-size: 2.8125rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  & > header > div {
+    font-size: 1.625rem;
+    font-weight: 400;
+    position: relative;
+    display: flex;
+
+    flex-direction: column;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 0;
+      right: 0;
+      border-bottom: 1px dashed var(--dark-gray);
+    }
+  }
+}
+
+.review-detail-bottom {
+  padding: 2.1875rem;
+  background-color: var(--light-gray);
+  border-radius: 30px;
+  max-height: 280px;
+  overflow: scroll;
+
+  .review-detail-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .review-detail-text {
+    font-size: 1.25rem;
+    font-weight: 400;
+    width: 610px;
+    overflow: scroll;
+  }
+}
+
+.review-detail-close {
+  align-self: flex-end;
+}
+
+@media screen and (max-width: 576px) {
+  .review-detail .book-cover {
+    display: none;
+  }
+
+  .review-detail-top > header {
+    padding: 2rem;
+    gap: 1rem;
+    width: 100%;
+
+    & > h2 {
+      font-size: 2rem;
+    }
+
+    & > p {
+      font-size: 1rem;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .review-detail-bottom > p {
+    width: auto;
+    min-width: 200px;
+  }
+}
+
+.stars-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  vertical-align: middle;
+}
+
+.star-container {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.color path {
+  fill: var(--black);
+  stroke: var(--black);
+}
+
+.review-info > div:last-child {
+  display: flex;
+  column-gap: 1rem;
+
+  span {
+    color: var(--dark-gray);
+  }
+}
+
+.book-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  .loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid var(--dark-gray);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+
+  & > p {
+    color: var(--dark-gray);
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

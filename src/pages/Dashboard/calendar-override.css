@@ -58,6 +58,6 @@
   background-color: var(--yellow);
 
   &:hover {
-    background-color: #cbdd55;
+    background-color: #cbdd55 !important;
   }
 }

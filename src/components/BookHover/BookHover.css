@@ -30,14 +30,14 @@
   justify-content: flex-end;
   padding: 32px;
   color: white;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
   text-align: center;
 }
 
 .book-hover-title {
   position: absolute;
   bottom: 20%;
-  font-size: clamp(1.3rem, 2vw, 2.5rem);
+  font-size: clamp(1.4rem, 2vw, 1.6rem);
   padding-bottom: 0.5rem;
   transform: translateY(2rem);
   transition: transform 0.6s ease;
@@ -45,7 +45,8 @@
 
 .book-hover-title,
 .book-hover-id {
-  max-width: 20rem;
+  max-width: 85%;
+  max-height: 30%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -55,26 +56,33 @@
 .book-hover-id {
   max-height: 6rem;
   overflow: scroll;
-  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
   opacity: 0;
   transform: translateY(2rem);
   transition: opacity 0.6s ease, transform 0.8s ease;
 }
 
+.book-hover-id {
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  font-weight: 300;
+}
+
 /* 호버 시 텍스트 박스 중앙으로 */
-.book-hover-wrapper:hover .book-hover-text-wrapper {
+.book-hover-wrapper:is(:hover, :focus-visible) .book-hover-text-wrapper {
+  background: rgba(0, 0, 0, 0.9);
   justify-content: center;
 }
 
-.book-hover-wrapper:hover .book-hover-title {
+.book-hover-wrapper:is(:hover, :focus-visible) .book-hover-title {
+  overflow: scroll;
   position: static;
   transform: translateY(-1rem);
   border-bottom: 1px solid var(--white);
   white-space: wrap;
 }
 
-.book-hover-wrapper:hover .book-hover-review,
-.book-hover-wrapper:hover .book-hover-id {
+.book-hover-wrapper:is(:hover, :focus-visible) .book-hover-review,
+.book-hover-wrapper:is(:hover, :focus-visible) .book-hover-id {
   opacity: 1;
   transform: translateY(0);
 }

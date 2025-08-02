@@ -57,7 +57,7 @@
   align-items: center;
   font-size: 20px;
   border-radius: 20px 0px 20px 0px;
-  margin-bottom: 50px
+  margin-bottom: 50px;
 }
 
 .slide-text-wrapper {
@@ -75,7 +75,6 @@
   }
 
   > p {
-
     font-size: 24px;
     margin-top: 24px;
     padding-top: 24px;
@@ -100,10 +99,19 @@
   cursor: pointer;
 }
 
+.btn-carousel {
+  border: none;
+  padding: 0;
+
+  & > img {
+    width: 10px;
+  }
+}
+
 .btn-indicator {
   background-color: var(--light-gray);
-  width: 25px;
-  height: 25px;
+  width: 16px;
+  aspect-ratio: 1;
   border-radius: 50%;
 
   &.is-selected {
@@ -136,24 +144,14 @@
   .carousel-btn-container {
     gap: 1.5rem;
   }
-
-  .btn-indicator {
-    width: 20px;
-    height: 20px;
-  }
 }
 
 @media (width <= 576px) {
-  .carousel {
-    gap: 1rem;
-  }
-
   .carousel-btn-container {
     gap: 1rem;
   }
 
-  .btn-indicator {
-    width: 16px;
-    height: 16px;
+  .btn-carousel {
+    display: none;
   }
 }

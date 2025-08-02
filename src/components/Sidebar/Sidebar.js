@@ -1,7 +1,8 @@
 import './Sidebar.css';
 import logo from '../../assets/icon/logo.svg';
+import { authState, setAuthState } from '../../utils/auth';
 
-export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
+export function Sidebar({ selectedIndex = 0 }) {
   const sidebarItems = [
     {
       href: '/src/pages/Dashboard/Dashboard.html',
@@ -52,8 +53,17 @@ export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
       alt: '커뮤니티',
     },
   ];
-  const loginItems = [
-    {
+  const loginItems = {
+    true: {
+      href: '#',
+      svg: `
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 1.5C12.803 1.5 15.9426 4.33079 16.4316 8H9.91406L11.957 5.95703L10.543 4.54297L6.08594 9L10.543 13.457L11.957 12.043L9.91406 10H16.4316C15.9426 13.6692 12.803 16.5 9 16.5C4.85786 16.5 1.5 13.1421 1.5 9C1.5 4.85786 4.85786 1.5 9 1.5Z" fill="currentColor"/>
+      </svg>
+      `,
+      alt: '로그아웃하기',
+    },
+    false: {
       href: '/src/pages/LoginAndSignUp/LoginAndSignUp.html',
       svg: `
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,16 +72,7 @@ export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
       `,
       alt: '로그인하기',
     },
-    {
-      href: '#logout',
-      svg: `
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9 1.5C12.803 1.5 15.9426 4.33079 16.4316 8H9.91406L11.957 5.95703L10.543 4.54297L6.08594 9L10.543 13.457L11.957 12.043L9.91406 10H16.4316C15.9426 13.6692 12.803 16.5 9 16.5C4.85786 16.5 1.5 13.1421 1.5 9C1.5 4.85786 4.85786 1.5 9 1.5Z" fill="currentColor"/>
-      </svg>
-      `,
-      alt: '로그아웃하기',
-    },
-  ];
+  };
   const sidebarButtons = [];
   let clickedIndex = selectedIndex;
 
@@ -120,12 +121,37 @@ export function Sidebar({ selectedIndex = 0, isLoggedin = false }) {
 
   loginButton.className = 'sidebar-btn';
   loginIcon.className = 'sidebar-icon';
-  loginIcon.innerHTML = loginItems[+isLoggedin].svg.replace(
-    /<svg/,
-    '<svg aria-hidden="true" focusable="false"'
-  );
-  loginButton.href = loginItems[+isLoggedin].href;
-  loginButton.setAttribute('aria-label', loginItems[+isLoggedin].alt);
+
+  function setLoginButton(state) {
+    loginIcon.innerHTML = loginItems[state].svg.replace(
+      /<svg/,
+      '<svg aria-hidden="true" focusable="false"'
+    );
+    loginButton.href = loginItems[state].href;
+    loginButton.setAttribute('aria-label', loginItems[state].alt);
+  }
+
+  setLoginButton(authState.isLoggedIn);
+
+  if (authState.isLoggedIn) {
+    loginButton.addEventListener('click', (e) => {
+      const answer = confirm('로그아웃 하시겠습니까?');
+      e.preventDefault();
+
+      if (!answer) {
+        return;
+      }
+
+      authState.isLoggedIn = false;
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
+
+      setAuthState(false);
+      setLoginButton(false);
+
+      window.location.href = '/src/pages/Community/Community.html';
+    });
+  }
 
   loginButton.append(loginIcon);
 
