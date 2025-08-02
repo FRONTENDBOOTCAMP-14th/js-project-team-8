@@ -9,8 +9,17 @@ import { Button } from '../../components/Button/Button';
 import { Title } from '../../components/Title/Title';
 import { getYearMonthDateFormat } from '../../utils/date';
 import { fetchBookData, fetchBookDetail, postReview } from '../../api/writeData';
+import { getAuthToken, redirectIfNotLoggedIn } from '../../utils/auth';
 
-document.addEventListener('DOMContentLoaded', initWrite);
+document.addEventListener('DOMContentLoaded', () => {
+  if (!getAuthToken()) {
+    redirectIfNotLoggedIn();
+    return;
+  }
+
+  document.body.style.display = 'block';
+  initWrite();
+});
 
 // 더미 데이터
 const dummyBooks = [

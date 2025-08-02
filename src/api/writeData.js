@@ -4,7 +4,6 @@ import { getAuthToken, redirectIfNotLoggedIn } from '../utils/auth';
 export async function fetchBookData() {
   const token = getAuthToken();
   if (!token) {
-    redirectIfNotLoggedIn();
     throw new Error('토큰 없음');
   }
 
@@ -32,7 +31,6 @@ export async function fetchBookData() {
 export async function fetchBookDetail(isbn13) {
   const token = getAuthToken();
   if (!token) {
-    redirectIfNotLoggedIn();
     throw new Error('토큰 없음');
   }
 
@@ -60,7 +58,6 @@ export async function fetchBookDetail(isbn13) {
 export async function postReview(review) {
   const token = getAuthToken();
   if (!token) {
-    redirectIfNotLoggedIn();
     throw new Error('토큰 없음');
   }
 
