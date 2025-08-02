@@ -8,7 +8,7 @@ import { BookCover } from '../../components/BookCover/BookCover';
 import { Button } from '../../components/Button/Button';
 import { Title } from '../../components/Title/Title';
 import { getYearMonthDateFormat } from '../../utils/date';
-import { fetchBookData, fetchBookDetail } from '../../api/writeData';
+import { fetchBookData, fetchBookDetail, postReview } from '../../api/writeData';
 
 document.addEventListener('DOMContentLoaded', initWrite);
 
@@ -60,28 +60,33 @@ const dummyBooks = [
     isbn13: '0000000000000',
   },
 ];
+let totalBooks = [];
 
 /** 글쓰기 페이지 초기화 */
 async function initWrite() {
-  let totalBooks = [];
+  const write = document.querySelector('#write');
+  const search = document.querySelector('.write-search');
+
+  write.prepend(Sidebar({}));
 
   try {
-    totalBooks = await fetchBookData().books;
+    const data = await fetchBookData();
+    totalBooks = data.books;
+
+    if (!totalBooks || totalBooks.length === 0) {
+      renderBooks(dummyBooks);
+      return;
+    }
+    renderBooks(totalBooks);
   } catch (error) {
     console.error(error.message);
     return null;
   } finally {
-    const write = document.querySelector('#write');
-    const search = document.querySelector('.write-search');
-
-    write.prepend(Sidebar({}));
     search.append(
       Input({ id: 'search', type: 'search', variant: 'search', placeholder: '검색하기' })
     );
     search.querySelector('.input-field').autocomplete = 'off';
-    search.addEventListener('change', searchBookEvent);
-
-    renderBooks(totalBooks || dummyBooks);
+    search.addEventListener('input', searchBookEvent);
   }
 }
 
@@ -92,33 +97,32 @@ function renderBooks(books) {
 
   if (books.length === 0) {
     const noBooksMessage = document.createElement('div');
-
     noBooksMessage.className = 'no-books';
     noBooksMessage.setAttribute('role', 'status');
     noBooksMessage.setAttribute('aria-live', 'polite');
-
     noBooksMessage.innerHTML = `
       <p>검색 결과가 없습니다!</p>
     `;
-
     bookList.append(noBooksMessage);
   }
 
+  const fragment = document.createDocumentFragment();
   books.forEach((book) => {
     const isbn13 = book.isbn13;
     const bookEl = BookItem({
       title: book.title,
       imageUrl: book.imageUrl,
-      onClick: (isbn13) => bookDetailModal(isbn13),
+      onClick: () => bookDetailModal(isbn13),
     });
 
-    bookList.append(bookEl);
+    fragment.append(bookEl);
   });
+
+  bookList.append(fragment);
 }
 
 /** 글쓰기 페이지 검색 핸들러 */
-const searchBookEvent = async () => {
-  let totalBooks = await fetchBookData().books;
+const searchBookEvent = () => {
   const searchText = document.querySelector('.write-search .input-field').value.trim();
   const headingText = document.querySelector('.write-book-container > h2');
 
@@ -128,20 +132,34 @@ const searchBookEvent = async () => {
   if (!searchText) {
     headingText.textContent = '이달의 베스트셀러';
     headingText.classList.remove('isSearched');
+    renderBooks(totalBooks);
+    return;
   }
 
-  const filtered = (totalBooks || dummyBooks).filter((book) => book.title.includes(searchText));
-  renderBooks(filtered);
+  const filtered = totalBooks.filter((book) =>
+    book.title.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  // 중복 도서 제거
+  const seen = new Set();
+  const deduplicatedBooks = filtered.filter((book) => {
+    if (seen.has(book.isbn13)) return false;
+    seen.add(book.isbn13);
+    return true;
+  });
+
+  renderBooks(deduplicatedBooks);
 };
 
 /** 책 디테일 로드 */
 async function loadBookDetail(isbn13) {
   const fallback = {
-    title: '제목 미상',
-    imageUrl: new URL('../../assets/image/undefined-bookcover.jpg', import.meta.url).href,
-    author: '미상',
-    totalPage: '???',
-    description: '책 데이터 불러오기에 실패했습니다.',
+    title: '안녕이라 그랬어',
+    imageUrl: 'https://cdn.munhak.com/upload/book/cover/1749120080228.jpg',
+    author: '김애란',
+    totalPage: '320',
+    description:
+      '이번 소설집의 주인공은 ‘공간’이라고도 할 수 있다. “많은 희곡 속 사건은 ‘초대’와 ‘방문’, ‘침입’과 ‘도주’로 시작됐다”(「홈 파티」, 42쪽)라는 소설 속 표현처럼, 이번 책에서는 인물들이 누군가의 공간을 방문하면서 이야기가 펼쳐진다. 그곳은 집주인의 미감과 여유를 짐작하게 하는 우아하고 안정적인 공간이거나(「홈 파티」), 값싼 물가와 저렴한 체류 비용 덕분에 한 달 여행이라는 “생애 처음으로 누리는 사치”를 가능하게 하는 해외의 단독주택이다(「숲속 작은 집」). 또는 정성스레 가꾸고 사용해왔지만 이제는 새 집주인을 위해 이사 준비를 해야 하는 전셋집이거나(「좋은 이웃」), 회사를 관두고 그간 모은 돈을 전부 털어 문을 연 책방이기도 하다(「레몬케이크」). 『안녕이라 그랬어』에서 공간이 중요한 이유는 그곳이 단순히 이야기의 배경으로 기능하는 게 아니라 인물들의 삶 그 자체와 같기 때문이다. 특히 우리 사회에서 ‘방 한 칸’이 가지는 의미를 남다른 통찰력으로 묘사해온 바 있는 김애란에게 어떤 공간은 누군가의 경제적, 사회적 지표를 가늠하게 하는 장소이자 한 사람의 내력이 고스란히 담긴 총체적이고 복합적인 장소이다. 때문에 이번 소설집에서 공간을 둘러싸고 벌어지는 갈등은 서로의 삶의 기준이 맞부딪치는 일이라고 할 수 있다. 다른 사람의 공간으로 들어가는 것은, 달리 말하면 나로 살아온 삶의 테두리를 벗어나는 사건인 것이다.',
   };
 
   try {
@@ -158,6 +176,7 @@ async function loadBookDetail(isbn13) {
 const bookDetailModal = async (isbn13) => {
   const bookData = await loadBookDetail(isbn13);
   const { title, imageUrl, author, totalPage, description } = bookData;
+  bookData.isbn13 = isbn13;
 
   const bookDetail = document.createElement('div');
   const top = document.createElement('div');
@@ -174,7 +193,7 @@ const bookDetailModal = async (isbn13) => {
   top.className = 'book-detail-top';
   bottom.className = 'book-detail-bottom';
   writeButton.classList.add('book-detail-write');
-  writeButton.addEventListener('click', (bookData) => writeReviewModal(bookData));
+  writeButton.addEventListener('click', () => writeReviewModal(bookData));
   header.innerHTML = `
     <h2>${title}</h2>
     <p>작가: ${author} <span aria-hidden="true">/</span> 페이지수: ${totalPage}p</p>
@@ -194,20 +213,7 @@ const bookDetailModal = async (isbn13) => {
 
 /** 글쓰기 모달 렌더링 */
 const writeReviewModal = (bookData) => {
-  const { title, imageUrl, totalPage } = bookData;
-  const reviewData = {
-    title: title,
-    imageUrl: imageUrl,
-    oneLineDescription: '',
-    detailDescription: '',
-    rate: 0,
-    currentPage: 0,
-    totalPage: totalPage,
-    date: getYearMonthDateFormat(),
-    public: true,
-    isbn13: '00000000',
-    // TODO: isbn fetch
-  };
+  const { title, imageUrl, totalPage, isbn13 } = bookData;
 
   const modal = document.querySelector('.modal.isOpen');
   modal.innerHTML = '';
@@ -230,19 +236,37 @@ const writeReviewModal = (bookData) => {
   const rate = document.createElement('div');
   rate.className = 'rate';
 
-  for (let i = 0; i < 5; i++) {
-    const star = document.createElement('button');
-    star.className = 'star';
-    star.type = 'button';
-
+  const fetchStar = (i) =>
     fetch('/assets/icons/star.svg')
       .then((res) => res.text())
       .then((svg) => {
+        const star = document.createElement('button');
+        star.className = 'star';
+        star.type = 'button';
         star.innerHTML = svg;
         star.dataset.order = i + 1;
-        rate.append(star);
+        return star;
       });
-  }
+
+  // 인덱스 꼬임 방지
+  Promise.all([0, 1, 2, 3, 4].map(fetchStar)).then((stars) => {
+    stars.forEach((star) => rate.append(star));
+  });
+
+  let rateNum = 0;
+
+  rate.addEventListener('click', (e) => {
+    const star = e.target.closest('.star');
+    if (!star) return;
+    const stars = rate.querySelectorAll('.star');
+
+    rateNum = +star.dataset.order;
+
+    stars.forEach((star, i) => {
+      star.classList.remove('fill');
+      if (i < rateNum) star.classList.add('fill');
+    });
+  });
 
   rating.append(ratingText, rate);
 
@@ -286,31 +310,85 @@ const writeReviewModal = (bookData) => {
   const bottom = document.createElement('div');
   bottom.className = 'write-review-bottom';
 
-  const publicToggle = document.createElement('div');
-  publicToggle.className = 'write-review-toggle';
+  const publicState = document.createElement('div');
+  const publicText = document.createElement('p');
+  const publicToggle = document.createElement('label');
+  const publicInput = document.createElement('input');
+  publicState.className = 'write-review-toggle';
+  publicText.textContent = '비공개';
+  publicToggle.setAttribute('for', 'public');
+  publicInput.type = 'checkbox';
+  publicInput.id = 'public';
+  publicState.append(publicText, publicInput, publicToggle);
+
+  publicState.addEventListener('click', (e) => {
+    const toggle = e.target.closest('label');
+    if (!toggle) return;
+
+    publicInput.value = !publicInput.value;
+    publicText.textContent = publicInput.value ? '공개' : '비공개';
+  });
+
+  const submitWrapper = document.createElement('div');
   const letterCounter = document.createElement('div');
   letterCounter.className = 'write-review-counter';
+  letterCounter.textContent = `0 / 500`;
+
+  reviewText.addEventListener('input', () => {
+    const count = reviewText.value.length;
+    letterCounter.textContent = `${count} / 500`;
+  });
 
   const submitButton = Button({
     text: '남기기',
-    type: 'submit',
+    type: 'button',
     color: 'dark',
   });
-  submitButton.className = 'write-review-submit';
+  submitButton.classList.add('write-review-submit');
+
+  submitWrapper.append(letterCounter, submitButton);
 
   header.append(Title({ text: title, color: 'yellow' }));
   top.append(rating, page);
-  bottom.append(publicToggle, letterCounter, submitButton);
+  bottom.append(publicState, submitWrapper);
   form.append(top, reviewTitle, reviewText, bottom);
   writeReview.append(header, form);
   modal.append(writeReview);
 
-  submitButton.addEventListener('submit', (reviewData) => submitReview(reviewData));
+  submitButton.addEventListener('click', () => {
+    const reviewData = {
+      title: title || '제목 미상',
+      imageUrl:
+        imageUrl || new URL('../../assets/image/undefined-bookcover.jpg', import.meta.url).href,
+      oneLineDescription: reviewTitle.value || '',
+      detailDescription: reviewText.value || '',
+      rate: rateNum || 0,
+      currentPage: +pageInput.value || 0,
+      totalPage: +totalPage || 0,
+      date: getYearMonthDateFormat(),
+      public: publicInput.checked,
+      isbn13: isbn13 || '0000000000000',
+    };
+
+    submitReview(reviewData);
+  });
 };
 
-const countInputText = () => {};
-
 /** 리뷰 등록 */
-const submitReview = async (e) => {
-  e.preventDefault();
+const submitReview = async (reviewData) => {
+  try {
+    await postReview(reviewData);
+    console.log('리뷰 등록 성공');
+    const answer = confirm('책갈피를 등록했습니다! 개인 서랍으로 이동할까요?');
+    if (answer) {
+      window.location.href = `${import.meta.env.BASE_URL}src/pages/MyShelf/MyShelf.html`;
+    } else {
+      const modal = document.querySelector('.modal-wrapper');
+      modal.remove();
+    }
+  } catch (error) {
+    console.log(error.message);
+    alert('리뷰 등록에 실패했습니다. 다시 시도해주세요.');
+    return null;
+  }
 };
