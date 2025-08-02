@@ -142,12 +142,12 @@ export async function reviewDetailModal(review) {
 
   header.innerHTML = `
       <h2>${detail.title}</h2>
-      <div>
+      <div class="review-info">
         <p class="stars-wrapper">
           내 별점
           <span class="rating-score" style="display: none;">${detail.rate}</span>
         </p>
-        <p>읽은 페이지 ${detail.currentPage} / ${detail.totalPage}</p>
+        <div><p>읽은 페이지</p><span>${detail.currentPage} / ${detail.totalPage}</span></div>
       </div>
     `;
 

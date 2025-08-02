@@ -106,6 +106,8 @@
   padding: 2.1875rem;
   background-color: var(--light-gray);
   border-radius: 30px;
+  max-height: 280px;
+  overflow: scroll;
 
   & p {
     font-size: 1.25rem;

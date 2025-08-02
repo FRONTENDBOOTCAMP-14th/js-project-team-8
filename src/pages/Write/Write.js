@@ -154,11 +154,12 @@ const searchBookEvent = () => {
 /** 책 디테일 로드 */
 async function loadBookDetail(isbn13) {
   const fallback = {
-    title: '제목 미상',
-    imageUrl: new URL('../../assets/image/undefined-bookcover.jpg', import.meta.url).href,
-    author: '미상',
-    totalPage: '???',
-    description: '책 데이터 불러오기에 실패했습니다.',
+    title: '안녕이라 그랬어',
+    imageUrl: 'https://cdn.munhak.com/upload/book/cover/1749120080228.jpg',
+    author: '김애란',
+    totalPage: '320',
+    description:
+      '이번 소설집의 주인공은 ‘공간’이라고도 할 수 있다. “많은 희곡 속 사건은 ‘초대’와 ‘방문’, ‘침입’과 ‘도주’로 시작됐다”(「홈 파티」, 42쪽)라는 소설 속 표현처럼, 이번 책에서는 인물들이 누군가의 공간을 방문하면서 이야기가 펼쳐진다. 그곳은 집주인의 미감과 여유를 짐작하게 하는 우아하고 안정적인 공간이거나(「홈 파티」), 값싼 물가와 저렴한 체류 비용 덕분에 한 달 여행이라는 “생애 처음으로 누리는 사치”를 가능하게 하는 해외의 단독주택이다(「숲속 작은 집」). 또는 정성스레 가꾸고 사용해왔지만 이제는 새 집주인을 위해 이사 준비를 해야 하는 전셋집이거나(「좋은 이웃」), 회사를 관두고 그간 모은 돈을 전부 털어 문을 연 책방이기도 하다(「레몬케이크」). 『안녕이라 그랬어』에서 공간이 중요한 이유는 그곳이 단순히 이야기의 배경으로 기능하는 게 아니라 인물들의 삶 그 자체와 같기 때문이다. 특히 우리 사회에서 ‘방 한 칸’이 가지는 의미를 남다른 통찰력으로 묘사해온 바 있는 김애란에게 어떤 공간은 누군가의 경제적, 사회적 지표를 가늠하게 하는 장소이자 한 사람의 내력이 고스란히 담긴 총체적이고 복합적인 장소이다. 때문에 이번 소설집에서 공간을 둘러싸고 벌어지는 갈등은 서로의 삶의 기준이 맞부딪치는 일이라고 할 수 있다. 다른 사람의 공간으로 들어가는 것은, 달리 말하면 나로 살아온 삶의 테두리를 벗어나는 사건인 것이다.',
   };
 
   try {
@@ -380,7 +381,7 @@ const submitReview = async (reviewData) => {
     console.log('리뷰 등록 성공');
     const answer = confirm('책갈피를 등록했습니다! 개인 서랍으로 이동할까요?');
     if (answer) {
-      window.location.href = 'src/pages/MyShelf/MyShelf.html';
+      window.location.href = `${import.meta.env.BASE_URL}src/pages/MyShelf/MyShelf.html`;
     } else {
       const modal = document.querySelector('.modal-wrapper');
       modal.remove();
