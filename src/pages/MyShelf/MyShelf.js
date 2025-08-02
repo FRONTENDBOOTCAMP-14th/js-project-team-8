@@ -51,8 +51,43 @@ const dummyReviews = [
     isbn13: '0000000000000',
   },
   {
+    title: '탈주',
+    imageUrl: 'https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/480D240195820.jpg',
+    isbn13: '0000000000000',
+  },
+  {
+    title: '가공범',
+    imageUrl: 'https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791170612759.jpg',
+    isbn13: '0000000000000',
+  },
+  {
+    title: '편안함의 습격',
+    imageUrl: 'https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791193238691.jpg',
+    isbn13: '0000000000000',
+  },
+  {
+    title: '다크 심리학',
+    imageUrl: 'https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791198754080.jpg',
+    isbn13: '0000000000000',
+  },
+  {
+    title: '니체 인생수업: 니체가 세상에 남긴 66가지 인생지혜(리커버 에디션)',
+    imageUrl: 'https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791193282069.jpg',
+    isbn13: '0000000000000',
+  },
+  {
+    title: '푸른 사자 와니니 8: 갈라진 앞발들',
+    imageUrl: 'https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9788936443443.jpg',
+    isbn13: '0000000000000',
+  },
+  {
     title: '혼모노',
     imageUrl: 'https://i.pinimg.com/736x/05/45/b0/0545b0f03de19da2d2639ec92efae930.jpg',
+    isbn13: '0000000000000',
+  },
+  {
+    title: '똑똑하게 화를 다스리는 법',
+    imageUrl: 'https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9788950912161.jpg',
     isbn13: '0000000000000',
   },
 ];
