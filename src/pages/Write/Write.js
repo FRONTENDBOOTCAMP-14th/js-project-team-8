@@ -68,26 +68,25 @@ async function initWrite() {
   const search = document.querySelector('.write-search');
 
   write.prepend(Sidebar({}));
-  search.append(
-    Input({ id: 'search', type: 'search', variant: 'search', placeholder: '검색하기' })
-  );
-  search.querySelector('.input-field').autocomplete = 'off';
-  search.addEventListener('input', searchBookEvent);
 
   try {
     const data = await fetchBookData();
     totalBooks = data.books;
-    console.log(totalBooks);
 
     if (!totalBooks || totalBooks.length === 0) {
       renderBooks(dummyBooks);
       return;
     }
-
     renderBooks(totalBooks);
   } catch (error) {
     console.error(error.message);
     return null;
+  } finally {
+    search.append(
+      Input({ id: 'search', type: 'search', variant: 'search', placeholder: '검색하기' })
+    );
+    search.querySelector('.input-field').autocomplete = 'off';
+    search.addEventListener('input', searchBookEvent);
   }
 }
 

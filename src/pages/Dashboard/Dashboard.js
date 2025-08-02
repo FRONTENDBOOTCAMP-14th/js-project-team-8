@@ -12,17 +12,61 @@ document.addEventListener('DOMContentLoaded', initDashboard);
 
 // 더미 데이터
 const dummyReviews = [
-  { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-07-12' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-07-09' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-07-22' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-05-21' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-05-20' },
-  { title: '제목', oneLineDescription: '소제목', date: '2025-06-18' },
+  {
+    title: '신더',
+    oneLineDescription: '유명한 동화들을 소재로 자신만의 독창적인 세계를 선보인다.',
+    date: '2025-08-22',
+  },
+  {
+    title: '슬램덩크',
+    oneLineDescription: '작품에 재미를 더하는 개그컷도 되살려 실었다.',
+    date: '2025-08-22',
+  },
+  {
+    title: '안녕이라 그랬어',
+    oneLineDescription: '공간을 둘러싸고 벌어지는 갈등은 서로의 삶의 기준이 맞부딪치는 일.',
+    date: '2025-08-21',
+  },
+  {
+    title: '너무 늦은 시간',
+    oneLineDescription: '주인공의 모습이 이상하지만, 무엇이 문제인지 당장은 알 수 없다.',
+    date: '2025-08-21',
+  },
+  {
+    title: '구의 증명',
+    oneLineDescription: '책을 읽는 내내 마치 영화 속 한 장면에 들어간 것 같았어요.',
+    date: '2025-07-22',
+  },
+  {
+    title: '꽤 낙천적인 아이',
+    oneLineDescription: '매 장마다 웃고 울게 만드는 힘이 있는 책이에요.',
+    date: '2025-08-12',
+  },
+  {
+    title: '안녕이라 그랬어',
+    oneLineDescription: '처음 몇 장만 읽으려고 했는데, 밤을 세워 끝까지 읽어버렸다.',
+    date: '2025-08-09',
+  },
+  {
+    title: '궤도',
+    oneLineDescription: '읽는 내내 따뜻하고 뭉클한 기분이 들었다.',
+    date: '2025-08-22',
+  },
+  {
+    title: '옐로페이스',
+    oneLineDescription: '주인공의 감정이 너무 생생해서 마치 내 이야기를 보는 듯 했다.',
+    date: '2025-08-21',
+  },
+  {
+    title: '혼모노',
+    oneLineDescription: '이야기의 몰입감이 대단해서 한 번 잡으면 놓을 수가 없었다.',
+    date: '2025-07-20',
+  },
+  {
+    title: '신더',
+    oneLineDescription: '유명한 동화들을 소재로 자신만의 독창적인 세계를 선보인다.',
+    date: '2025-06-18',
+  },
 ];
 
 const dashboard = document.querySelector('#dashboard');
@@ -40,18 +84,17 @@ async function initDashboard() {
   header.prepend(
     Title({
       text: `
-    ${currentYear}년 ${currentMonth}월<span class="desktop-only">엔 <span aria-hidden="true">|</span> 책갈피 ${monthBookmarkCount || '0'}개를 남겼어요!</span>
+    ${currentYear}년 ${currentMonth}월<span class="desktop-only">엔 <span aria-hidden="true">|</span> 책갈피 ${monthBookmarkCount || '8'}개를 남겼어요!</span>
   `,
     })
   );
 
   try {
     const data = await fetchDashboardData();
-    console.log('[DEBUG] fetched data:', data);
     if (data.message) {
-      monthBookmarkCount = 0;
-      yearBookmarkCount = 0;
-      totalReviews = [];
+      monthBookmarkCount = null;
+      yearBookmarkCount = dummyReviews.length;
+      totalReviews = dummyReviews;
     } else {
       ({ monthBookmarkCount, yearBookmarkCount, totalReviews } = data);
     }
@@ -59,7 +102,7 @@ async function initDashboard() {
     console.error(error.message);
     return null;
   } finally {
-    const currentMonthReviews = totalReviews.filter((review) => {
+    const currentMonthReviews = (totalReviews || dummyReviews).filter((review) => {
       const [reviewYear, reviewMonth] = review.date.split('-');
       return reviewYear == currentYear && reviewMonth == currentMonth;
     });
