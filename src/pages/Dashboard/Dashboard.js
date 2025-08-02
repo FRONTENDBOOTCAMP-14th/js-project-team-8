@@ -29,30 +29,45 @@ const dashboard = document.querySelector('#dashboard');
 const bookstackWrapper = document.querySelector('.dashboard-bookstack');
 
 /** 대시보드 페이지 초기화 */
-function initDashboard() {
-  const { monthBookmarkCount, yearBookmarkCount, totalReviews } = loadDashboardData();
-  const today = new Date();
-  const [currentYear, currentMonth] = [today.getFullYear(), today.getMonth() + 1];
-  const header = document.querySelector('.dashboard-header');
+async function initDashboard() {
+  let totalReviews = [];
+  let monthBookmarkCount, yearBookmarkCount;
+  try {
+    const data = await fetchDashboardData();
+    console.log('[DEBUG] fetched data:', data);
+    if (data.message) {
+      console.log('데이터 없음');
+    } else {
+      ({ monthBookmarkCount, yearBookmarkCount, totalReviews } = data);
+    }
+      
+  } catch (error) {
+    console.error(error.message);
+    return null;
+  } finally {
+    const today = new Date();
+    const [currentYear, currentMonth] = [today.getFullYear(), today.getMonth() + 1];
+    const header = document.querySelector('.dashboard-header');
 
-  const currentMonthReviews = totalReviews.filter((review) => {
-    const [reviewYear, reviewMonth] = review.date.split('-');
-    return reviewYear == currentYear && reviewMonth == currentMonth;
-  });
+    const currentMonthReviews = totalReviews.filter((review) => {
+      const [reviewYear, reviewMonth] = review.date.split('-');
+      return reviewYear == currentYear && reviewMonth == currentMonth;
+    });
 
-  dashboard.prepend(Sidebar({}));
-  header.prepend(
-    Title({
-      text: `
+    dashboard.prepend(Sidebar({}));
+    header.prepend(
+      Title({
+        text: `
     ${currentYear}년 ${currentMonth}월<span class="desktop-only">엔 <span aria-hidden="true">|</span> 책갈피 ${monthBookmarkCount || '0'}개를 남겼어요!</span>
   `,
-    })
-  );
+      })
+    );
 
-  // 더미데이터 렌더링
-  renderReviews(currentMonthReviews);
-  // renderCalendar(dummyReviews);
-  renderStats(currentMonthReviews, yearBookmarkCount);
+    // 더미데이터 렌더링
+    renderReviews(currentMonthReviews);
+    renderCalendar(currentMonthReviews);
+    renderStats(currentMonthReviews, yearBookmarkCount);
+  }
 }
 
 /** 대시보드 데이터 연동

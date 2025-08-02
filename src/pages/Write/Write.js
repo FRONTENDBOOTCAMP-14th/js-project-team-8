@@ -66,7 +66,9 @@ async function initWrite() {
   let totalBooks = [];
 
   try {
-    totalBooks = await fetchBookData().books;
+    const data = await fetchBookData();
+    totalBooks = data.books;
+    console.log(totalBooks);
   } catch (error) {
     console.error(error.message);
     return null;
@@ -87,6 +89,7 @@ async function initWrite() {
 
 /** 책 목록 렌더링 */
 function renderBooks(books) {
+  // TODO: 로딩스피너 추가
   const bookList = document.querySelector('.book-list');
   bookList.innerHTML = '';
 
@@ -109,7 +112,7 @@ function renderBooks(books) {
     const bookEl = BookItem({
       title: book.title,
       imageUrl: book.imageUrl,
-      onClick: (isbn13) => bookDetailModal(isbn13),
+      onClick: () => bookDetailModal(isbn13),
     });
 
     bookList.append(bookEl);
@@ -150,7 +153,7 @@ async function loadBookDetail(isbn13) {
   } catch (error) {
     console.log(error.message);
     // TODO: 연동 후 null로 수정
-    return fallback;
+    return null;
   }
 }
 
