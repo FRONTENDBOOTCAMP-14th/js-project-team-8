@@ -24,11 +24,12 @@ export async function fetchReviewList() {
   }
 
   if (!res.ok) {
-    throw new Error(`리뷰 목록 불러오기 실패: ${res.status}`);
+    throw new Error(`리뷰 목록 불러오기 실패: ${res.status} ${res.statusText}`);
+  } else {
+    console.log(res.status);
   }
 
-  const data = await res.json();
-  return data.totalReviews;
+  return await res.json();
 }
 
 /** 개인서랍 - 리뷰 상세 조회 */
@@ -54,7 +55,7 @@ export async function fetchReviewDetail(isbn13) {
   }
 
   if (!res.ok) {
-    throw new Error(`리뷰 상세 조회 실패: ${res.status}`);
+    throw new Error(`리뷰 상세 조회 실패: ${res.status} ${res.statusText}`);
   }
 
   return await res.json();
