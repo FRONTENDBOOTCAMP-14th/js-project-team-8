@@ -315,8 +315,8 @@ const writeReviewModal = (bookData) => {
   const publicToggle = document.createElement('label');
   const publicInput = document.createElement('input');
   publicState.className = 'write-review-toggle';
-  publicText.textContent = '비공개';
   publicToggle.setAttribute('for', 'public');
+  publicText.textContent = '비공개';
   publicInput.type = 'checkbox';
   publicInput.id = 'public';
   publicState.append(publicText, publicInput, publicToggle);
@@ -325,8 +325,8 @@ const writeReviewModal = (bookData) => {
     const toggle = e.target.closest('label');
     if (!toggle) return;
 
-    publicInput.value = !publicInput.value;
-    publicText.textContent = publicInput.value ? '공개' : '비공개';
+    publicInput.value = !publicInput.checked;
+    publicText.textContent = !publicInput.checked ? '공개' : '비공개';
   });
 
   const submitWrapper = document.createElement('div');
