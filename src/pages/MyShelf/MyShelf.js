@@ -66,6 +66,7 @@ async function initMyShelf() {
 
   try {
     let reviews = await fetchReviewList();
+    reviewList.innerHTML = '';
 
     if (reviews.message) {
       console.log('리뷰 없음');

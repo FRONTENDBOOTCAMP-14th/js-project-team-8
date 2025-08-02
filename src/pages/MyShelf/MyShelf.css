@@ -213,3 +213,40 @@
     color: var(--dark-gray);
   }
 }
+
+.book-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  .loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid var(--dark-gray);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+
+  & > p {
+    color: var(--dark-gray);
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
