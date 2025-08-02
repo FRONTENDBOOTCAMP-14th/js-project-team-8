@@ -28,7 +28,6 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
   login(email, password)
     .then((data) => {
       if (data.token) {
-        alert('로그인 성공!');
         if (keepLogin && keepLogin.checked) {
           localStorage.setItem('token', data.token);
           localStorage.setItem('tokenSource', 'local');

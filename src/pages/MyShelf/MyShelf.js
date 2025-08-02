@@ -4,9 +4,18 @@ import { Button } from '../../components/Button/Button.js';
 import { BookCover } from '../../components/BookCover/BookCover.js';
 import { BookItem } from '../../components/BookItem/BookItem.js';
 import { Modal } from '../../components/Modal/Modal.js';
-import { fetchReviewList, fetchReviewDetail } from '../../api/MyShelfData.js';
+import { fetchReviewList, fetchReviewDetail } from '../../api/myShelfData.js';
+import { getAuthToken, redirectIfNotLoggedIn } from '../../utils/auth.js';
 
-initMyShelf();
+document.addEventListener('DOMContentLoaded', () => {
+  if (!getAuthToken()) {
+    redirectIfNotLoggedIn();
+    return;
+  }
+
+  document.body.style.display = 'block';
+  initMyShelf();
+});
 
 const dummyReviews = [
   {
