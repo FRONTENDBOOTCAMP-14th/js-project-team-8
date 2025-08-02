@@ -21,8 +21,10 @@ export function setAuthState(isLoggedIn, user = {}) {
  * - 자동로그인 OFF: sessionStorage 토큰
  */
 export function getAuthToken() {
-  const TOKEN_KEY = 'token';
-  return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || null;
+  const source = sessionStorage.getItem('tokenSource') || localStorage.getItem('tokenSource');
+  if (source === 'session') return sessionStorage.getItem('token');
+  if (source === 'local') return localStorage.getItem('token');
+  return null;
 }
 
 /** 비로그인 상태 시 로그인 페이지로 리디렉션 */

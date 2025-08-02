@@ -64,26 +64,23 @@ const dummyBooks = [
 /** 글쓰기 페이지 초기화 */
 async function initWrite() {
   let totalBooks = [];
+  const write = document.querySelector('#write');
+  const search = document.querySelector('.write-search');
+
+  write.prepend(Sidebar({}));
+  search.append(
+    Input({ id: 'search', type: 'search', variant: 'search', placeholder: '검색하기' })
+  );
+  search.querySelector('.input-field').autocomplete = 'off';
+  search.addEventListener('change', searchBookEvent);
 
   try {
     const data = await fetchBookData();
     totalBooks = data.books;
-    console.log(totalBooks);
+    renderBooks(totalBooks || dummyBooks);
   } catch (error) {
     console.error(error.message);
     return null;
-  } finally {
-    const write = document.querySelector('#write');
-    const search = document.querySelector('.write-search');
-
-    write.prepend(Sidebar({}));
-    search.append(
-      Input({ id: 'search', type: 'search', variant: 'search', placeholder: '검색하기' })
-    );
-    search.querySelector('.input-field').autocomplete = 'off';
-    search.addEventListener('change', searchBookEvent);
-
-    renderBooks(totalBooks || dummyBooks);
   }
 }
 
@@ -153,7 +150,7 @@ async function loadBookDetail(isbn13) {
   } catch (error) {
     console.log(error.message);
     // TODO: 연동 후 null로 수정
-    return null;
+    return fallback;
   }
 }
 

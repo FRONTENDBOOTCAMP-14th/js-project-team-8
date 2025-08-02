@@ -31,8 +31,14 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
         alert('로그인 성공!');
         if (keepLogin && keepLogin.checked) {
           localStorage.setItem('token', data.token);
+          localStorage.setItem('tokenSource', 'local');
+          sessionStorage.removeItem('token');
+          sessionStorage.removeItem('tokenSource');
         } else {
           sessionStorage.setItem('token', data.token);
+          sessionStorage.setItem('tokenSource', 'session');
+          localStorage.removeItem('token');
+          localStorage.removeItem('tokenSource');
         }
         window.location.href = '/src/pages/Dashboard/Dashboard.html';
       } else {
