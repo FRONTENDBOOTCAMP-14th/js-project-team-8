@@ -64,24 +64,13 @@ export async function postReview(review) {
     throw new Error('토큰 없음');
   }
 
-  const res = await fetch(`https://server.bookmark.soop.run/write/reviews/write`, {
+  const res = await fetch(`https://server.bookmark.soop.run/reviews/write`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      title: review.title,
-      imageUrl: review.ImageUrl,
-      oneLineDescription: review.oneLineDescription,
-      detailDescription: review.detailDescription,
-      rate: review.rate,
-      currentPage: review.currentPage,
-      totalPage: review.totalPage,
-      date: review.date,
-      public: review.public,
-      isbn13: review.isbn13,
-    }),
+    body: JSON.stringify(review),
   });
 
   if (res.status === 401) {

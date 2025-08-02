@@ -8,7 +8,7 @@ import { BookCover } from '../../components/BookCover/BookCover';
 import { Button } from '../../components/Button/Button';
 import { Title } from '../../components/Title/Title';
 import { getYearMonthDateFormat } from '../../utils/date';
-import { fetchBookData, fetchBookDetail } from '../../api/writeData';
+import { fetchBookData, fetchBookDetail, postReview } from '../../api/writeData';
 
 document.addEventListener('DOMContentLoaded', initWrite);
 
@@ -77,6 +77,7 @@ async function initWrite() {
   try {
     const data = await fetchBookData();
     totalBooks = data.books;
+    // totalBooks = false;
     renderBooks(totalBooks || dummyBooks);
   } catch (error) {
     console.error(error.message);
@@ -158,6 +159,7 @@ async function loadBookDetail(isbn13) {
 const bookDetailModal = async (isbn13) => {
   const bookData = await loadBookDetail(isbn13);
   const { title, imageUrl, author, totalPage, description } = bookData;
+  bookData.isbn13 = isbn13;
 
   const bookDetail = document.createElement('div');
   const top = document.createElement('div');
@@ -174,7 +176,7 @@ const bookDetailModal = async (isbn13) => {
   top.className = 'book-detail-top';
   bottom.className = 'book-detail-bottom';
   writeButton.classList.add('book-detail-write');
-  writeButton.addEventListener('click', (bookData) => writeReviewModal(bookData));
+  writeButton.addEventListener('click', () => writeReviewModal(bookData));
   header.innerHTML = `
     <h2>${title}</h2>
     <p>작가: ${author} <span aria-hidden="true">/</span> 페이지수: ${totalPage}p</p>
@@ -194,20 +196,7 @@ const bookDetailModal = async (isbn13) => {
 
 /** 글쓰기 모달 렌더링 */
 const writeReviewModal = (bookData) => {
-  const { title, imageUrl, totalPage } = bookData;
-  const reviewData = {
-    title: title,
-    imageUrl: imageUrl,
-    oneLineDescription: '',
-    detailDescription: '',
-    rate: 0,
-    currentPage: 0,
-    totalPage: totalPage,
-    date: getYearMonthDateFormat(),
-    public: true,
-    isbn13: '00000000',
-    // TODO: isbn fetch
-  };
+  const { title, imageUrl, totalPage, isbn13 } = bookData;
 
   const modal = document.querySelector('.modal.isOpen');
   modal.innerHTML = '';
@@ -230,19 +219,37 @@ const writeReviewModal = (bookData) => {
   const rate = document.createElement('div');
   rate.className = 'rate';
 
-  for (let i = 0; i < 5; i++) {
-    const star = document.createElement('button');
-    star.className = 'star';
-    star.type = 'button';
-
+  const fetchStar = (i) =>
     fetch('/assets/icons/star.svg')
       .then((res) => res.text())
       .then((svg) => {
+        const star = document.createElement('button');
+        star.className = 'star';
+        star.type = 'button';
         star.innerHTML = svg;
         star.dataset.order = i + 1;
-        rate.append(star);
+        return star;
       });
-  }
+
+  // 인덱스 꼬임 방지
+  Promise.all([0, 1, 2, 3, 4].map(fetchStar)).then((stars) => {
+    stars.forEach((star) => rate.append(star));
+  });
+
+  let rateNum = 0;
+
+  rate.addEventListener('click', (e) => {
+    const star = e.target.closest('.star');
+    if (!star) return;
+    const stars = rate.querySelectorAll('.star');
+
+    rateNum = +star.dataset.order;
+
+    stars.forEach((star, i) => {
+      star.classList.remove('fill');
+      if (i < rateNum) star.classList.add('fill');
+    });
+  });
 
   rating.append(ratingText, rate);
 
@@ -286,31 +293,84 @@ const writeReviewModal = (bookData) => {
   const bottom = document.createElement('div');
   bottom.className = 'write-review-bottom';
 
-  const publicToggle = document.createElement('div');
-  publicToggle.className = 'write-review-toggle';
+  const publicState = document.createElement('div');
+  const publicText = document.createElement('p');
+  const publicToggle = document.createElement('label');
+  const publicInput = document.createElement('input');
+  publicState.className = 'write-review-toggle';
+  publicText.textContent = '비공개';
+  publicToggle.setAttribute('for', 'public');
+  publicInput.type = 'checkbox';
+  publicInput.id = 'public';
+  publicState.append(publicText, publicInput, publicToggle);
+
+  publicState.addEventListener('click', (e) => {
+    const toggle = e.target.closest('label');
+    if (!toggle) return;
+
+    publicInput.value = !publicInput.value;
+    publicText.textContent = publicInput.value ? '공개' : '비공개';
+  });
+
+  const submitWrapper = document.createElement('div');
   const letterCounter = document.createElement('div');
   letterCounter.className = 'write-review-counter';
+  letterCounter.textContent = `0 / 500`;
+
+  reviewText.addEventListener('input', () => {
+    const count = reviewText.value.length;
+    letterCounter.textContent = `${count} / 500`;
+  });
 
   const submitButton = Button({
     text: '남기기',
-    type: 'submit',
+    type: 'button',
     color: 'dark',
   });
-  submitButton.className = 'write-review-submit';
+  submitButton.classList.add('write-review-submit');
+
+  submitWrapper.append(letterCounter, submitButton);
 
   header.append(Title({ text: title, color: 'yellow' }));
   top.append(rating, page);
-  bottom.append(publicToggle, letterCounter, submitButton);
+  bottom.append(publicState, submitWrapper);
   form.append(top, reviewTitle, reviewText, bottom);
   writeReview.append(header, form);
   modal.append(writeReview);
 
-  submitButton.addEventListener('submit', (reviewData) => submitReview(reviewData));
+  submitButton.addEventListener('click', () => {
+    const reviewData = {
+      title: title || '제목 미상',
+      imageUrl:
+        imageUrl || new URL('../../assets/image/undefined-bookcover.jpg', import.meta.url).href,
+      oneLineDescription: reviewTitle.value || '',
+      detailDescription: reviewText.value || '',
+      rate: rateNum || 0,
+      currentPage: +pageInput.value || 0,
+      totalPage: +totalPage || 0,
+      date: getYearMonthDateFormat(),
+      public: publicInput.checked,
+      isbn13: isbn13 || '0000000000000',
+    };
+    submitReview(reviewData);
+  });
 };
 
-const countInputText = () => {};
-
 /** 리뷰 등록 */
-const submitReview = async (e) => {
-  e.preventDefault();
+const submitReview = async (reviewData) => {
+  try {
+    await postReview(reviewData);
+    console.log('리뷰 등록 성공');
+    const answer = confirm('책갈피를 등록했습니다! 개인 서랍으로 이동할까요?');
+    if (answer) {
+      window.location.href = 'src/pages/MyShelf/MyShelf.html';
+    } else {
+      const modal = document.querySelector('.modal-wrapper');
+      modal.remove();
+    }
+  } catch (error) {
+    console.log(error.message);
+    alert('리뷰 등록에 실패했습니다. 다시 시도해주세요.');
+    return null;
+  }
 };
