@@ -2,6 +2,7 @@
   width: 100%;
   aspect-ratio: 0.9;
   position: relative;
+  border: 1px solid var(--light-gray);
   border-radius: 20px;
   overflow: hidden;
 }
