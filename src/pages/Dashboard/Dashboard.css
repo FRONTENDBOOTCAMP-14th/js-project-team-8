@@ -56,6 +56,8 @@
 .dashboard-bookstack {
   grid-row: 2 / span 2;
   position: relative;
+  background-color: var(--black);
+  border-radius: 30px;
 }
 
 .no-reviews {
@@ -80,6 +82,7 @@
   background: var(--light-gray);
   border-radius: 1.875rem;
   box-shadow: 2px 2px 4px #00000010;
+  position: relative;
 }
 
 .dashboard-userdata {

@@ -32,6 +32,19 @@ const bookstackWrapper = document.querySelector('.dashboard-bookstack');
 async function initDashboard() {
   let totalReviews = [];
   let monthBookmarkCount, yearBookmarkCount;
+  const today = new Date();
+  const [currentYear, currentMonth] = [today.getFullYear(), today.getMonth() + 1];
+  const header = document.querySelector('.dashboard-header');
+
+  dashboard.prepend(Sidebar({}));
+  header.prepend(
+    Title({
+      text: `
+    ${currentYear}년 ${currentMonth}월<span class="desktop-only">엔 <span aria-hidden="true">|</span> 책갈피 ${monthBookmarkCount || '0'}개를 남겼어요!</span>
+  `,
+    })
+  );
+
   try {
     const data = await fetchDashboardData();
     console.log('[DEBUG] fetched data:', data);
@@ -40,28 +53,14 @@ async function initDashboard() {
     } else {
       ({ monthBookmarkCount, yearBookmarkCount, totalReviews } = data);
     }
-      
   } catch (error) {
     console.error(error.message);
     return null;
   } finally {
-    const today = new Date();
-    const [currentYear, currentMonth] = [today.getFullYear(), today.getMonth() + 1];
-    const header = document.querySelector('.dashboard-header');
-
     const currentMonthReviews = totalReviews.filter((review) => {
       const [reviewYear, reviewMonth] = review.date.split('-');
       return reviewYear == currentYear && reviewMonth == currentMonth;
     });
-
-    dashboard.prepend(Sidebar({}));
-    header.prepend(
-      Title({
-        text: `
-    ${currentYear}년 ${currentMonth}월<span class="desktop-only">엔 <span aria-hidden="true">|</span> 책갈피 ${monthBookmarkCount || '0'}개를 남겼어요!</span>
-  `,
-      })
-    );
 
     // 더미데이터 렌더링
     renderReviews(currentMonthReviews);
@@ -115,6 +114,8 @@ function renderCalendar(reviews) {
   };
   const calendar = new Calendar('#calendar', options);
   calendar.init();
+  const loader = document.querySelector('.dashboard-calendar .loader');
+  loader.remove();
 
   const calendarEl = document.querySelector('#calendar');
   const calendarHeader = document.querySelector('.vc-header');
