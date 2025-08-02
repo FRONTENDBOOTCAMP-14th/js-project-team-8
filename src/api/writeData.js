@@ -29,7 +29,7 @@ export async function fetchBookData() {
 }
 
 /** 글쓰기 페이지 - 책 디테일 API 요청 */
-export async function fetchBookDetail(isbn13 = '') {
+export async function fetchBookDetail(isbn13) {
   const token = getAuthToken();
   if (!token) {
     redirectIfNotLoggedIn();

@@ -72,12 +72,18 @@ async function initWrite() {
     Input({ id: 'search', type: 'search', variant: 'search', placeholder: '검색하기' })
   );
   search.querySelector('.input-field').autocomplete = 'off';
-  search.addEventListener('change', searchBookEvent);
+  search.addEventListener('input', searchBookEvent);
 
   try {
     const data = await fetchBookData();
     totalBooks = data.books;
-    if (totalBooks == []) renderBooks(dummyBooks);
+    console.log(totalBooks);
+
+    if (!totalBooks || totalBooks.length === 0) {
+      renderBooks(dummyBooks);
+      return;
+    }
+
     renderBooks(totalBooks);
   } catch (error) {
     console.error(error.message);
@@ -87,24 +93,21 @@ async function initWrite() {
 
 /** 책 목록 렌더링 */
 function renderBooks(books) {
-  // TODO: 로딩스피너 추가
   const bookList = document.querySelector('.book-list');
   bookList.innerHTML = '';
 
   if (books.length === 0) {
     const noBooksMessage = document.createElement('div');
-
     noBooksMessage.className = 'no-books';
     noBooksMessage.setAttribute('role', 'status');
     noBooksMessage.setAttribute('aria-live', 'polite');
-
     noBooksMessage.innerHTML = `
       <p>검색 결과가 없습니다!</p>
     `;
-
     bookList.append(noBooksMessage);
   }
 
+  const fragment = document.createDocumentFragment();
   books.forEach((book) => {
     const isbn13 = book.isbn13;
     const bookEl = BookItem({
@@ -113,8 +116,10 @@ function renderBooks(books) {
       onClick: () => bookDetailModal(isbn13),
     });
 
-    bookList.append(bookEl);
+    fragment.append(bookEl);
   });
+
+  bookList.append(fragment);
 }
 
 /** 글쓰기 페이지 검색 핸들러 */
@@ -132,8 +137,19 @@ const searchBookEvent = () => {
     return;
   }
 
-  const filtered = totalBooks.filter((book) => book.title.includes(searchText));
-  renderBooks(filtered);
+  const filtered = totalBooks.filter((book) =>
+    book.title.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  // 중복 도서 제거
+  const seen = new Set();
+  const deduplicatedBooks = filtered.filter((book) => {
+    if (seen.has(book.isbn13)) return false;
+    seen.add(book.isbn13);
+    return true;
+  });
+
+  renderBooks(deduplicatedBooks);
 };
 
 /** 책 디테일 로드 */
