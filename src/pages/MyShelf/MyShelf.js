@@ -103,10 +103,10 @@ const dummyReviews = [
 
 /** 개인서랍 페이지 초기화 */
 async function initMyShelf() {
-  const sidebarContainer = document.getElementById('sidebar-container');
-  const reviewList = document.getElementById('book-list');
+  const sidebarContainer = document.querySelector('#sidebar-container');
+  const reviewList = document.querySelector('book-list');
 
-  sidebarContainer.appendChild(Sidebar({ selectedIndex: 1 }));
+  sidebarContainer.append(Sidebar({ selectedIndex: 1 }));
 
   try {
     let reviews = await fetchReviewList();

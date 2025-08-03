@@ -1,3 +1,4 @@
+import './LoginAndSignUp.css';
 import { login, requestSignupAuth, signup, updateNickname } from '../../api/loginAndSignupAuth.js';
 
 // 비밀번호 토글 버튼 기능 (동적 생성 포함)

@@ -12,6 +12,7 @@ import { getAuthToken, redirectIfNotLoggedIn } from '../../utils/auth';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!getAuthToken()) {
+    console.log('리디렉션')
     redirectIfNotLoggedIn();
     return;
   }
