@@ -6,7 +6,6 @@ import { Title } from '../../components/Title/Title';
 import { Carousel } from '../../components/Carousel/Carousel';
 import { Button } from '../../components/Button/Button';
 import { BookHover } from '../../components/BookHover/BookHover';
-import { authState } from '../../utils/auth';
 
 export function initCommunity() {
   let publicReviews = [];
