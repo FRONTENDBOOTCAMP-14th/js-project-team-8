@@ -90,29 +90,14 @@ export function Sidebar({ selectedIndex = 0 }) {
       <img src="${logo}" alt="책갈피 홈으로" draggable="false"/>
     </h1>
   `;
+  sidebarLogo.tabIndex = '0';
 
-  sidebarLogo.addEventListener('click', () => {
-    const info = document.createElement('div');
-    info.className = 'info-modal';
-    info.innerHTML = `
-      <h1>책갈피 프로젝트🔖에 오신 것을 환영합니다!</h1>
-      <p>
-        '책갈피'는 나만의 공간에서 독서 활동을 기록하고,<br>커뮤니티 기능으로 감상을 공유할 수 있는 웹 서비스입니다.<br><br>
-        단순히 개인적인 독서 기록을 넘어,<br> 다른 사람들과 내용을 공유하며<br>‘함께 읽는 즐거움’을 느낄 수 있도록 설계했어요.<br>
-        책갈피처럼 쌓이는 기록을 보며 독서 습관을 길러 보세요!
-      </p>
-    `;
-    info.append(
-      Button({
-        text: '이해했어요',
-        type: 'button',
-        onClick: () => {
-          modal.remove();
-        },
-      })
-    );
-    const modal = Modal({ isOpen: true, children: info });
-    document.body.append(modal);
+  sidebarLogo.addEventListener('click', createInfoModal);
+  sidebarLogo.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      createInfoModal();
+    }
   });
 
   sidebar.append(sidebarLogo);
@@ -218,3 +203,31 @@ export function Sidebar({ selectedIndex = 0 }) {
 
   return sidebar;
 }
+
+/** 로고 눌렀을 때 팝업되는 환영 모달 */
+const createInfoModal = () => {
+  const info = document.createElement('div');
+  info.className = 'info-modal';
+  info.innerHTML = `
+      <h1>책갈피 프로젝트🔖에 오신 것을 환영합니다!</h1>
+      <p>
+        '책갈피'는 나만의 공간에서 독서 활동을 기록하고,<br>커뮤니티 기능으로 감상을 공유할 수 있는 웹 서비스입니다.<br><br>
+        단순히 개인적인 독서 기록을 넘어,<br> 다른 사람들과 내용을 공유하며<br>‘함께 읽는 즐거움’을 느낄 수 있도록 설계했어요.<br>
+        책갈피처럼 쌓이는 기록을 보며 독서 습관을 길러 보세요!
+      </p>
+    `;
+  info.append(
+    Button({
+      text: '이해했어요',
+      type: 'button',
+      onClick: () => {
+        document.querySelector('.modal').classList.remove('isOpen');
+        setTimeout(() => {
+          document.querySelector('.modal-wrapper').remove();
+        }, 200);
+      },
+    })
+  );
+  const modal = Modal({ isOpen: true, children: info });
+  document.body.append(modal);
+};
