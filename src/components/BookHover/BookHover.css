@@ -74,11 +74,12 @@
 }
 
 .book-hover-wrapper:is(:hover, :focus-visible) .book-hover-title {
-  overflow: scroll;
+  overflow: hidden;
   position: static;
   transform: translateY(-1rem);
   border-bottom: 1px solid var(--white);
   white-space: wrap;
+  max-height: 150px;
 }
 
 .book-hover-wrapper:is(:hover, :focus-visible) .book-hover-review,
