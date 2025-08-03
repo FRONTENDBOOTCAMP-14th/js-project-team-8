@@ -11,6 +11,12 @@ export function Button({ text = '', type = 'button', onClick = null, color = 'da
 
   if (typeof onClick === 'function') {
     button.addEventListener('click', onClick);
+    button.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onClick();
+      }
+    });
   }
 
   return button;
