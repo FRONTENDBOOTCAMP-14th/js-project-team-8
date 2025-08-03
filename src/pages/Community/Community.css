@@ -76,7 +76,7 @@
 @media (width <= 768px) {
 
   #community {
-    height: auto;
+    height: 100vh;
   }
 
   .community-header {

@@ -10,6 +10,10 @@
   &:hover .book-cover-image {
     transform: scale(1.05);
   }
+
+  &:focus {
+    outline: 2px solid var(--dark-gray);
+  }
 }
 .book-item > .book-cover {
   box-shadow: 10px 4px 8px rgba(0, 0, 0, 0.08);

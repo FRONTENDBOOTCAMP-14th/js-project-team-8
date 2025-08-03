@@ -1,6 +1,9 @@
 import './Modal.css';
 
 export function Modal({ isOpen = false, children = null }) {
+  const openedModal = document.querySelector('.modal');
+  if (openedModal) return;
+
   const modalWrapper = document.createElement('div');
   const modal = document.createElement('div');
   const MODAL_TRANSITION_DURATION = 200;
@@ -25,16 +28,16 @@ export function Modal({ isOpen = false, children = null }) {
       if (e.target !== modalWrapper) return;
       modal.classList.remove('isOpen');
       setTimeout(() => {
-        modalWrapper.classList.remove('show');
+        modalWrapper.remove();
       }, MODAL_TRANSITION_DURATION);
     });
 
     // esc 키다운 닫힘
-    document.addEventListener('keydown', (e) => {
+    window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        modalWrapper.classList.remove('show');
+        modal.classList.remove('isOpen');
         setTimeout(() => {
-          modalWrapper.classList.remove('show');
+          modalWrapper.remove();
         }, MODAL_TRANSITION_DURATION);
       }
     });

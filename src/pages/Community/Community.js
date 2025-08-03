@@ -6,7 +6,7 @@ import { Title } from '../../components/Title/Title';
 import { Carousel } from '../../components/Carousel/Carousel';
 import { Button } from '../../components/Button/Button';
 import { BookHover } from '../../components/BookHover/BookHover';
-import { authState } from '../../utils/auth';
+import { ScrollTopButton } from '../../components/ScrollTopButton/ScrollTopButton';
 
 export function initCommunity() {
   let publicReviews = [];
@@ -67,6 +67,7 @@ export function initCommunity() {
   bookWrapperControls.append(bookHeader, btnWrapper);
   wrapper.append(Carousel(), bookWrapperControls, bookWrapper);
   community.prepend(Sidebar({ selectedIndex: 2 }));
+  community.after(ScrollTopButton())
 
   // 데이터 로드 후 렌더링
   loadPublicReviews().then((data) => {
