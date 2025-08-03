@@ -3,7 +3,7 @@ import { Sidebar } from '../../components/Sidebar/Sidebar.js';
 import { BookItem } from '../../components/BookItem/BookItem.js';
 import { fetchReviewList } from '../../api/myShelfData.js';
 import { getAuthToken, redirectIfNotLoggedIn } from '../../utils/auth.js';
-import { reviewDetailModal } from '../../utils/reviewModal.js';
+import { reviewDetailModal } from '../../utils/modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!getAuthToken()) {

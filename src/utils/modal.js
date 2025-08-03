@@ -91,4 +91,35 @@ export async function reviewDetailModal(review) {
   reviewDetailModal.classList.add('review-detail-modal');
 
   document.body.append(reviewDetailModal);
+  setTimeout(() => {
+    trapFocus(document.querySelector('.modal'));
+  });
+}
+
+/** 모달 열렸을 시 모달 안 요소만 포커스 */
+export function trapFocus(modal) {
+  const focusable = 'button, [href], input, select, textarea, [tabindex]';
+  const focusableEls = modal.querySelectorAll(focusable);
+
+  if (focusableEls.length === 0) return;
+
+  const [first, last] = [focusableEls[0], focusableEls[focusableEls.length - 1]];
+
+  first?.focus();
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+  });
 }

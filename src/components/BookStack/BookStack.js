@@ -1,6 +1,6 @@
 import './BookStack.css';
 import { BookBlock } from '../BookBlock/BookBlock';
-import { reviewDetailModal } from '../../utils/reviewModal';
+import { reviewDetailModal } from '../../utils/modal';
 
 export function BookStack({ reviews = [] }) {
   const bookStack = document.createElement('div');

@@ -3,6 +3,7 @@ import logo from '../../assets/icon/logo.svg';
 import { authState, setAuthState } from '../../utils/auth';
 import { Modal } from '../Modal/Modal';
 import { Button } from '../Button/Button';
+import { trapFocus } from '../../utils/modal';
 
 export function Sidebar({ selectedIndex = 0 }) {
   const sidebarItems = [
@@ -230,4 +231,5 @@ const createInfoModal = () => {
   );
   const modal = Modal({ isOpen: true, children: info });
   document.body.append(modal);
+  trapFocus(info);
 };
