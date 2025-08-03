@@ -11,7 +11,7 @@ export function ScrollTopButton() {
   
   scrollBtn.appendChild(arrowTop)
 
-  const scrollArea = document.querySelector('.community-container');
+  const scrollArea = document.querySelector('main');
   let lastScrollY = scrollArea.scrollTop;
 
   scrollArea.addEventListener('scroll', () => {
