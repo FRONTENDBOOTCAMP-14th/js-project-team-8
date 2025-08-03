@@ -33,6 +33,12 @@ export async function reviewDetailModal(review) {
     text: '닫기',
     type: 'button',
     color: 'dark',
+    onClick: () => {
+      document.querySelector('.modal').classList.remove('isOpen');
+      setTimeout(() => {
+        document.querySelector('.modal-wrapper').remove();
+      }, 200);
+    },
   });
 
   reviewDetail.className = 'review-detail';
@@ -83,10 +89,6 @@ export async function reviewDetailModal(review) {
 
   const reviewDetailModal = Modal({ isOpen: true, children: reviewDetail });
   reviewDetailModal.classList.add('review-detail-modal');
-
-  writeButton.addEventListener('click', () => {
-    document.body.removeChild(reviewDetailModal);
-  });
 
   document.body.append(reviewDetailModal);
 }
