@@ -1,0 +1,27 @@
+.scroll-top-btn {
+  position: fixed;
+  bottom: 4rem;
+  right: 4rem;
+  padding: 1rem;
+  width: 48px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--yellow);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+.scroll-top-btn img {
+  pointer-events: none;
+}
+
+.scroll-top-btn.opaque {
+  opacity: 1;
+}
+
+.scroll-top-btn.transparent {
+  opacity: 0.4;
+}
