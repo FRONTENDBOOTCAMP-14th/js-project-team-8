@@ -2,16 +2,17 @@ import './Dashboard.css';
 import 'vanilla-calendar-pro/styles/index.css';
 import './calendar-override.css';
 
+import { getAuthToken, redirectIfNotLoggedIn } from '../../utils/auth';
 import { fetchDashboardData } from '../../api/dashboardData';
 import { Calendar } from 'vanilla-calendar-pro';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { Title } from '../../components/Title/Title';
 import { BookStack } from '../../components/BookStack/BookStack';
-import { reviewDetailModal } from '../MyShelf/MyShelf';
-import { getAuthToken, redirectIfNotLoggedIn } from '../../utils/auth';
+import { reviewDetailModal } from '../../utils/reviewModal';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!getAuthToken()) {
+    console.log('리디렉션')
     redirectIfNotLoggedIn();
     return;
   }
