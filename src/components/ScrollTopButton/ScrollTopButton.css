@@ -19,9 +19,9 @@
 }
 
 .scroll-top-btn.opaque {
-  opacity: 1;
+  opacity: 0;
 }
 
 .scroll-top-btn.transparent {
-  opacity: 0.4;
+  opacity: 1;
 }

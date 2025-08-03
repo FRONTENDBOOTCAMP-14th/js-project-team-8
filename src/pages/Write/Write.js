@@ -10,6 +10,7 @@ import { Title } from '../../components/Title/Title';
 import { getYearMonthDateFormat } from '../../utils/date';
 import { fetchBookData, fetchBookDetail, postReview } from '../../api/writeData';
 import { getAuthToken, redirectIfNotLoggedIn } from '../../utils/auth';
+import { ScrollTopButton } from '../../components/ScrollTopButton/ScrollTopButton';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!getAuthToken()) {
@@ -77,6 +78,7 @@ async function initWrite() {
   const search = document.querySelector('.write-search');
 
   write.prepend(Sidebar({}));
+  document.body.append(ScrollTopButton());
 
   try {
     const data = await fetchBookData();

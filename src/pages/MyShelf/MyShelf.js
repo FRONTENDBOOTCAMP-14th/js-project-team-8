@@ -4,6 +4,7 @@ import { BookItem } from '../../components/BookItem/BookItem.js';
 import { fetchReviewList } from '../../api/myShelfData.js';
 import { getAuthToken, redirectIfNotLoggedIn } from '../../utils/auth.js';
 import { reviewDetailModal } from '../../utils/modal.js';
+import { ScrollTopButton } from '../../components/ScrollTopButton/ScrollTopButton.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!getAuthToken()) {
@@ -105,6 +106,7 @@ async function initMyShelf() {
   const reviewList = document.querySelector('#book-list');
 
   sidebarContainer.append(Sidebar({ selectedIndex: 1 }));
+  document.body.append(ScrollTopButton());
 
   try {
     let reviews = await fetchReviewList();
