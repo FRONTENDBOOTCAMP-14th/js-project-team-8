@@ -1,5 +1,6 @@
 import './BookStack.css';
 import { BookBlock } from '../BookBlock/BookBlock';
+import { reviewDetailModal } from '../../utils/reviewModal';
 
 export function BookStack({ reviews = [] }) {
   const bookStack = document.createElement('div');
@@ -8,7 +9,14 @@ export function BookStack({ reviews = [] }) {
 
   reviews.forEach((review, index) => {
     // * TODO: onClick에 책 상세 모달 연결(title로 검색)
-    bookStack.append(BookBlock({ title: review.title, desc: review.oneLineDescription, index }));
+    bookStack.append(
+      BookBlock({
+        title: review.title,
+        desc: review.oneLineDescription,
+        index,
+        onClick: reviewDetailModal,
+      })
+    );
   });
 
   return bookStack;
