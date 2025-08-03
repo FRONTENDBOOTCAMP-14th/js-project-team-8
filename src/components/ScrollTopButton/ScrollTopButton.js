@@ -11,22 +11,25 @@ export function ScrollTopButton() {
   
   scrollBtn.appendChild(arrowTop)
 
-  let lastScrollY = window.scrollY;
-  document.addEventListener('scroll', () => {
-  const currentScrollY = window.scrollY
-  const isScrollingDown = currentScrollY > lastScrollY;
+  const scrollArea = document.querySelector('.community-container');
+  let lastScrollY = scrollArea.scrollTop;
 
-  if (isScrollingDown && !scrollBtn.classList.contains('transparent')) {
-    scrollBtn.classList.replace('opaque', 'transparent')
-  } else if (!isScrollingDown && !scrollBtn.classList.contains('opaque')) {
-    scrollBtn.classList.replace('transparent', 'opaque')
-  }
+  scrollArea.addEventListener('scroll', () => {
+    const currentScrollY = scrollArea.scrollTop
+    const isScrollingDown = currentScrollY > lastScrollY;
 
-  lastScrollY = currentScrollY;
-})
+    if (isScrollingDown && !scrollBtn.classList.contains('transparent')) {
+      scrollBtn.classList.replace('opaque', 'transparent')
+    } else if (!isScrollingDown && !scrollBtn.classList.contains('opaque')) {
+      scrollBtn.classList.replace('transparent', 'opaque')
+    }
+
+    lastScrollY = currentScrollY;
+
+  })
 
   scrollBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollArea.scrollTo({ top: 0, behavior: 'smooth' });
   });
   return scrollBtn;
 }
